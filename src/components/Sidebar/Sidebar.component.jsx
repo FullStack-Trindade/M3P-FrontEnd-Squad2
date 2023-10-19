@@ -8,15 +8,14 @@ import {
 	TbHome,
 } from "react-icons/tb"
 
-import { FaUserDoctor, FaUserNurse } from 'react-icons/fa6'
-import { MdOutlineSick } from 'react-icons/md'
+import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
+import { MdOutlineSick } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { SidebarContext } from "../../contexts/SidebarContext"
 
 export default function SidebarComponent() {
-
 	// CONTEXTS
-	const { showSidebar, setShowSidebar} = useContext(SidebarContext)
+	const { showSidebar, setShowSidebar } = useContext(SidebarContext)
 
 	// REACT-ROUTER-DOM
 	const navigate = useNavigate()
@@ -24,21 +23,22 @@ export default function SidebarComponent() {
 	// FUNCTIONS
 	const logout = async () => {
 		// deslogar e apagar token no localStorage
-
 		// após logout redirecionar para a página de login
 		// navigate('/login')
 	}
 
 	const check = (e) => {
-		console.log(e.target.id)
+		// marca o 1º filho (input) como checked
+		e.target.firstChild.checked = true
 	}
 
 	return (
 		<Styled.Sidebar show={showSidebar} $isOpened={showSidebar}>
 			<Styled.Header>
-				<div
-					style={{ width: "100%", display: "flex", justifyContent: "end" }}
-				>
+				<Styled.TooltipContainer>
+					<span className={showSidebar ? "" : "tooltiptext"}>
+						{showSidebar ? "Retrair" : "Expandir"}
+					</span>
 					<button onClick={() => setShowSidebar(!showSidebar)}>
 						{showSidebar ? (
 							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
@@ -46,46 +46,71 @@ export default function SidebarComponent() {
 							<TbLayoutSidebarLeftExpand size={"1.5rem"} />
 						)}
 					</button>
-				</div>
+				</Styled.TooltipContainer>
 				<h2>Brand</h2>
 			</Styled.Header>
 			<Styled.Body>
 				<Styled.ListGroup>
-					<p style={{display: showSidebar ? "" : "none"}}>Páginas</p>
+					<p style={{ display: showSidebar ? "" : "none" }}>Páginas</p>
 
 					<ul>
-                        <li>
-                            <input type="radio" name="selector" id="home" />
+						<Styled.Li onClick={check}>
+							<input type="radio" name="page" id="home" value="Home" />
 							<TbHome size={showSidebar ? "" : "1.5rem"} />
-                            <label htmlFor="home" style={{display: showSidebar ? "" : "none"}}>Home</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="selector" id="cadMedico" />
+							<label
+								htmlFor="home"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Home
+							</label>
+						</Styled.Li>
+						<Styled.Li onClick={check}>
+							<input type="radio" name="page" id="cadMedico" />
 							<FaUserDoctor size={showSidebar ? "" : "1.5rem"} />
-                            <label htmlFor="cadMedico" style={{display: showSidebar ? "" : "none"}}>Cad. Medico</label>
-                        </li>
-						<li>
-                            <input type="radio" name="selector" id="cadEnfermeiro" />
+							<label
+								htmlFor="cadMedico"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Cad. Medico
+							</label>
+						</Styled.Li>
+						<Styled.Li onClick={check}>
+							<input type="radio" name="page" id="cadEnfermeiro" />
 							<FaUserNurse size={showSidebar ? "" : "1.5rem"} />
-                            <label htmlFor="cadEnfermeiro" style={{display: showSidebar ? "" : "none"}}>Cad. Enfermeiro</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="selector" id="cadPaciente" />
+							<label
+								htmlFor="cadEnfermeiro"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Cad. Enfermeiro
+							</label>
+						</Styled.Li>
+						<Styled.Li onClick={check}> 
+							<input type="radio" name="page" id="cadPaciente" />
 							<MdOutlineSick size={showSidebar ? "" : "1.5rem"} />
-                            <label htmlFor="cadPaciente" style={{display: showSidebar ? "" : "none"}}>Cad. Paciente</label>
-                        </li>                        
-                    </ul>
+							<label
+								htmlFor="cadPaciente"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Cad. Paciente
+							</label>
+						</Styled.Li>
+					</ul>
 				</Styled.ListGroup>
 			</Styled.Body>
 			<Styled.Footer>
-				<Styled.UserContainer $isOpened={showSidebar}>
-					<TbUserCircle size={"1.5rem"}/>
-					<span>Username</span>
-				</Styled.UserContainer>
+				<Styled.TooltipContainer $isOpened={showSidebar} style={{marginBottom: '1rem'}}>
+					<TbUserCircle size={"2.5rem"} />
+					<span className={showSidebar ? "" : "tooltiptext"}>
+						Username
+					</span>
+				</Styled.TooltipContainer>
 
-				<Styled.LogoutBtn onClick={logout} $isOpened={showSidebar}>
+				<Styled.TooltipContainer onClick={logout} $isOpened={showSidebar}>
+					<span className={showSidebar ? "" : "tooltiptext"}>
+						Logout
+					</span>
 					<TbLogout size={"1.5rem"} />
-				</Styled.LogoutBtn>
+				</Styled.TooltipContainer>
 			</Styled.Footer>
 		</Styled.Sidebar>
 	)

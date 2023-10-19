@@ -33,6 +33,47 @@ export const Header = styled.div`
 	}
 `
 
+export const TooltipContainer = styled.div`
+	display: flex;
+	gap: .5rem;
+	align-items: center;
+
+	/* para o ToolTip */
+	position: relative;
+
+	.tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+
+		/* Position the tooltip */
+		position: absolute;
+		left: 105%;
+		z-index: 1;
+	}
+
+	.tooltiptext::after {
+		content: " ";
+		position: absolute;
+		top: 50%;
+		right: 100%; /* To the left of the tooltip */
+		margin-top: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: transparent black transparent transparent;
+	}
+
+	&:hover {
+		.tooltiptext {
+			visibility: visible;
+		}
+	}
+`
+
 export const Body = styled.div`
 	width: 100%;
 	height: 100%;
@@ -53,38 +94,73 @@ export const ListGroup = styled.div`
 		color: #fefefe;
 	}
 
-	li {
-		padding: 10px;
-		display: flex;
-		align-content: center;
-		align-items: baseline;
-		border-radius: .5rem;
-		gap: 5px;;
-	}
-
-	li:hover {
-		cursor: pointer;
-		background-color: #888;
-		
-		& > * {
-			color: #fff;
-		}
-	}
-
-	li::marker {
-		content: "";
-	}
-
-	li label:hover {
-		cursor: pointer;
-	}
-
 	input[type="radio"] {
 		display: none;
 	}
 
-	input[type="radio"]:checked + label {
+	input[type="radio"]:checked ~ svg,
+	input[type="radio"]:checked ~ label {
 		color: limegreen;
+	}
+`
+
+export const Li = styled.li`
+	padding: 5px .5rem;
+	display: flex;
+	gap: .5rem;
+	align-content: center;
+	align-items: center;
+	border-radius: 0.5rem;
+	width: 100%;
+
+	/* para o ToolTip */
+	position: relative;
+
+	.tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+
+		/* Position the tooltip */
+		position: absolute;
+		left: 105%;
+		z-index: 1;
+	}
+
+	.tooltiptext::after {
+		content: " ";
+		position: absolute;
+		top: 50%;
+		right: 100%; /* To the left of the tooltip */
+		margin-top: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: transparent black transparent transparent;
+	}
+
+	&:hover {
+		cursor: pointer;
+		background-color: #888;
+
+		& > * {
+			color: #fff;
+		}
+
+		& > *:hover {
+			cursor: pointer;
+		}
+
+		.tooltiptext {
+			visibility: visible;
+		}
+	}
+
+	&::marker {
+		content: "";
 	}
 `
 
@@ -92,16 +168,18 @@ export const Footer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	/* justify-content: flex-end; */
 `
 
 export const UserContainer = styled.div`
 	display: flex;
+	align-items: center;
 	flex-direction: ${({ $isOpened }) => {
 		return $isOpened ? "row" : "column"
 	}};
 	gap: 0.5rem;
-	padding: .5rem;
+	padding: 0.5rem;
 `
 
 export const LogoutBtn = styled.button`
