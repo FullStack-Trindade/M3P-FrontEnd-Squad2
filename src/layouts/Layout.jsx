@@ -1,11 +1,11 @@
-
-
+import InputComponent from "../components/Input/Input.component";
 import { Btn } from "../components/Button/button.style"
 
 export default function Layout() {
 	return (
 		<div>
 			Layout is render
+      <InputComponent type="text" id="ss" mask="999.999.999-99" label="cpf"></InputComponent>
 			<div>
 				<h4>Botões e suas variantes</h4>
 				<div style={{display: 'flex', gap: '1rem'}}>
