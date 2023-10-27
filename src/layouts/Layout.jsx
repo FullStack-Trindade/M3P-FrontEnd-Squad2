@@ -1,12 +1,17 @@
 import { Btn } from "../components/Button/button.style";
 import { ToolbarComponent } from "../components/Toolbar/Toolbar.component";
 import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.context";
+import InputComponent from "../components/Input/Input.component";
+import SidebarComponent from "../components/Sidebar/Sidebar.component"
 
 export default function Layout() {
 	return (
 		<ToolbarTituloProvider>
+    <div style={{display: 'flex'}}>
+			<SidebarComponent />
 			<div>
 				Layout is render
+				<InputComponent type="text" id="ss" mask="999.999.999-99" label="cpf"></InputComponent>
 				<div>
 					<ToolbarComponent />
 					<h4>Botões e suas variantes</h4>
@@ -23,6 +28,7 @@ export default function Layout() {
 					</div>
 				</div>
 			</div>
+    </div>
 		</ToolbarTituloProvider>
 	);
 }
