@@ -1,15 +1,19 @@
+import { Btn } from "../components/Button/button.style";
+import { ToolbarComponent } from "../components/Toolbar/Toolbar.component";
+import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.context";
 import InputComponent from "../components/Input/Input.component";
-import { Btn } from "../components/Button/button.style"
 import SidebarComponent from "../components/Sidebar/Sidebar.component"
 
 export default function Layout() {
 	return (
-		<div style={{display: 'flex'}}>
+		<ToolbarTituloProvider>
+    <div style={{display: 'flex'}}>
 			<SidebarComponent />
 			<div>
 				Layout is render
-        <InputComponent type="text" id="ss" mask="999.999.999-99" label="cpf"></InputComponent>
+				<InputComponent type="text" id="ss" mask="999.999.999-99" label="cpf"></InputComponent>
 				<div>
+					<ToolbarComponent />
 					<h4>Botões e suas variantes</h4>
 					<div style={{ display: "flex", gap: "1rem" }}>
 						<Btn variant="primary">primary</Btn>
@@ -24,7 +28,7 @@ export default function Layout() {
 					</div>
 				</div>
 			</div>
-		</div>
-	)
-
+    </div>
+		</ToolbarTituloProvider>
+	);
 }
