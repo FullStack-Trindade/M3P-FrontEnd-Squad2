@@ -11,6 +11,12 @@ export default function Layout() {
         <SidebarComponent />
           <div>
             <ToolbarComponent />
+            <InputComponent
+              type="text"
+              id="ss"
+              mask="999.999.999-99"
+              label="cpf"
+            ></InputComponent>
             <h4>Botões e suas variantes</h4>
             <div style={{ display: "flex", gap: "1rem" }}>
               <Btn variant="primary">primary</Btn>
@@ -23,15 +29,8 @@ export default function Layout() {
               <Btn variant="blue">blue</Btn>
               <Btn variant="blueOutlined">blueOutlined</Btn>
             </div>
-			<InputComponent
-            type="text"
-            id="ss"
-            mask="999.999.999-99"
-            label="cpf"
-          ></InputComponent>
           </div>
         </div>
     </ToolbarTituloProvider>
   );
 }
-
