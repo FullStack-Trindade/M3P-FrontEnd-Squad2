@@ -41,9 +41,26 @@ const CadastroPaciente = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setPaciente({ ...paciente, [name]: value });
+  
+    // Se o nome do campo começa com "endereco." tratar como um campo aninhado
+    if (name.startsWith("endereco.")) {
+      // Extrai o nome do campo após "endereco."
+      const enderecoField = name.replace("endereco.", "");
+  
+      // Atualiza o estado do paciente aninhando os campos de endereço
+      setPaciente({
+        ...paciente,
+        endereco: {
+          ...paciente.endereco,
+          [enderecoField]: value,
+        },
+      });
+    } else {
+      // se não for campo aninahdo atualiza normalmente
+      setPaciente({ ...paciente, [name]: value });
+    }
   };
-
+  
   const handleCepBlur = async (e) => {
     const { value } = e.target;
 
@@ -68,6 +85,8 @@ const CadastroPaciente = () => {
   };
 
   const enviarPaciente = async () => {
+    const pacienteParaEnviar = { ...paciente };
+    console.log(pacienteParaEnviar);
     try {
       const response = await PatientService.criarPaciente(paciente, token);
       setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
@@ -236,7 +255,7 @@ const CadastroPaciente = () => {
           <input
             type="text"
             name="status"
-            value={paciente.status ? "Ativo" : "Inativo"}
+            value={paciente.status ? "true" : "false"}
             readOnly
           />
         </div>
@@ -293,7 +312,7 @@ const CadastroPaciente = () => {
             name="endereco.numero"
             value={paciente.endereco.numero}
             onChange={handleInputChange}
-            placeholder="123"
+            placeholder=""
           />
         </div>
         <div>

@@ -37,6 +37,7 @@ const MockPaciente = () => {
   const [statusMessage, setStatusMessage] = useState('');
 
   const enviarMockPaciente = async () => {
+    console.log(mockPaciente);
     try {
       const response = await PacienteService.criarPaciente(mockPaciente, token);
       setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
