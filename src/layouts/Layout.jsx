@@ -4,7 +4,9 @@ import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.c
 import InputComponent from "../components/Input/Input.component";
 import SidebarComponent from "../components/Sidebar/Sidebar.component";
 import ModalComponent from "../components/Modal/Modal.component";
-import FormComponent from "../components/Form/Form.component";
+import FormComponent from "../components/Form/FormComponent";
+
+
 
 export default function Layout() {
   return (
@@ -14,15 +16,14 @@ export default function Layout() {
           <SidebarComponent />
           <div>
             <ToolbarComponent />
-			
-            <FormComponent title={"Cadastro"}>
-              <InputComponent
+           
+             <InputComponent
                 type="text"
                 id="ss"
                 mask="999.999.999-99"
                 label="cpf"
             />
-            </FormComponent>
+             <FormComponent title={"Cadastro Paciente"}/>
            
             <h4>Botões e suas variantes</h4>
             <div style={{ display: "flex", gap: "1rem" }}>
