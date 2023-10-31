@@ -31,12 +31,13 @@ const InputComponent = ({ label, name, control, type = 'text', mask, guide, plac
                 mask={mask}
                 guide={guide}
                 placeholder={placeholder}
+                value={field.value || ''}
                 {...rest}
               />
             );
           } else {
             return (
-              <Styled.Input type={type} {...field} placeholder={placeholder} {...rest} />
+              <Styled.Input type={type} {...field} value={field.value || ''} placeholder={placeholder} {...rest} />
             );
           }
         }}
