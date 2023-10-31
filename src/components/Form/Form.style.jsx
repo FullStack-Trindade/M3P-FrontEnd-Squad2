@@ -4,9 +4,9 @@ import { Form } from 'react-bootstrap';
 
 export const StyledForm = styled(Form)`
   display:flex;
-  max-width: 910px;
-  height: 450px;
-  margin: 0 auto;
+  max-width: 1000px;
+  height: 550px;
+  margin: 30px 30px 20px 30px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -17,6 +17,12 @@ export const StyledForm = styled(Form)`
   &:hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 255, 0.4);
   }
+
+  @media (max-width: 768px) {
+    /* Estilos para pantallas más pequeñas */
+    max-width: 100%;
+    padding: 10px;
+  }
 `
 export const Label = styled.label`
 
@@ -25,36 +31,45 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  margin: 5px 0;
+  margin: 10px 10px;
   padding: 5px;
   width: 180px; 
   height: 40px;
   border-radius: 8px;
   border: 1px solid;
-  gap: 10px;
+ 
   `;
 
 export const Select = styled.select`
-  margin: 5px 0;
+  margin: 10px 10px;
   padding: 5px;
-  width: 150px;
+  width: 180px;
   height: 40px;
   border-radius: 8px;
   border: 1px solid;
-  gap: 10px;
+ 
 `;
 export const GroupForm = styled.div`
-    margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: space-between;
     align-content: stretch;
 `
 export const titulo = styled.h1`
-width: 200px;
-height: 350px;
+width: 270px;
+height: 10px;
 margin-top: 20px;
 `
+export const ErrorMessage = styled.div`
+  color: red;
+  width: 200px;
+  font-size: 10px;
+`;
+
+export const SuccessMessage = styled.div`
+  color: green;
+
+`;
 
