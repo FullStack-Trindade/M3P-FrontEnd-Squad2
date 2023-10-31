@@ -14,6 +14,7 @@ export const InputGroup = styled.div`
 export const InputContainer = styled.div`
   position: relative;
   width: 100%;
+  padding: 0.5rem;
 `;
 
 export const Label = styled.label`

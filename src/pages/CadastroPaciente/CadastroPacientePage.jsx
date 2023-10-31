@@ -54,7 +54,6 @@ const CadastroPaciente = () => {
     <div>
       <h1>Cadastro de Paciente</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
           <InputComponent
             label="Nome Completo"
             name="nome_completo"
@@ -62,9 +61,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe o nome completo"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Gênero"
             name="genero"
@@ -78,18 +74,12 @@ const CadastroPaciente = () => {
               { label: "Prefiro não informar", value: " NÃO INFORMADO" },
             ]}
           />
-        </div>
-
-        <div>
         <InputComponent
           label="Data de Nascimento"
           name="data_nascimento"
           control={control}
           type="date"
         />
-        </div> 
-        
-        <div>
          <InputComponent
           label="CPF"
           name="cpf"
@@ -114,9 +104,6 @@ const CadastroPaciente = () => {
           placeholder="000.000.000-00"
           guide={true}
         />
-        </div>
-
-        <div>
           <InputComponent
             label="RG com órgão expedidor"
             name="rg"
@@ -124,9 +111,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="ex: 23443235-5 SSP"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Estado Civil"
             name="estado_civil"
@@ -140,9 +124,6 @@ const CadastroPaciente = () => {
               { label: "Viuvo(a)", value: "VIUVO" },
             ]}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Telefone"
             name="telefone"
@@ -169,9 +150,6 @@ const CadastroPaciente = () => {
             placeholder="(99) 9 9999-9999"
             guide={true}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="E-mail"
             name="email"
@@ -179,9 +157,6 @@ const CadastroPaciente = () => {
             type="email"
             placeholder="email@site.com"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Naturalidade"
             name="naturalidade"
@@ -189,9 +164,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe a naturalidade"
           />
-        </div>
-
-        <div>
            <InputComponent
             label="Contato de Emergência"
             name="contato_emergencia"
@@ -218,9 +190,6 @@ const CadastroPaciente = () => {
             placeholder="(99) 9 9999-9999"
             guide={true}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Lista de Alergias"
             name="lista_alergias"
@@ -228,9 +197,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe se possui alergias"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Lista de Cuidados Específicos"
             name="lista_cuidados"
@@ -238,9 +204,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe se necessita de cuidados especiais"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Convênio"
             name="nome_convenio"
@@ -248,9 +211,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe o convênio"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Número do Convênio"
             name="numero_convenio"
@@ -258,19 +218,13 @@ const CadastroPaciente = () => {
             type="text"
             placeholder="Informe o número do convênio"
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Validade do Convênio"
             name="validade_convenio"
             control={control}
             type="date"
           />
-        </div>
-
         {/* status só pra teste */}
-        <div>
           <InputComponent
             label="Status do Sistema"
             name="status"
@@ -285,10 +239,7 @@ const CadastroPaciente = () => {
               setStatus(selectedValue === "true");
             }}
           />
-        </div>
         {/* ... fim do teste de status */}
-
-        <div>
           <InputComponent
             label="CEP"
             name="endereco.cep"
@@ -299,9 +250,6 @@ const CadastroPaciente = () => {
             placeholder={"00000-000"}
             onBlur={(e) => handleCepBlur(e.target.value)}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Cidade"
             name="endereco.cidade"
@@ -309,9 +257,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe a cidade"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Estado"
             name="endereco.estado"
@@ -319,9 +264,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o estado"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Logradouro"
             name="endereco.logradouro"
@@ -329,9 +271,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o logradouro"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Número"
             name="endereco.numero"
@@ -339,9 +278,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o número"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Complemento"
             name="endereco.complemento"
@@ -349,9 +285,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o complemento"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Bairro"
             name="endereco.bairro"
@@ -359,9 +292,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o bairro"}
           />
-        </div>
-
-        <div>
           <InputComponent
             label="Ponto de Referência"
             name="endereco.ponto_referencia"
@@ -369,7 +299,6 @@ const CadastroPaciente = () => {
             type="text"
             placeholder={"Informe o ponto de referência"}
           />
-        </div>
         <Btn type="submit">Enviar Paciente</Btn>
       </form>
       <div>Status: {status ? "Ativo" : "Inativo"}</div>
