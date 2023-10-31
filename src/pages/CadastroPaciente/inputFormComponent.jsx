@@ -1,29 +1,31 @@
 import { Controller } from "react-hook-form";
-import TextMask from "react-text-mask";
+import * as Styled from './inputFormComponent.style';
+
 
 import PropTypes from 'prop-types';
 
 const InputComponent = ({ label, name, control, type = 'text', mask, guide, placeholder, options, ...rest }) => {
   return (
-    <div>
-      <label>{label}:</label>
+    <Styled.InputGroup>
+      <Styled.InputContainer>
+      <Styled.Label>{label}:</Styled.Label>
       <Controller
         name={name}
         control={control}
         render={({ field }) => {
           if (type === 'select') {
             return (
-              <select {...field} {...rest}>
+              <Styled.Select {...field} {...rest}>
                 {options.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
-              </select>
+              </Styled.Select>
             );
           } else if (mask) {
             return (
-              <TextMask
+              <Styled.TextMaskInput
                 {...field}
                 type={type}
                 mask={mask}
@@ -34,12 +36,13 @@ const InputComponent = ({ label, name, control, type = 'text', mask, guide, plac
             );
           } else {
             return (
-              <input type={type} {...field} placeholder={placeholder} {...rest} />
+              <Styled.Input type={type} {...field} placeholder={placeholder} {...rest} />
             );
           }
         }}
       />
-    </div>
+      </Styled.InputContainer>
+    </Styled.InputGroup>
   );
 };
 

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import PacienteService from "../../services/Paciente/PacienteService";
 import EnderecoService from "../../services/Endereco/EnderecoService";
-import InputComponent from "./inputComponent";
+import InputComponent from "./inputFormComponent";
+import { Btn } from "../../components/Button/button.style";
 
 //token manual depois deve consumir de um local storage
 let token =
@@ -117,7 +118,7 @@ const CadastroPaciente = () => {
 
         <div>
           <InputComponent
-            label="RG com órgão expedidor:"
+            label="RG com órgão expedidor"
             name="rg"
             control={control}
             type="text"
@@ -369,7 +370,7 @@ const CadastroPaciente = () => {
             placeholder={"Informe o ponto de referência"}
           />
         </div>
-        <button type="submit">Enviar Paciente</button>
+        <Btn type="submit">Enviar Paciente</Btn>
       </form>
       <div>Status: {status ? "Ativo" : "Inativo"}</div>
       <div>{statusMessage}</div>
