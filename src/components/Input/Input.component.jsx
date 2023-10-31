@@ -1,9 +1,9 @@
+
 import { useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import * as Styled from "./Input.style";
-import { COLOR } from "../../assets/styles.colors";
+import { COLOR } from "../../assets/styles/colors";
 import PropTypes from "prop-types";
-import InputMask from "react-input-mask"
 
 const InputComponent = ({
   label,
@@ -15,6 +15,7 @@ const InputComponent = ({
   register,
   error,
   value,
+  onChange,
   rows,
   defaultValue,
 }) => {
@@ -22,6 +23,12 @@ const InputComponent = ({
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleChange = (e) => {
+    if (onChange) {
+      onChange(e);
+    }
   };
 
   return (
@@ -39,12 +46,13 @@ const InputComponent = ({
             onBlur={onBlur}
             {...register}
             value={value || defaultValue}
+            onChange={handleChange}
           />
           <Styled.Loading>
             {isLoading && (
               <ReactLoading
                 type="spin"
-                style={{ color: COLOR.$blue_dark }}
+                style={{color:COLOR.$blue_dark}}
                 width={"2rem"}
               />
             )}
@@ -70,6 +78,7 @@ const InputComponent = ({
             placeholder={placeholder}
             rows={rows}
             value={value || defaultValue}
+            onChange={handleChange}
             {...register}
           />
           {error && <Styled.Error>{error.message}</Styled.Error>}
@@ -90,25 +99,3 @@ InputComponent.propTypes = {
   register: PropTypes.any,
   mask: PropTypes.any,
 };
-
-
-/*     
-;  
-
-<InputMask
-          name="cpf"
-          mask={"999.999.999-99"}      
-          maskChar=""
-        >
-          {(inputprops) => (
-            <InputComponent
-              {...inputprops}
-              label="CPF"
-              id="cpf"
-              type="text"
-              placeholder="123.123.123-12"
-              register={register("cpf")}          
-            
-            />            
-          )}
-        </InputMask> */

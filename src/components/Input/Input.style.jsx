@@ -1,8 +1,8 @@
 
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { COLOR } from "../../assets/styles.colors";
-import { IMaskInput } from "react-imask";
+import { COLOR } from "../../assets/styles/colors";
+
 
 export const InputGroup = styled.div`
   display: flex;
