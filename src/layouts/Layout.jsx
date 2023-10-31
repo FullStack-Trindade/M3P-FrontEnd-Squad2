@@ -4,8 +4,18 @@ import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.c
 import InputComponent from "../components/Input/Input.component"
 import SidebarComponent from "../components/Sidebar/Sidebar.component"
 import ModalComponent from "../components/Modal/Modal.component"
+import SuccessComponent from "../components/Success/Success.component"
+import { useContext, useEffect } from "react"
+import { ModalContext } from "../contexts/Modal.context"
 
 export default function Layout() {
+
+  const {show, setShow} = useContext(ModalContext)
+
+  useEffect(() => {
+    setShow(true)
+  },[])
+
 	return (
 		<>
 			<ToolbarTituloProvider>
@@ -34,8 +44,8 @@ export default function Layout() {
 					</div>
 				</div>
 			</ToolbarTituloProvider>
-      <ModalComponent>
-        
+      <ModalComponent show={show} >
+        <SuccessComponent />
       </ModalComponent>
 		</>
 	)
