@@ -60,6 +60,17 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder="Informe o nome completo"
+            rules={{
+              required: 'Campo obrigatório',
+              minLength: {
+                value: 8,
+                message: 'Nome deve ter pelo menos 8 caracteres',
+              },
+              maxLength: {
+                value: 64,
+                message: 'Nome deve ter no máximo 64 caracteres',
+              },
+            }}
           />
           <InputComponent
             label="Gênero"
@@ -73,12 +84,14 @@ const CadastroPaciente = () => {
               { label: "Outro", value: "OUTRO" },
               { label: "Prefiro não informar", value: " NÃO INFORMADO" },
             ]}
+            rules={{required: 'Campo obrigatório'}}
           />
         <InputComponent
           label="Data de Nascimento"
           name="data_nascimento"
           control={control}
           type="date"
+          rules={{required: 'Campo obrigatório'}}
         />
          <InputComponent
           label="CPF"
@@ -103,6 +116,13 @@ const CadastroPaciente = () => {
           ]}
           placeholder="000.000.000-00"
           guide={true}
+          rules={{
+            required: 'Campo obrigatório',
+            pattern: {
+              value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+              message: 'CPF inválido (000.000.000-00)',
+            },
+          }}
         />
           <InputComponent
             label="RG com órgão expedidor"
@@ -110,6 +130,13 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder="ex: 23443235-5 SSP"
+            rules={{
+              required: 'Campo obrigatório',
+              maxLength: {
+                value: 20,
+                message: 'Nome deve ter no máximo 64 caracteres',
+              },
+            }}
           />
           <InputComponent
             label="Estado Civil"
@@ -123,6 +150,7 @@ const CadastroPaciente = () => {
               { label: "Divorciado", value: "DIVORCIADO" },
               { label: "Viuvo(a)", value: "VIUVO" },
             ]}
+            rules={{required: 'Campo obrigatório'}}
           />
           <InputComponent
             label="Telefone"
@@ -149,6 +177,13 @@ const CadastroPaciente = () => {
             ]}
             placeholder="(99) 9 9999-9999"
             guide={true}
+            rules={{
+              required: 'Campo obrigatório',
+              pattern: {
+                value: /^\(\d{2}\) \d \d{4}-\d{4}$/,
+                message: 'Telefone inválido (exemplo: (99) 9 9999-9999)',
+              },
+            }}
           />
           <InputComponent
             label="E-mail"
@@ -156,6 +191,13 @@ const CadastroPaciente = () => {
             control={control}
             type="email"
             placeholder="email@site.com"
+            rules={{
+              required: 'Campo obrigatório',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Endereço de e-mail inválido',
+              },
+            }}
           />
           <InputComponent
             label="Naturalidade"
@@ -163,6 +205,17 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder="Informe a naturalidade"
+            rules={{
+              required: 'Campo obrigatório',
+              minLength: {
+                value: 8,
+                message: 'Deve ter pelo menos 8 caracteres',
+              },
+              maxLength: {
+                value: 64,
+                message: 'Deve ter no máximo 64 caracteres',
+              },
+            }}
           />
            <InputComponent
             label="Contato de Emergência"
@@ -189,6 +242,13 @@ const CadastroPaciente = () => {
             ]}
             placeholder="(99) 9 9999-9999"
             guide={true}
+            rules={{
+              required: 'Campo obrigatório',
+              pattern: {
+                value: /^\(\d{2}\) \d \d{4}-\d{4}$/,
+                message: 'Telefone de contato inválido (exemplo: (99) 9 9999-9999)',
+              },
+            }}
           />
           <InputComponent
             label="Lista de Alergias"
@@ -248,7 +308,16 @@ const CadastroPaciente = () => {
             guide={true}
             type="text"
             placeholder={"00000-000"}
-            onBlur={(e) => handleCepBlur(e.target.value)}
+            // onBlur={(e) => handleCepBlur(e.target.value)}
+            onChange={(e) => {
+              const cleanedCep = e.target.value.replace(/[^0-9]/g, '');
+              if (cleanedCep.length === 8) {
+                handleCepBlur(cleanedCep);
+              }
+            }}
+            rules={{
+              required: 'Campo obrigatório',
+            }}
           />
           <InputComponent
             label="Cidade"
@@ -256,6 +325,7 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder={"Informe a cidade"}
+            rules={{required: 'Campo obrigatório'}}
           />
           <InputComponent
             label="Estado"
@@ -263,6 +333,7 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder={"Informe o estado"}
+            rules={{required: 'Campo obrigatório'}}
           />
           <InputComponent
             label="Logradouro"
@@ -270,6 +341,7 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder={"Informe o logradouro"}
+            rules={{required: 'Campo obrigatório'}}
           />
           <InputComponent
             label="Número"
@@ -277,6 +349,7 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder={"Informe o número"}
+            rules={{required: 'Campo obrigatório'}}
           />
           <InputComponent
             label="Complemento"
@@ -298,6 +371,7 @@ const CadastroPaciente = () => {
             control={control}
             type="text"
             placeholder={"Informe o ponto de referência"}
+            rules={{required: 'Campo obrigatório'}}
           />
         <Btn type="submit">Enviar Paciente</Btn>
       </form>
