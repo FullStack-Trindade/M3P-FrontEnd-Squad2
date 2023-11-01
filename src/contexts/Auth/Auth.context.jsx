@@ -1,13 +1,32 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import jwt_decode from "jwt-decode";
 import { Api } from "../../services/api";
 import { toast } from "react-toastify";
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({
+    usuario: {},
+    autenticado: false,
+    login: () => { },
+    logout: () => { }
+})
+
+const getInitialState = () => {
+    const userLogado = localStorage.getItem('@Auth:user')
+    return userLogado;
+}
 
 export const AuthProvider = ({ children }) => {
-    const [usuario, setUsuario] = useState(null);
+    const [usuario, setUsuario] = useState(getInitialState);
+
+    useEffect(() => {
+        const usuarioSalvo = localStorage.getItem('@Auth:user');
+        const tokenSalvo = localStorage.getItem('@Auth:token');
+        if (usuarioSalvo && tokenSalvo) {
+            setUsuario(JSON.parse(usuarioSalvo));
+        }
+
+    }, []);
 
     const login = async (email, senha) => {
         try {
@@ -17,7 +36,7 @@ export const AuthProvider = ({ children }) => {
             setUsuario(usuario);
             Api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             localStorage.setItem('@Auth:token', token);
-            localStorage.setItem('@Auth:user', usuario);
+            localStorage.setItem('@Auth:user', JSON.stringify(usuario));
             toast.success(response.data.message, {
                 position: toast.POSITION.TOP_CENTER,
                 theme: 'colored'
@@ -36,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         Api.defaults.headers.common['Authorization'] = undefined;
         localStorage.removeItem('@Auth:token');
         localStorage.removeItem('@Auth:user');
+
     }
 
     return (

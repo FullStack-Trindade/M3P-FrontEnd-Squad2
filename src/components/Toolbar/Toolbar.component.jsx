@@ -3,6 +3,7 @@ import * as Styled from "./Toolbar.style";
 import { useToolbarContext } from "../../hooks/useToolbarContext";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const ToolbarComponent = () => {
 	const { titulo } = useToolbarContext();
@@ -11,12 +12,15 @@ export const ToolbarComponent = () => {
 
 	const { usuario, logout } = useAuth();
 
+	const navigate = useNavigate();
+
 	const handleAbrirDropdown = () => {
 		setAbrirDropdown(!abrirDropdown);
 	};
 
 	const handleSair = async () => {
 		logout();
+		navigate('/login');
 	}
 
 	return (

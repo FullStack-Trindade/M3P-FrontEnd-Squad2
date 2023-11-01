@@ -16,7 +16,7 @@ export const LoginFormComponent = () => {
     const submitForm = async (data) => {
 
         await auth.login(data.email, data.senha)
-        navigate('/home');
+        navigate('/');
     }
 
     const criarConta = () => {
