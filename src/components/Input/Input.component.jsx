@@ -5,7 +5,7 @@ import * as Styled from "./Input.style";
 import { COLOR } from "../../assets/styles/colors";
 import PropTypes from "prop-types";
 
-const InputComponent = ({
+export default function InputComponent ({
   label,
   type,
   id,
@@ -14,11 +14,11 @@ const InputComponent = ({
   isLoading,
   register,
   error,
-  value,
   onChange,
   rows,
-  defaultValue,
-}) => {
+  value,
+  defaultValue
+}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
@@ -45,7 +45,6 @@ const InputComponent = ({
             placeholder={placeholder}
             onBlur={onBlur}
             {...register}
-            value={value || defaultValue}
             onChange={handleChange}
           />
           <Styled.Loading>
@@ -77,7 +76,6 @@ const InputComponent = ({
             id={id}
             placeholder={placeholder}
             rows={rows}
-            value={value || defaultValue}
             onChange={handleChange}
             {...register}
           />
@@ -88,14 +86,14 @@ const InputComponent = ({
   );
 };
 
-export default InputComponent;
+
 
 InputComponent.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   placeholder: PropTypes.string,
   error: PropTypes.any,
   register: PropTypes.any,
-  mask: PropTypes.any,
+  rows: PropTypes.any,
 };

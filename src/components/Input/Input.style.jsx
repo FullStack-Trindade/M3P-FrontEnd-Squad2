@@ -64,6 +64,17 @@ export const TextArea = styled.textarea`
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
     }};
 `;
+export const Select = styled.select`
+  display: flex;
+  padding: 0.5rem;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 0.3125rem;
+  border: 1px solid;
+  color: ${({ $color }) => {
+      return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
+    }};
+`;
 
 export const InputContainer = styled.div`
   position: relative;
