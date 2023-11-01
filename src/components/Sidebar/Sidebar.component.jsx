@@ -13,6 +13,8 @@ import { MdOutlineSick } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { SidebarContext } from "../../contexts/SidebarContext"
 
+import logoP from "../../assets/images/logoG.png"
+
 export default function SidebarComponent() {
 	// CONTEXTS
 	const { showSidebar, setShowSidebar } = useContext(SidebarContext)
@@ -39,7 +41,7 @@ export default function SidebarComponent() {
 					<span className={showSidebar ? "" : "tooltiptext"}>
 						{showSidebar ? "Retrair" : "Expandir"}
 					</span>
-					<button onClick={() => setShowSidebar(!showSidebar)}>
+					<button onClick={() => setShowSidebar(!showSidebar)} >
 						{showSidebar ? (
 							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
 						) : (
@@ -47,7 +49,7 @@ export default function SidebarComponent() {
 						)}
 					</button>
 				</Styled.TooltipContainer>
-				<h2>Brand</h2>
+				<img src={logoP} width={showSidebar ? '120px' : '50px'}  style={{margin: '2rem 0'}}/>
 			</Styled.Header>
 			<Styled.Body>
 				<Styled.ListGroup>
