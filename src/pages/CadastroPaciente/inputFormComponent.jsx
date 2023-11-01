@@ -22,13 +22,13 @@ const InputComponent = ({
   return (
     <Styled.InputGroup>
       <Styled.InputContainer>
-        <Styled.Label>{label}:</Styled.Label>
+        <Styled.Label $color={error && 'danger'} >{label}:</Styled.Label>
         {type === "select" ? (
           <div>
             <Styled.Select
               {...field}
               {...rest}
-              style={{ borderColor: invalid ? "red" : "initial" }}
+              $color={invalid ? "danger" : "blue-darkest"}
             >
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -47,7 +47,7 @@ const InputComponent = ({
               placeholder={placeholder}
               value={field.value || ""}
               {...rest}
-              style={{ borderColor: invalid ? "red" : "initial" }}
+              $color={invalid ? "danger" : "blue-darkest"}
             />
           </div>
         ) : (
@@ -58,11 +58,11 @@ const InputComponent = ({
               value={field.value || ""}
               placeholder={placeholder}
               {...rest}
-              style={{ borderColor: invalid ? "red" : "initial" }}
+              $color={invalid ? "danger" : "blue-darkest"}
             />
           </div>
         )}
-        {invalid && <p style={{ color: "red" }}>{error.message}</p>}
+        {invalid && <Styled.ErrorMessage>{error.message}</Styled.ErrorMessage>}
       </Styled.InputContainer>
     </Styled.InputGroup>
   );
