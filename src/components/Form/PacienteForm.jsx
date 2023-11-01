@@ -2,25 +2,25 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import PacienteService from "../../services/Paciente/PacienteService";
 import EnderecoService from "../../services/Endereco/EnderecoService";
-import InputComponent from "./inputFormComponent";
+import InputComponent from "../Input/inputFormComponent";
 import {
   Form,
   Label,
   EqualDivider,
   Child,
   BtnCustom as Btn,
-} from "./CadastroPacientePage.styled";
+} from "./PacienteForm.styled";
 
 //token manual depois deve consumir de um local storage
 let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODc1NjU2NywiZXhwIjoxNjk4ODQyOTY3fQ.ZoW0NeSw_Ng-TjHWSTMp2WP7M6nNGPRym3cVaP8ZlgU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg3OTU1NywiZXhwIjoxNjk4OTY1OTU3fQ.kOx0xZ-9m31J3-pztInKJcRpgTe-t4JrBrFoxTrlLtE";
 
-const CadastroPaciente = () => {
+const PacienteForm = () => {
   const { handleSubmit, control, setValue } = useForm();
   const [statusMessage, setStatusMessage] = useState("");
   const [status, setStatus] = useState(true);
   
-  const isEditing = true; // Define se o formulário está em modo de edição ou não colocar em um contexto
+  const isEditing = false; // Define se o formulário está em modo de edição ou não colocar em um contexto
 
 
   const onSubmit = async (data) => {
@@ -437,4 +437,4 @@ const CadastroPaciente = () => {
   );
 };
 
-export default CadastroPaciente;
+export default PacienteForm;
