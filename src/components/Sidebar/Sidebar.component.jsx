@@ -1,5 +1,9 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import * as Styled from "./sidebar.style"
+import { useNavigate, useLocation } from "react-router-dom"
+import { SidebarContext } from "../../contexts/SidebarContext"
+
+// Imagem de icones
 import {
 	TbLayoutSidebarLeftCollapse,
 	TbLayoutSidebarLeftExpand,
@@ -7,13 +11,12 @@ import {
 	TbUserCircle,
 	TbHome,
 } from "react-icons/tb"
-
 import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
 import { MdOutlineSick } from "react-icons/md"
-import { useNavigate } from "react-router-dom"
-import { SidebarContext } from "../../contexts/SidebarContext"
 
+// Imagem de Logo
 import logoP from "../../assets/images/logoG.png"
+
 
 export default function SidebarComponent() {
 	// CONTEXTS
@@ -21,6 +24,18 @@ export default function SidebarComponent() {
 
 	// REACT-ROUTER-DOM
 	const navigate = useNavigate()
+	const location = useLocation()
+
+	useEffect(() => {
+		switch (location.pathname) {
+			case "/":
+				document.getElementById('home').checked = true
+				break;
+			default:
+				console.log('Pagina diferente de /')
+				break;
+		}
+	},[location])
 
 	// FUNCTIONS
 	const logout = async () => {
