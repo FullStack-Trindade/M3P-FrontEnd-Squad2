@@ -20,17 +20,6 @@ export const Header = styled.div`
 	/* align-content: center; */
 	align-items: center;
 	justify-content: center;
-
-	button {
-		padding: 0;
-		background-color: transparent;
-		border: 0;
-		color: #fefefe;
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
 `
 
 export const TooltipContainer = styled.div`
@@ -173,7 +162,8 @@ export const Footer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* justify-content: flex-end; */
+	gap: 1.5rem;
+
 `
 
 export const UserContainer = styled.div`
@@ -186,7 +176,7 @@ export const UserContainer = styled.div`
 	padding: 0.5rem;
 `
 
-export const LogoutBtn = styled.button`
+export const SidebarBtn = styled.button`
 	align-self: ${({ $isOpened }) => {
 		return $isOpened ? "flex-end" : "center"
 	}};

@@ -17,7 +17,6 @@ import { MdOutlineSick } from "react-icons/md"
 // Imagem de Logo
 import logoP from "../../assets/images/logoG.png"
 
-
 export default function SidebarComponent() {
 	// CONTEXTS
 	const { showSidebar, setShowSidebar } = useContext(SidebarContext)
@@ -29,13 +28,13 @@ export default function SidebarComponent() {
 	useEffect(() => {
 		switch (location.pathname) {
 			case "/":
-				document.getElementById('home').checked = true
-				break;
+				document.getElementById("home").checked = true
+				break
 			default:
-				console.log('Pagina diferente de /')
-				break;
+				console.log("Pagina diferente de /")
+				break
 		}
-	},[location])
+	}, [location])
 
 	// FUNCTIONS
 	const logout = async () => {
@@ -52,19 +51,11 @@ export default function SidebarComponent() {
 	return (
 		<Styled.Sidebar show={showSidebar} $isOpened={showSidebar}>
 			<Styled.Header>
-				<Styled.TooltipContainer>
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						{showSidebar ? "Retrair" : "Expandir"}
-					</span>
-					<button onClick={() => setShowSidebar(!showSidebar)} >
-						{showSidebar ? (
-							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
-						) : (
-							<TbLayoutSidebarLeftExpand size={"1.5rem"} />
-						)}
-					</button>
-				</Styled.TooltipContainer>
-				<img src={logoP} width={showSidebar ? '120px' : '50px'}  style={{margin: '2rem 0'}}/>
+				<img
+					src={logoP}
+					width={showSidebar ? "120px" : "50px"}
+					style={{ margin: "2rem 0" }}
+				/>
 			</Styled.Header>
 			<Styled.Body>
 				<Styled.ListGroup>
@@ -116,22 +107,27 @@ export default function SidebarComponent() {
 			</Styled.Body>
 			<Styled.Footer>
 				<Styled.TooltipContainer
-					$isOpened={showSidebar}
-					style={{ marginBottom: "1rem" }}
+					onClick={() => setShowSidebar(!showSidebar)}
 				>
-					<TbUserCircle size={"2.5rem"} />
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						Username
-					</span>
+					<Styled.SidebarBtn>
+						<span className={showSidebar ? "" : "tooltiptext"}>
+							{showSidebar ? "Retrair" : "Expandir"}
+						</span>
+						{showSidebar ? (
+							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
+						) : (
+							<TbLayoutSidebarLeftExpand size={"1.5rem"} />
+						)}
+					</Styled.SidebarBtn>
 				</Styled.TooltipContainer>
 
 				<Styled.TooltipContainer onClick={logout} $isOpened={showSidebar}>
-					<Styled.LogoutBtn>
+					<Styled.SidebarBtn>
 						<span className={showSidebar ? "" : "tooltiptext"}>
 							Logout
 						</span>
 						<TbLogout size={"1.5rem"} />
-					</Styled.LogoutBtn>
+					</Styled.SidebarBtn>
 				</Styled.TooltipContainer>
 			</Styled.Footer>
 		</Styled.Sidebar>
