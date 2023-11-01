@@ -9,7 +9,8 @@ export const AppRoutes = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}/>
-        <Route path="/cadastrarpaciente" element={<PacientePage />} />
+        <Route path="/cadastrapaciente" element={<PacientePage />}/>
+        <Route path="/editapaciente/:id" element={<PacientePage />}/>
         <Route path="*" element={<NotFoundPage />}/>       
       </Routes>
     </Router>

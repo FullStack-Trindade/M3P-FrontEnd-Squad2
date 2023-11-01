@@ -6,7 +6,6 @@ import PacienteForm from '../../components/Form/PacienteForm';
 
 export const PacientePage = () => {
     // const { setTittle } = useMenu();
-    //token manual depois deve consumir de um local storage
 
     const { id } = useParams();
 

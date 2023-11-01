@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import PacienteService from "../../services/Paciente/PacienteService";
 import EnderecoService from "../../services/Endereco/EnderecoService";
+import PropTypes from "prop-types";
 import InputComponent from "../Input/inputFormComponent";
 import {
   Form,
@@ -15,12 +16,11 @@ import {
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg3OTU1NywiZXhwIjoxNjk4OTY1OTU3fQ.kOx0xZ-9m31J3-pztInKJcRpgTe-t4JrBrFoxTrlLtE";
 
-const PacienteForm = () => {
+const PacienteForm = ({ isEditing = false }) => {
   const { handleSubmit, control, setValue } = useForm();
   const [statusMessage, setStatusMessage] = useState("");
   const [status, setStatus] = useState(true);
   
-  const isEditing = false; // Define se o formulário está em modo de edição ou não colocar em um contexto
 
 
   const onSubmit = async (data) => {
@@ -438,3 +438,7 @@ const PacienteForm = () => {
 };
 
 export default PacienteForm;
+
+PacienteForm.propTypes = {
+  isEditing: PropTypes.bool,
+};
