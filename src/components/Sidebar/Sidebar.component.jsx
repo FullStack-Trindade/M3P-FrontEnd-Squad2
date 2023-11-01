@@ -1,5 +1,9 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import * as Styled from "./sidebar.style"
+import { useNavigate, useLocation } from "react-router-dom"
+import { SidebarContext } from "../../contexts/SidebarContext"
+
+// Imagem de icones
 import {
 	TbLayoutSidebarLeftCollapse,
 	TbLayoutSidebarLeftExpand,
@@ -7,11 +11,11 @@ import {
 	TbUserCircle,
 	TbHome,
 } from "react-icons/tb"
-
 import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
 import { MdOutlineSick } from "react-icons/md"
-import { useNavigate } from "react-router-dom"
-import { SidebarContext } from "../../contexts/SidebarContext"
+
+// Imagem de Logo
+import logoP from "../../assets/images/logoG.png"
 
 export default function SidebarComponent() {
 	// CONTEXTS
@@ -19,6 +23,18 @@ export default function SidebarComponent() {
 
 	// REACT-ROUTER-DOM
 	const navigate = useNavigate()
+	const location = useLocation()
+
+	useEffect(() => {
+		switch (location.pathname) {
+			case "/":
+				document.getElementById("home").checked = true
+				break
+			default:
+				console.log("Pagina diferente de /")
+				break
+		}
+	}, [location])
 
 	// FUNCTIONS
 	const logout = async () => {
@@ -35,19 +51,11 @@ export default function SidebarComponent() {
 	return (
 		<Styled.Sidebar show={showSidebar} $isOpened={showSidebar}>
 			<Styled.Header>
-				<Styled.TooltipContainer>
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						{showSidebar ? "Retrair" : "Expandir"}
-					</span>
-					<button onClick={() => setShowSidebar(!showSidebar)}>
-						{showSidebar ? (
-							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
-						) : (
-							<TbLayoutSidebarLeftExpand size={"1.5rem"} />
-						)}
-					</button>
-				</Styled.TooltipContainer>
-				<h2>Brand</h2>
+				<img
+					src={logoP}
+					width={showSidebar ? "120px" : "50px"}
+					style={{ margin: "2rem 0" }}
+				/>
 			</Styled.Header>
 			<Styled.Body>
 				<Styled.ListGroup>
@@ -84,7 +92,7 @@ export default function SidebarComponent() {
 								Cad. Enfermeiro
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={check}> 
+						<Styled.Li onClick={check}>
 							<input type="radio" name="page" id="cadPaciente" />
 							<MdOutlineSick size={showSidebar ? "" : "1.5rem"} />
 							<label
@@ -98,18 +106,28 @@ export default function SidebarComponent() {
 				</Styled.ListGroup>
 			</Styled.Body>
 			<Styled.Footer>
-				<Styled.TooltipContainer $isOpened={showSidebar} style={{marginBottom: '1rem'}}>
-					<TbUserCircle size={"2.5rem"} />
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						Username
-					</span>
+				<Styled.TooltipContainer
+					onClick={() => setShowSidebar(!showSidebar)}
+				>
+					<Styled.SidebarBtn>
+						<span className={showSidebar ? "" : "tooltiptext"}>
+							{showSidebar ? "Retrair" : "Expandir"}
+						</span>
+						{showSidebar ? (
+							<TbLayoutSidebarLeftCollapse size={"1.5rem"} />
+						) : (
+							<TbLayoutSidebarLeftExpand size={"1.5rem"} />
+						)}
+					</Styled.SidebarBtn>
 				</Styled.TooltipContainer>
 
 				<Styled.TooltipContainer onClick={logout} $isOpened={showSidebar}>
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						Logout
-					</span>
-					<TbLogout size={"1.5rem"} />
+					<Styled.SidebarBtn>
+						<span className={showSidebar ? "" : "tooltiptext"}>
+							Logout
+						</span>
+						<TbLogout size={"1.5rem"} />
+					</Styled.SidebarBtn>
 				</Styled.TooltipContainer>
 			</Styled.Footer>
 		</Styled.Sidebar>
