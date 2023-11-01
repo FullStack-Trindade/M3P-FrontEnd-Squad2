@@ -1,20 +1,22 @@
 import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
-import { AuthContext } from '../../../contexts/Auth/Auth.context';
 import { toast } from "react-toastify";
 import * as Styled from './LoginForm.style';
 import logo from '../../../assets/images/logoP.png'
 import InputComponent from '../../Input/Input.component';
-
+import { useAuth } from '../../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 export const LoginFormComponent = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const auth = useContext(AuthContext);
+    const auth = useAuth();
+
+    const navigate = useNavigate();
 
     const submitForm = async (data) => {
 
         await auth.login(data.email, data.senha)
+        navigate('/home');
     }
 
     const criarConta = () => {
