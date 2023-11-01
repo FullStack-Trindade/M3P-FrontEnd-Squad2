@@ -191,6 +191,11 @@ export const LogoutBtn = styled.button`
 	border: 0;
 	color: #fefefe;
 
+	display: flex;
+	gap: .5rem;
+	align-items: center;
+	font-size: 16px;
+
 	&:hover {
 		cursor: pointer;
 	}

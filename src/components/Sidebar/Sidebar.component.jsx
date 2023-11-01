@@ -84,7 +84,7 @@ export default function SidebarComponent() {
 								Cad. Enfermeiro
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={check}> 
+						<Styled.Li onClick={check}>
 							<input type="radio" name="page" id="cadPaciente" />
 							<MdOutlineSick size={showSidebar ? "" : "1.5rem"} />
 							<label
@@ -98,7 +98,10 @@ export default function SidebarComponent() {
 				</Styled.ListGroup>
 			</Styled.Body>
 			<Styled.Footer>
-				<Styled.TooltipContainer $isOpened={showSidebar} style={{marginBottom: '1rem'}}>
+				<Styled.TooltipContainer
+					$isOpened={showSidebar}
+					style={{ marginBottom: "1rem" }}
+				>
 					<TbUserCircle size={"2.5rem"} />
 					<span className={showSidebar ? "" : "tooltiptext"}>
 						Username
@@ -106,10 +109,12 @@ export default function SidebarComponent() {
 				</Styled.TooltipContainer>
 
 				<Styled.TooltipContainer onClick={logout} $isOpened={showSidebar}>
-					<span className={showSidebar ? "" : "tooltiptext"}>
-						Logout
-					</span>
-					<TbLogout size={"1.5rem"} />
+					<Styled.LogoutBtn>
+						<span className={showSidebar ? "" : "tooltiptext"}>
+							Logout
+						</span>
+						<TbLogout size={"1.5rem"} />
+					</Styled.LogoutBtn>
 				</Styled.TooltipContainer>
 			</Styled.Footer>
 		</Styled.Sidebar>
