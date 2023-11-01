@@ -113,6 +113,10 @@ export const Li = styled.li`
 	border-radius: 0.5rem;
 	width: 100%;
 
+	svg {
+		pointer-events: none;
+	}
+
 	/* para o ToolTip */
 	position: relative;
 
