@@ -4,7 +4,7 @@ import NotFoundPage from "../pages/NotFound/NotFound.page";
 import { LoginPage } from "../pages/LoginPage/Login.page";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { HomePage } from "../pages/Home/Home.page";
-import {PacientePage} from "../pages/CadastroPaciente/PacientePage";
+import {PacientePage} from "../pages/PacientePage/PacientePage";
 /* import { useAuth } from "../hooks/useAuth"; */
 
 

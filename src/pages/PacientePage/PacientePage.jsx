@@ -1,7 +1,7 @@
 // import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import { useMenu } from "../../contexts/menu/menu.context";
-import PacienteForm from '../../components/Form/PacienteForm';
+import PacienteForm from '../../components/Form/PacienteForm/PacienteForm';
 
 
 export const PacientePage = () => {
