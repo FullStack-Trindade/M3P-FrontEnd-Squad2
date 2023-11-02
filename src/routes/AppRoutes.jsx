@@ -5,6 +5,7 @@ import { LoginPage } from "../pages/LoginPage/Login.page";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { HomePage } from "../pages/Home/Home.page";
 import {PacientePage} from "../pages/PacientePage/PacientePage";
+/* import { ExamePage } from "../pages/ExamePage/Exame.page"; */
 /* import { useAuth } from "../hooks/useAuth"; */
 
 
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+           
             {/* {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />} */}
           </Route>
         </Route>
@@ -24,6 +26,8 @@ export const AppRoutes = () => {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/cadastrapaciente" element={<PacientePage />}/>
         <Route path="/editapaciente/:id" element={<PacientePage />}/>
+    {/*     <Route path="/exames" element={<ExamePage />}/>
+        <Route path="/exames/:id" element={<ExamePage />}/> */}
       </Routes>
     </Router>
   );
