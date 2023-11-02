@@ -9,7 +9,9 @@ export default function CadMedicamentoComponent() {
 			<Container style={{ padding: "1rem", flex: "1 1" }}>
 				<h4>Cadastro de Medicamento</h4>
 
-				<Form style={{ minWidth: "400px" }}>
+                <p>*** Inserir uma Busca de paciente</p>
+
+				<Styled.Form onSubmit={(e) => {e.preventDefault(), console.log('enviado')}}>
 					<InputComponent
 						type="text"
 						placeholder="Digite o nome do Medicamento"
@@ -76,11 +78,11 @@ export default function CadMedicamentoComponent() {
                     <InputComponent type="textarea" label="Observações" id="observacoes" />
 
                     <Styled.ActionsContainer>
-                        <Btn variant="primary">Cadastrar</Btn>
+                        <Btn type="submit" variant="primary">Cadastrar</Btn>
                         <Btn variant="outlined">Editar</Btn>
                         <Btn variant="redOutlined">Excluir</Btn>
                     </Styled.ActionsContainer>
-				</Form>
+				</Styled.Form>
 			</Container>
 		</>
 	)
