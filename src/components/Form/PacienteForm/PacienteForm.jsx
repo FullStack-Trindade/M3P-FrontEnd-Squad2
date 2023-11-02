@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PacienteService from "../../services/Paciente/PacienteService";
-import EnderecoService from "../../services/Endereco/EnderecoService";
+import PacienteService from "../../../services/Paciente/PacienteService";
+import EnderecoService from "../../../services/Endereco/EnderecoService";
 import PropTypes from "prop-types";
-import InputComponent from "../InputForm/inputFormComponent";
+import InputComponent from "../../InputForm/inputFormComponent";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
