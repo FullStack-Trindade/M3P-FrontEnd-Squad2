@@ -5,7 +5,10 @@ import { useParams } from "react-router-dom";
 import PacienteService from "../../services/Paciente/PacienteService";
 import EnderecoService from "../../services/Endereco/EnderecoService";
 import PropTypes from "prop-types";
-import InputComponent from "../Input/inputFormComponent";
+import InputComponent from "../InputForm/inputFormComponent";
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+
 import {
   Form,
   Label,
@@ -18,11 +21,12 @@ import {
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg4MjM2MywiZXhwIjoxNjk4OTY4NzYzfQ.AKLEbojUaY0Drp288h0rPud0pe01SB9ZREcUu8_a1_w";
 
+
 const PacienteForm = ({ isEditing = false }) => {
   const { id } = useParams();
-  const { handleSubmit, control, setValue } = useForm();
-  const [statusMessage, setStatusMessage] = useState("");
+  const { handleSubmit, control, setValue, reset } = useForm();
   const [status, setStatus] = useState(true);
+  const navigate = useNavigate();
 
   // Define o estado de edição com base no ID da rota
   useEffect(() => {
@@ -34,7 +38,6 @@ const PacienteForm = ({ isEditing = false }) => {
           if (response) {
             // Define os detalhes do paciente nos campos do formulário
             const paciente = response;
-            console.log("dados no form", paciente); // Suponha que a resposta contenha os detalhes do paciente
             Object.keys(paciente).forEach((key) => {
               setValue(key, paciente[key]);
             });
@@ -45,8 +48,10 @@ const PacienteForm = ({ isEditing = false }) => {
       };
 
       fetchPacienteDetails();
+    }else{
+      reset();
     }
-  }, [id, setValue]);
+  }, [id, setValue, reset]);
 
   const onSubmit = async (data) => {
     try {
@@ -57,24 +62,57 @@ const PacienteForm = ({ isEditing = false }) => {
         delete data.cpf;
         delete data.rg;
         await PacienteService.atualizarPaciente(id, data, token);
-        setStatusMessage(`Atualização bem-sucedida.`);
+        toast.success(`Paciente ${data.nome_completo} atualizado com sucesso!`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: 'colored',
+          autoClose: 2000,
+      });
       } else {
         //adiciona o status PADRÃO ao data
         setStatus(true);
         data = { ...data, status };
         // Caso contrário, estamos criando um novo paciente
         const response = await PacienteService.criarPaciente(data, token);
-        setStatusMessage(
-          `Cadastro bem-sucedido. ID do paciente: ${response.id}`
-        );
+        toast.success(`Cadastro do paciente: ${response.nome_completo} realizado com sucesso!`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: 'colored',
+          autoClose: 2000,
+      });
+      navigate('/editapaciente/'+response.id);
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
         const errorMessage = error.response.data.message || "Erro desconhecido";
-        setStatusMessage(`Erro 409: ${errorMessage}`);
+        toast.error(`Erro 409: ${errorMessage}`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: 'colored',
+          autoClose: 2000,
+        });
       } else {
-        setStatusMessage(`Erro ao cadastrar paciente: ${error.message}`);
+        toast.error(`Erro ao cadastrar paciente: ${error.message}`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: 'colored',
+          autoClose: 2000,
+        });
       }
+    }
+  };
+
+  const onDeletePaciente = async () => {
+    try {
+      await PacienteService.excluirPaciente(id, token);
+      toast.success(`Exclusão do paciente realizada com sucesso!`, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: 'colored',
+        autoClose: 2000,
+    });
+    navigate('/cadastrapaciente');
+    } catch (error) {
+      toast.error(`Erro ao excluir paciente: ${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: 'colored',
+        autoClose: 2000,
+      });
     }
   };
 
@@ -456,7 +494,7 @@ const PacienteForm = ({ isEditing = false }) => {
               <Btn variant="blue" type="submit">
                 Editar Paciente
               </Btn>
-              <Btn variant="red" type="submit">
+              <Btn variant="red" type="button" onClick={onDeletePaciente}>
                 Excluir Paciente
               </Btn>
             </>
@@ -467,7 +505,6 @@ const PacienteForm = ({ isEditing = false }) => {
           )}
         </EqualDivider>
       </Form>
-      <div>{statusMessage}</div>
     </>
   );
 };
