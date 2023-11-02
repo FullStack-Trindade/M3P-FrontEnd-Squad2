@@ -13,11 +13,9 @@ export const AppRoutes = () => {
 		<Router>
 			<Routes>
 				<Route element={<PrivateRoutes />}>
-					<Route path="/" element={<Layout />}>
-						<Route path="/cadMedicamento" element={<CadMedicamento />} />
-						<Route path="/" element={<HomePage />} />
-						{/* {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />} */}
-					</Route>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/cadMedicamento" element={<CadMedicamento />} />
+					{/* {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />} */}
 				</Route>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="*" element={<NotFoundPage />} />
