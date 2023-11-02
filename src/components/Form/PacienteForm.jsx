@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import PacienteService from "../../services/Paciente/PacienteService";
 import EnderecoService from "../../services/Endereco/EnderecoService";
 import PropTypes from "prop-types";
@@ -14,13 +16,37 @@ import {
 
 //token manual depois deve consumir de um local storage
 let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg3OTU1NywiZXhwIjoxNjk4OTY1OTU3fQ.kOx0xZ-9m31J3-pztInKJcRpgTe-t4JrBrFoxTrlLtE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg4MjM2MywiZXhwIjoxNjk4OTY4NzYzfQ.AKLEbojUaY0Drp288h0rPud0pe01SB9ZREcUu8_a1_w";
 
 const PacienteForm = ({ isEditing = false }) => {
+  const { id } = useParams();
   const { handleSubmit, control, setValue } = useForm();
   const [statusMessage, setStatusMessage] = useState("");
   const [status, setStatus] = useState(true);
-  
+
+  // Define o estado de edição com base no ID da rota
+  useEffect(() => {
+    if (id) {
+      // Se o ID existe, estamos em modo de edição, então buscamos os detalhes do paciente
+      const fetchPacienteDetails = async () => {
+        try {
+          const response = await PacienteService.getPacientePorId(id, token);
+          if (response) {
+            // Define os detalhes do paciente nos campos do formulário
+            const paciente = response; 
+            console.log("dados no form",paciente);// Suponha que a resposta contenha os detalhes do paciente
+            Object.keys(paciente).forEach((key) => {
+              setValue(key, paciente[key]);
+            });
+          }
+        } catch (error) {
+          console.error("Erro ao buscar detalhes do paciente:", error);
+        }
+      };
+
+      fetchPacienteDetails();
+    }
+  }, [id, setValue]);
 
 
   const onSubmit = async (data) => {
@@ -29,8 +55,19 @@ const PacienteForm = ({ isEditing = false }) => {
       data = { ...data, status };
       //lista dados do paciente a serem enviados
       console.log(data);
-      const response = await PacienteService.criarPaciente(data, token);
-      setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
+      // const response = await PacienteService.criarPaciente(data, token);
+      // setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
+      if (id) {
+        // Se há um ID, estamos em modo de edição
+        delete data.cpf;
+        delete data.rg;
+        const response = await PacienteService.atualizarPaciente(id, data, token);
+        setStatusMessage(`Atualização bem-sucedida. ID do paciente: ${response.id}`);
+      } else {
+        // Caso contrário, estamos criando um novo paciente
+        const response = await PacienteService.criarPaciente(data, token);
+        setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
+      }
     } catch (error) {
       if (error.response && error.response.status === 409) {
         const errorMessage = error.response.data.message || "Erro desconhecido";
