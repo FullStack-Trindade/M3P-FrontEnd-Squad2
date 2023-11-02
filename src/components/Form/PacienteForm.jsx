@@ -33,8 +33,8 @@ const PacienteForm = ({ isEditing = false }) => {
           const response = await PacienteService.getPacientePorId(id, token);
           if (response) {
             // Define os detalhes do paciente nos campos do formulário
-            const paciente = response; 
-            console.log("dados no form",paciente);// Suponha que a resposta contenha os detalhes do paciente
+            const paciente = response;
+            console.log("dados no form", paciente); // Suponha que a resposta contenha os detalhes do paciente
             Object.keys(paciente).forEach((key) => {
               setValue(key, paciente[key]);
             });
@@ -48,25 +48,25 @@ const PacienteForm = ({ isEditing = false }) => {
     }
   }, [id, setValue]);
 
-
   const onSubmit = async (data) => {
     try {
-      //adiciona o status ao data
-      data = { ...data, status };
       //lista dados do paciente a serem enviados
       console.log(data);
-      // const response = await PacienteService.criarPaciente(data, token);
-      // setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
       if (id) {
         // Se há um ID, estamos em modo de edição
         delete data.cpf;
         delete data.rg;
-        const response = await PacienteService.atualizarPaciente(id, data, token);
-        setStatusMessage(`Atualização bem-sucedida. ID do paciente: ${response.id}`);
+        await PacienteService.atualizarPaciente(id, data, token);
+        setStatusMessage(`Atualização bem-sucedida.`);
       } else {
+        //adiciona o status PADRÃO ao data
+        setStatus(true);
+        data = { ...data, status };
         // Caso contrário, estamos criando um novo paciente
         const response = await PacienteService.criarPaciente(data, token);
-        setStatusMessage(`Cadastro bem-sucedido. ID do paciente: ${response.id}`);
+        setStatusMessage(
+          `Cadastro bem-sucedido. ID do paciente: ${response.id}`
+        );
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
@@ -174,6 +174,7 @@ const PacienteForm = ({ isEditing = false }) => {
                 message: "CPF inválido (000.000.000-00)",
               },
             }}
+            disabled={isEditing}
           />
           <InputComponent
             label="RG"
@@ -188,6 +189,7 @@ const PacienteForm = ({ isEditing = false }) => {
                 message: "Nome deve ter no máximo 64 caracteres",
               },
             }}
+            disabled={isEditing}
           />
           <InputComponent
             label="Estado Civil"
@@ -306,6 +308,21 @@ const PacienteForm = ({ isEditing = false }) => {
           />
         </EqualDivider>
         <EqualDivider>
+        <InputComponent
+              label="Status do Sistema"
+              name="status"
+              control={control}
+              type="select"
+              options={[
+                { label: "Ativo", value: "true" },
+                { label: "Inativo", value: "false" },
+              ]}
+              disabled={!isEditing}
+            />
+             <Child/>
+             <Child/>
+        </EqualDivider>
+        <EqualDivider>
           <Label $tittle>DADOS MÉDICOS</Label>
         </EqualDivider>
         <EqualDivider>
@@ -348,6 +365,7 @@ const PacienteForm = ({ isEditing = false }) => {
             type="date"
           />
         </EqualDivider>
+        
         <EqualDivider>
           <Label $tittle>ENDEREÇO</Label>
         </EqualDivider>
@@ -428,26 +446,6 @@ const PacienteForm = ({ isEditing = false }) => {
             type="text"
             placeholder={"Informe o ponto de referência"}
             rules={{ required: "Campo obrigatório" }}
-          />
-        </EqualDivider>
-
-        <EqualDivider>
-          <Child />
-          <Child />{" "}
-          <InputComponent
-            label="Status do Sistema"
-            name="status"
-            control={control}
-            type="select"
-            options={[
-              { label: "Ativo", value: "true" },
-              { label: "Inativo", value: "false" },
-            ]}
-            onChange={(selectedValue) => {
-              setValue("status", selectedValue === "true");
-              setStatus(selectedValue === "true");
-            }}
-            disabled={!isEditing} // Define a propriedade disabled com base no estado de edição
           />
         </EqualDivider>
 

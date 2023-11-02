@@ -1,6 +1,8 @@
 import { api } from '../../api/api'; // Importe a instância da API
 
 const PacienteService = {
+
+  
     async criarPaciente(paciente, token) {
         const response = await api.post('/pacientes', paciente, {
             headers: {
@@ -84,7 +86,28 @@ const PacienteService = {
       }
     },
 
-        // ... outros métodos
+    async excluirPaciente(id, token) {
+      const response = await api.delete(`/pacientes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        let errorMessage = 'Erro desconhecido';
+        const erroData = await response.json();
+        if (erroData) {
+          if (erroData.message) {
+            errorMessage = erroData.message;
+          }
+        }
+        throw new Error(errorMessage);
+      }
+    },
+
     };
     export default PacienteService;
 
