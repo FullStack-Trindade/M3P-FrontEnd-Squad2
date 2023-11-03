@@ -80,6 +80,10 @@ export const InputContainer = styled.div`
   position: relative;
   width: 100%;
 `;
+export const TextAreaContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
 export const Error = styled.p`
     font-size: .8rem;
     color: COLOR.$message_error;
