@@ -2,8 +2,8 @@ import InputComponent from "../../Input/Input.component";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import * as Styled from "../../Button/button.style";
-import "./ExameForm.css";
 import ExameService from "../../../services/Exame/ExameService";
+
 
 export default function ExameForm() {
   const [exame, setExame] = useState();

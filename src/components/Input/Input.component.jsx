@@ -1,4 +1,4 @@
-
+import ReactLoading from 'react-loading';
 import { useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import * as Styled from "./Input.style";
