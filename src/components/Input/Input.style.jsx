@@ -59,6 +59,7 @@ export const TextArea = styled.textarea`
   align-items: flex-start;
   align-self: stretch;
   border-radius: 0.3125rem;
+  width: 100%;
   border: 1px solid;
   color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
