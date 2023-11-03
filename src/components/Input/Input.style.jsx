@@ -59,6 +59,7 @@ export const TextArea = styled.textarea`
   align-items: flex-start;
   align-self: stretch;
   border-radius: 0.3125rem;
+  width: 100%;
   border: 1px solid;
   width: 100%;
   color: ${({ $color }) => {

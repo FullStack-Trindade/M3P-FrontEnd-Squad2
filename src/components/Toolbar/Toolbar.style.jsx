@@ -44,7 +44,7 @@ export const PerfilDropdown = styled.div`
 	position: absolute;
 	top: 3.5rem;
 	right: 0;
-	width: 12.5rem;
+	width: 15rem;
 	height: 6rem;
 	background-color: #fff;
 	color: #004a63;

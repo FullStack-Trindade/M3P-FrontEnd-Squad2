@@ -1,4 +1,5 @@
 import { TbUserCircle, TbLogout } from "react-icons/tb";
+import { MdOutlineBuild } from "react-icons/md";
 import * as Styled from "./Toolbar.style";
 import { useToolbarContext } from "../../hooks/useToolbarContext";
 import { useState } from "react";
@@ -30,7 +31,12 @@ export const ToolbarComponent = () => {
 				<Styled.NomePerfil>{usuario.nomeCompleto}</Styled.NomePerfil>
 				<TbUserCircle />
 				<Styled.PerfilDropdown $hasOpen={abrirDropdown}>
-					{/* opcional para adicionar link para configurações aqui <Styled.PerfilDropdownItem></Styled.PerfilDropdownItem> */}
+					{usuario.tipo === 'ADMINISTRADOR' &&
+						<Styled.PerfilDropdownItem onClick={() => navigate('/config')}>
+							<MdOutlineBuild />
+							Configurações
+						</Styled.PerfilDropdownItem>
+					}
 					<Styled.PerfilDropdownItem onClick={handleSair}>
 						<TbLogout />
 						Sair
