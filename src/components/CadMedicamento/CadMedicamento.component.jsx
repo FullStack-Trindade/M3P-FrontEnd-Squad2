@@ -53,17 +53,6 @@ export default function CadMedicamentoComponent() {
 						</div>
 
                     <InputComponent type="number" label="Quantidade" id="quantidade" step="0.01" />
-
-						{/* <div>
-							<label htmlFor="quantidade">Quantidade</label>
-							<input
-								type="number"
-								step="0.01"
-								name="quantidade"
-								id="quantidade"
-                                placeholder="0,00"
-							/>
-						</div> */}
                         <div>
                             <label htmlFor="unidade">Unidade</label>
                             <select name="unidade" id="unidade">
