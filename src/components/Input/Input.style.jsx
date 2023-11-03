@@ -61,6 +61,7 @@ export const TextArea = styled.textarea`
   border-radius: 0.3125rem;
   width: 100%;
   border: 1px solid;
+  width: 100%;
   color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
     }};
