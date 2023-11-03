@@ -71,6 +71,7 @@ export const EsqueceuSenha = styled.a`
     font-size: 1rem;
     color: #004a63;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
