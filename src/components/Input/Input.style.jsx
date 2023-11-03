@@ -60,6 +60,7 @@ export const TextArea = styled.textarea`
   align-self: stretch;
   border-radius: 0.3125rem;
   border: 1px solid;
+  width: 100%;
   color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
     }};
@@ -77,6 +78,10 @@ export const Select = styled.select`
 `;
 
 export const InputContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+export const TextAreaContainer = styled.div`
   position: relative;
   width: 100%;
 `;
