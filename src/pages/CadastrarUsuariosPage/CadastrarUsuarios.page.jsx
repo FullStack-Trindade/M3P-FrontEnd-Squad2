@@ -12,8 +12,8 @@ export const CadastrarUsuariosPage = () => {
 
 
     useEffect(() => {
-        { setTitulo('CADASTRO DE USUÁRIOS') }
-    }, [setTitulo]);
+        { id ? setTitulo("Editar Usuário") : setTitulo("Cadastrar Usuário") }
+    }, [id, setTitulo]);
 
     return (
         <>
