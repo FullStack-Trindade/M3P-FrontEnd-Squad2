@@ -5,6 +5,7 @@ import { LoginPage } from "../pages/LoginPage/Login.page";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { HomePage } from "../pages/Home/Home.page";
 import {PacientePage} from "../pages/PacientePage/PacientePage";
+import CadastroConsultaPage from "../pages/CadastroConsultaPage/CadastroConsulta.Page";
 /* import { useAuth } from "../hooks/useAuth"; */
 
 
@@ -24,6 +25,9 @@ export const AppRoutes = () => {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/cadastrapaciente" element={<PacientePage />}/>
         <Route path="/editapaciente/:id" element={<PacientePage />}/>
+        
+       <Route path="/cadastroconsulta" element={<CadastroConsultaPage />}/>
+       <Route path="/editaconsulta/:id" element={<CadastroConsultaPage />}/>
       </Routes>
     </Router>
   );
