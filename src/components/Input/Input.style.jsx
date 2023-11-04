@@ -69,6 +69,7 @@ export const TextArea = styled.textarea`
 export const Select = styled.select`
   display: flex;
   padding: 0.5rem;
+  margin-top: .390rem;
   align-items: flex-start;
   align-self: stretch;
   border-radius: 0.3125rem;

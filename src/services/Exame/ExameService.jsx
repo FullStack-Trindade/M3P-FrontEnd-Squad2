@@ -1,4 +1,7 @@
-import { api } from "../../api/api"; // Importe a instância da API
+
+import  api  from "../../api/api";
+
+
 
 export default class ExameService {
   async Create(exame, token) {
@@ -8,55 +11,54 @@ export default class ExameService {
       },
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      let errorMessage = "Erro desconhecido";
-      const erroData = await response.json();
-      if (erroData) {
-        if (erroData.message) {
-          errorMessage = erroData.message;
-        } else if (erroData.errors && Array.isArray(erroData.errors)) {
-          const errorMessages = erroData.errors
-            .map((error) => error.message)
-            .join(", ");
-          errorMessage = errorMessages;
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+          } else {
+            let errorMessage = 'Erro desconhecido';
+            const erroData = await response.json();
+            if (erroData) {
+                if (erroData.message) {
+                  errorMessage = erroData.message;
+                } else if (erroData.errors && Array.isArray(erroData.errors)) {
+                  const errorMessages = erroData.errors
+                    .map((error) => error.message)
+                    .join(', ');    
+                  errorMessage = errorMessages;
+                }
+              }   
+            throw new Error(errorMessage);
+          }
+    }
+
+    async Update(id, exame, token) {
+      const response = await api.put(`/exames/${id}`, exame, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        let errorMessage = 'Erro desconhecido';
+        const erroData = await response.json();
+        if (erroData) {
+          if (erroData.message) {
+            errorMessage = erroData.message;
+          } else if (erroData.errors && Array.isArray(erroData.errors)) {
+            const errorMessages = erroData.errors
+              .map((error) => error.message)
+              .join(', ');
+            errorMessage = errorMessages;
+          }
         }
       }
       throw new Error(errorMessage);
     }
-  }
-
-  async Update(id, exame, token) {
-    const response = await api.put(`/exames/${id}`, exame, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    } else {
-      let errorMessage = "Erro desconhecido";
-      const erroData = await response.json();
-      if (erroData) {
-        if (erroData.message) {
-          errorMessage = erroData.message;
-        } else if (erroData.errors && Array.isArray(erroData.errors)) {
-          const errorMessages = erroData.errors
-            .map((error) => error.message)
-            .join(", ");
-          errorMessage = errorMessages;
-        }
-      }
-      throw new Error(errorMessage);
-    }
-  }
-
+  
   async GetById(id, token) {
-    // Use a função `api.get` para buscar os detalhes do exame com base no `id`
     const response = await api.get(`/exames/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,7 +86,7 @@ export default class ExameService {
     }
   }
 
-  async excluirexame(id, token) {
+  async Delete(id, token) {
     const response = await api.delete(`/exames/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

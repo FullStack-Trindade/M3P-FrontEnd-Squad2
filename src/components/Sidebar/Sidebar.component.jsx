@@ -10,6 +10,7 @@ import {
 	TbLogout,
 	TbUserCircle,
 	TbHome,
+	TbPill,
 } from "react-icons/tb"
 import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
 import { MdOutlineSick } from "react-icons/md"
@@ -29,6 +30,9 @@ export default function SidebarComponent() {
 		switch (location.pathname) {
 			case "/":
 				document.getElementById("home").checked = true
+				break
+			case "/cadMedicamento":
+				document.getElementById("cadMedicamento").checked = true
 				break
 			default:
 				console.log("Pagina diferente de /")
@@ -100,6 +104,16 @@ export default function SidebarComponent() {
 								className={showSidebar ? "" : "tooltiptext"}
 							>
 								Cad. Paciente
+							</label>
+						</Styled.Li>
+						<Styled.Li onClick={check}>
+							<input type="radio" name="page" id="cadMedicamento" />
+							<TbPill size={showSidebar ? "" : "1.5rem"} />
+							<label
+								htmlFor="cadMedicamento"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Cad. Medicamento
 							</label>
 						</Styled.Li>
 					</ul>
