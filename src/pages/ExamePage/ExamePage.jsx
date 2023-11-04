@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToolbarTituloContext } from "../../contexts/ToolbarTitulo/ToolbarTitulo.context";
 import ExameForm from "../../components/Form/ExameForm/ExameForm.component";
@@ -10,15 +10,16 @@ export const ExamePage = () => {
   const { setTitulo } = useContext(ToolbarTituloContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const service = new ExameService();
 
   useEffect(() => {
     setTitulo(id ? "EDITAR EXAME" : "CADASTRAR EXAME");
     if (id) {
-      const exameData = service.GetById(parseInt(id, 10));
+      const exameData = service.GetById(parseInt(id));
       if (exameData) {
-        const pacienteData = PacienteService.getPacientePorId(exameData.id);
+        const pacienteData = PacienteService.getPacientePorId(exameData.paciente_id);
         setSelectedPatient(pacienteData);
       } else {
         console.error(`Exame com ID ${id} não encontrado.`);
@@ -27,14 +28,19 @@ export const ExamePage = () => {
   }, [setTitulo, id, navigate]);
 
   const handlePatient = (paciente) => {
-    setPaciente(paciente);
+    setSelectedPatient(paciente);
   };
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column",width:"98%"}}>
-        <Search pacienteSelecionado={handlePatient} />
-        {id ? <ExameForm isEditing={true} /> : <ExameForm isEditing={false} />}
-      
+      <div style={{ display: "flex", flexDirection: "column", width: "98%" }}>
+        {id ? (
+          <ExameForm isEditing={true} selectedPatient={selectedPatient} />
+        ) : (
+          <>
+            <Search pacienteSelecionado={handlePatient} />
+            <ExameForm isEditing={false} selectedPatient={selectedPatient} />
+          </>
+        )}
       </div>
     </>
   );
