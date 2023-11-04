@@ -182,11 +182,18 @@ export default function ExameForm({ isEditing = false }) {
             register={register("docurl")}
           />
         </div>
-
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems:"center",
+            gap: "10px",
+          }}
+        >
         <InputComponent
           label="Resultados:"
           type="textarea"
-          rows={4}
+          rows={3}
           id="resultados"
           register={register("resultados", {
             required: "Este campo é obrigatorio",
@@ -195,13 +202,13 @@ export default function ExameForm({ isEditing = false }) {
         />
       
         <OptionComponent
-          label="Status do Sistema:"
+          label="Status:"
           id="statusSistema"
           value="true"
           value1="false"
           register={register("statusSistema", { required: "Campo obrigatorio" })}
-          error={errors.status}
-        />
+          error={errors.statusSistema}
+        />  </div>
 
         <div style={{ margin: "20px" }}>
           {isEditing ? (
