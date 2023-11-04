@@ -1,4 +1,5 @@
-const baseURL = 'http://localhost:3033/api'; // URL da API pode também usar o env
+
+const baseURL = 'http://localhost:3031/api'; // URL da API pode também usar o env
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -48,4 +49,5 @@ export const api = {
     });
     return response;
   },
+
 };
