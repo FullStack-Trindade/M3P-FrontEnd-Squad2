@@ -9,34 +9,39 @@ import { PacientePage } from "../pages/PacientePage/PacientePage";
 import { useAuth } from "../hooks/useAuth";
 import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
 import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
-
+import CadMedicamento from "../pages/CadMedicamento/CadMedicamento.page"
 
 export const AppRoutes = () => {
   const { usuario } = useAuth();
   return (
     <Router>
       <Routes>
-        <Route path="*" element={<NotFoundPage />} />
+        {/* Inicio Rotas privadas */}
         <Route element={<PrivateRoutes />}>
+          {/* Inicio do Layout */}
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<HomePage />} />
 
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/editausuario/:id" element={<CadastrarUsuariosPage />} />}
-
+            
+            <Route path="/cadastrapaciente" element={<PacientePage />} />
+            <Route path="/editapaciente/:id" element={<PacientePage />} />
+            <Route path="/exames" element={<ExamePage />} />
+            <Route path="/exames/:id" element={<ExamePage />} />
+            <Route path="/cadMedicamento" element={<CadMedicamento />} />
           </Route>
+          {/* Fim do Layout */}
         </Route>
+        {/* Fim Rotas privadas */}
+             
+        {/* Rotas publicas abaixo: */}
         <Route path='/login' element={<LoginPage />} />
         <Route path="/resetarSenha" element={<ResetarSenhaPage />} />
         <Route path="*" element={<NotFoundPage />} />
-
-        <Route path="/cadastrapaciente" element={<PacientePage />} />
-        <Route path="/editapaciente/:id" element={<PacientePage />} />
-        <Route path="/exames" element={<ExamePage />} />
-        <Route path="/exames/:id" element={<ExamePage />} />
-
-      </Routes>
-    </Router>
-  );
-};
+          
+			</Routes>
+		</Router>
+	)
+}
