@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from "react";
 import { useToolbarContext } from "../../hooks/useToolbarContext"
@@ -11,7 +12,7 @@ export const PacientePage = () => {
 
 
     useEffect(() => {
-        { id ? setTitulo("Editar Paciente") : setTitulo("Cadastrar Paciente") }
+        { id ? setTitulo("Editar Dieta") : setTitulo("Cadastrar Dieta") }
     }, [id, setTitulo]);
     
     return (
