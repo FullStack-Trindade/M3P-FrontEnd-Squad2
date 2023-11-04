@@ -108,5 +108,27 @@ const DietaService = {
       }
     },
 
+    async listarPacientes(token) {
+      const response = await api.get('/pacientes', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        let errorMessage = 'Erro desconhecido';
+        const erroData = await response.json();
+        if (erroData) {
+          if (erroData.message) {
+            errorMessage = erroData.message;
+          }
+        }
+        throw new Error(errorMessage);
+      }
+    },
+
     };
     export default DietaService;

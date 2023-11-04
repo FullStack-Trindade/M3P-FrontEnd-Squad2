@@ -2,10 +2,10 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from "react";
 import { useToolbarContext } from "../../hooks/useToolbarContext"
-import PacienteForm from '../../components/Form/PacienteForm/PacienteForm';
+import DietaForm from '../../components/Form/DietaForm/DietaForm';
 
 
-export const PacientePage = () => {
+export const DietaPage = () => {
     const { setTitulo } = useToolbarContext();
 
     const { id } = useParams();
@@ -17,7 +17,7 @@ export const PacientePage = () => {
     
     return (
         <>
-        {id ? <PacienteForm isEditing={true}/> : <PacienteForm isEditing={false}/>}
+        {id ? <DietaForm isEditing={true}/> : <DietaForm isEditing={false}/>}
         </>
     )
 
