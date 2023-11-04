@@ -1,7 +1,4 @@
-
 import  api  from "../../api/api";
-
-
 
 export default class ExameService {
   async Create(exame, token) {
