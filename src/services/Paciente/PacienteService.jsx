@@ -1,10 +1,10 @@
-import { Api } from '../Api'; // Importe a instância da Api
+import { api } from '../../api/api'; // Importe a instância da API
 
 const PacienteService = {
 
   
     async criarPaciente(paciente, token) {
-        const response = await Api.post('/pacientes', paciente, {
+        const response = await api.post('/pacientes', paciente, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -31,7 +31,7 @@ const PacienteService = {
     },
 
     async atualizarPaciente(id, paciente, token) {
-      const response = await Api.put(`/pacientes/${id}`, paciente, {
+      const response = await api.put(`/pacientes/${id}`, paciente, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,8 +58,8 @@ const PacienteService = {
     },
 
     async getPacientePorId(id, token) {
-      // Use a função `Api.get` para buscar os detalhes do paciente com base no `id`
-      const response = await Api.get(`/pacientes/${id}`, {
+      // Use a função `api.get` para buscar os detalhes do paciente com base no `id`
+      const response = await api.get(`/pacientes/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +87,7 @@ const PacienteService = {
     },
 
     async excluirPaciente(id, token) {
-      const response = await Api.delete(`/pacientes/${id}`, {
+      const response = await api.delete(`/pacientes/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -110,4 +110,3 @@ const PacienteService = {
 
     };
     export default PacienteService;
-
