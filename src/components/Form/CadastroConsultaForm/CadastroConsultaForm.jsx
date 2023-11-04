@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import ConsultaService from '../../../services/CadastroConsulta/CadastroConsultaService';
 import InputComponent from '../../Input/Input.component';
 import * as Styled from './CadastroConsultaStyled';
-import { Btn } from '../../Button/button.style';
 import {  EqualDivider, Form, Label } from '../PacienteForm/PacienteForm.styled';
 
 
@@ -46,8 +45,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
     try {
       if (id) {
         // Se há um ID, estamos em modo de edição
-        delete data.cpf;
-        delete data.rg;
+        
         await ConsultaService.atualizarConsulta(id, data, token);
         toast.success(
           `Consulta do paciente ${data.nome_completo} atualizado com sucesso!`,
@@ -99,7 +97,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
         theme: 'colored',
         autoClose: 2000,
       });
-      navigate('/cadastraconsulta');
+      navigate('/cadastroconsulta');
     } catch (error) {
       toast.error(`Erro ao excluir a consulta do paciente: ${error.message}`, {
         position: toast.POSITION.TOP_CENTER,
@@ -132,7 +130,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
   }, [isEditing, setValue]);
 
   return (
-    <Styled.Body>
+    
       <Form onSubmit={handleSubmit(onSubmit)}>
         <EqualDivider>
           <Label $tittle> CADASTRO DE CONSULTA</Label>
@@ -201,8 +199,8 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
             control={control}
             type="select"
             options={[
-              { label: 'Ativo', value: 'true' },
-              { label: 'Inativo', value: 'false' },
+              { label: "Ativo", value: "true" },
+              { label: "Inativo", value: "false" },
             ]}
             disabled={!isEditing}
             rules={{ required: 'Status do Sistema é obrigatório' }}
@@ -211,21 +209,21 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
         <EqualDivider>
           {isEditing ? (
             <>
-              <Btn variant="blue" type="submit">
+              <Styled.BtnCustom variant="blue" type="submit">
                 Editar Consulta
-              </Btn>
-              <Btn variant="red" type="button" onClick={onDeleteConsulta}>
+              </Styled.BtnCustom>
+              <Styled.BtnCustom variant="red" type="button" onClick={onDeleteConsulta}>
                 Excluir Consulta
-              </Btn>
+              </Styled.BtnCustom>
             </>
           ) : (
-            <Btn variant="primary" type="submit">
+            <Styled.BtnCustom variant="primary" type="submit">
               Enviar Consulta
-            </Btn>
+            </Styled.BtnCustom>
           )}
         </EqualDivider>
       </Form>
-    </Styled.Body>
+    
   );
 }
 export default CadastroConsultaForm;

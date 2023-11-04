@@ -1,10 +1,10 @@
-import { Api } from '../Api'; // Importe a instância da Api
+import { Api } from '../api'; // Importe a instância da Api
 
-const PacienteService = {
+export default class ExameService {
 
   
-    async criarPaciente(paciente, token) {
-        const response = await Api.post('/pacientes', paciente, {
+    async Create(exame, token) {
+        const response = await Api.post('/exames', exame, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -28,10 +28,10 @@ const PacienteService = {
               }   
             throw new Error(errorMessage);
           }
-    },
+    }
 
-    async atualizarPaciente(id, paciente, token) {
-      const response = await Api.put(`/pacientes/${id}`, paciente, {
+    async Update(id, exame, token) {
+      const response = await Api.put(`/exames/${id}`, exame, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,11 +55,11 @@ const PacienteService = {
         }
         throw new Error(errorMessage);
       }
-    },
+    }
 
-    async getPacientePorId(id, token) {
-      // Use a função `Api.get` para buscar os detalhes do paciente com base no `id`
-      const response = await Api.get(`/pacientes/${id}`, {
+    async GetById(id, token) {
+      // Use a função `Api.get` para buscar os detalhes do exame com base no `id`
+      const response = await Api.get(`/exames/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,10 +84,10 @@ const PacienteService = {
         }
         throw new Error(errorMessage);
       }
-    },
+    }
 
-    async excluirPaciente(id, token) {
-      const response = await Api.delete(`/pacientes/${id}`, {
+    async excluirexame(id, token) {
+      const response = await Api.delete(`/exames/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -106,8 +106,8 @@ const PacienteService = {
         }
         throw new Error(errorMessage);
       }
-    },
+    }
 
     };
-    export default PacienteService;
+
 
