@@ -81,4 +81,9 @@ export const Btn = styled.button`
         cursor: pointer;
         box-shadow: 2px 2px 5px #888888;
     }
+
+    &:disabled {
+        pointer-events: none;
+        opacity: .5;
+    }
 ` 
