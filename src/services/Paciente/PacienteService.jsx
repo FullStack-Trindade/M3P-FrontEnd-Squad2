@@ -1,4 +1,4 @@
-import { api } from '../../api/api'; // Importe a instância da API
+import  api  from '../../api/api'; // Importe a instância da API
 
 const PacienteService = {
 

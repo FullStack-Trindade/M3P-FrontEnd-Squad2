@@ -1,10 +1,11 @@
-import ReactLoading from 'react-loading';
 import { useState } from "react";
+import PropTypes from "prop-types";
+import ReactLoading from 'react-loading';
+
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+
 import * as Styled from "./Input.style";
 import { COLOR } from "../../assets/styles/colors";
-import PropTypes from "prop-types";
-
 export default function InputComponent ({
   label,
   type,
