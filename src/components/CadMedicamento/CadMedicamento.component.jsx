@@ -2,15 +2,35 @@ import { Container, Form, InputGroup } from "react-bootstrap"
 import InputComponent from "../Input/Input.component"
 import { Btn } from "../Button/button.style"
 import * as Styled from './cadMedicamento.style'
+import { Label, Select, TextArea } from "../Input/Input.style"
 
 export default function CadMedicamentoComponent() {
+
+	// const handleChange = (value) => {
+	// 	handleSearch(value)
+	// }
+
+	const handleSearch = (value) => {
+		fetch("http://localhost:3000/pacientes")
+			.then((res) => res.json())
+			.then((json) => {
+				const result = json.filter((paciente) => {
+					return (
+						(value && paciente.nome.toLowerCase().includes(value))
+					)
+				})
+				return result
+			})
+	}
+
 	return (
 		<>
 			<Container style={{ padding: "1rem", flex: "1 1" }}>
-				<h4>Cadastro de Medicamento</h4>
 
-                <p>*** Inserir uma Busca de paciente</p>
+				{/* Busca do Paciente */}
+                <InputComponent placeholder="Digite o nome do paciente" label="Paciente" onChange={(e) => handleSearch(e.target.value)} />
 
+				{/* Inicio do formulário */}
 				<Styled.Form onSubmit={(e) => {e.preventDefault(), console.log('enviado')}}>
 					<InputComponent
 						type="text"
@@ -39,8 +59,8 @@ export default function CadMedicamentoComponent() {
 						}}
 					>
 						<div>
-							<label htmlFor="tipo">Tipo</label>
-							<select name="tipo" id="tipo">
+							<Label htmlFor="tipo">Tipo</Label>
+							<Select name="tipo" id="tipo">
 								<option value="capsula">Cápsula</option>
 								<option value="comprimido">Comprimido</option>
 								<option value="liquido">Líquido</option>
@@ -49,22 +69,23 @@ export default function CadMedicamentoComponent() {
 								<option value="inalacao">Inalação</option>
 								<option value="injecao">Injeção</option>
 								<option value="spray">Spray</option>
-							</select>
+							</Select>
 						</div>
 
                     <InputComponent type="number" label="Quantidade" id="quantidade" step="0.01" />
                         <div>
-                            <label htmlFor="unidade">Unidade</label>
-                            <select name="unidade" id="unidade">
+                            <Label htmlFor="unidade">Unidade</Label>
+                            <Select name="unidade" id="unidade">
                                 <option value="g">g</option>
                                 <option value="mg">mg</option>
                                 <option value="mcg">mcg</option>
                                 <option value="ml">ml</option>
                                 <option value="%">%</option>
-                            </select>
+                            </Select>
                         </div>
 					</div>
-                    <InputComponent type="textarea" label="Observações" id="observacoes" />
+					
+					<TextArea label="Observações" id="observacoes" />
 
                     <Styled.ActionsContainer>
                         <Btn type="submit" variant="primary">Cadastrar</Btn>
