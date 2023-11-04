@@ -8,6 +8,7 @@ import { ExamePage } from "../pages/ExamePage/ExamePage";
 import { PacientePage } from "../pages/PacientePage/PacientePage";
 import { useAuth } from "../hooks/useAuth";
 import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
+import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
 
 
 export const AppRoutes = () => {
@@ -21,6 +22,8 @@ export const AppRoutes = () => {
             <Route path="/" element={<HomePage />} />
 
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
+            {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
+            {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/editausuario/:id" element={<CadastrarUsuariosPage />} />}
 
           </Route>
         </Route>
@@ -28,10 +31,10 @@ export const AppRoutes = () => {
         <Route path="/resetarSenha" element={<ResetarSenhaPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
-        <Route path="/cadastrapaciente" element={<PacientePage />}/>
-        <Route path="/editapaciente/:id" element={<PacientePage />}/>
-       <Route path="/exames" element={<ExamePage />}/>
-        <Route path="/exames/:id" element={<ExamePage />}/> 
+        <Route path="/cadastrapaciente" element={<PacientePage />} />
+        <Route path="/editapaciente/:id" element={<PacientePage />} />
+        <Route path="/exames" element={<ExamePage />} />
+        <Route path="/exames/:id" element={<ExamePage />} />
 
       </Routes>
     </Router>
