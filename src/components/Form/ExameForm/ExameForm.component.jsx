@@ -109,7 +109,7 @@ export default function ExameForm({ isEditing = false }) {
 
   return (
     <>
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
+      <form  style={{width:"98%"}} noValidate onSubmit={handleSubmit(onSubmit)}>
         <InputComponent
           label="Nome do Exame:"
           type="text"

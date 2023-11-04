@@ -21,7 +21,7 @@ export const ExamePage = () => {
   };
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "column",width:"98%"}}>
         <Search pacienteId={handlePatient} />
         {id ? <ExameForm isEditing={true} /> : <ExameForm isEditing={false} />}
       
