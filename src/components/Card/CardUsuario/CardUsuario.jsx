@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useAuth } from '../../../hooks/useAuth';
 
-import {FaUserNurse} from 'react-icons/fa';
-import { RiAdminFill } from "react-icons/ri";
+import {FaUser} from 'react-icons/fa';
 
 import * as Styled from '../CardPaciente/CardPaciente.style';
-import  {COLOR}  from "../../../assets/styles/colors";
-import { useAuth } from '../../../hooks/useAuth';
+
 
 const CardUsuario = ({ user }) => {
   const { nomeCompleto, tipo, telefone, email } = user;
@@ -15,9 +14,9 @@ const CardUsuario = ({ user }) => {
   return (
     <Styled.CardWrapper>
         <Styled.IconWrapper>  
-       { usuario?.tipo === "ADMINISTRADOR"
-      ? <RiAdminFill/>
-      :  <FaUserNurse style={{color:COLOR.$blue_light}}/>}
+
+      <FaUser/>
+      
         </Styled.IconWrapper>
         <Styled.Name>{nomeCompleto}</Styled.Name>
         <Styled.Info>{tipo}</Styled.Info>

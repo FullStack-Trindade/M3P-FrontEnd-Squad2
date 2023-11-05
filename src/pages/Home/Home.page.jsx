@@ -20,13 +20,17 @@ import * as Styled from "./home.style";
 import CardComponent from "../../components/Card/CardComponent/CardComponent";
 import CardPaciente from "../../components/Card/CardPaciente/CardPaciente";
 import CardUsuario from "../../components/Card/CardUsuario/CardUsuario";
+import Search from "../../components/Search/Search";
 
 export const HomePage = () => {
   const exameService = new ExameService();
   const { setTitulo } = useToolbarContext();
   const { usuario } = useAuth();
   const [pacientes, setPacientes] = useState([]);
-  const [usuarios, setUsuarios] = useState({});
+  const [usuarios, setUsuarios] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [filteredUsuario, setFilteredUsuario] = useState([]);
+  const [searchValue, setSearchValue] = useState("")
   const token = localStorage.getItem("@Auth:token");
   /* console.log(token) */
   const dietas = async () => {
@@ -49,16 +53,45 @@ export const HomePage = () => {
     const fetchPaciente = async () => {
       const dataPaciente = await PacienteService.getPacientes(token);
       setPacientes(dataPaciente);
-      console.log("homelog paciente:" + dataPaciente);
+
+      const filtraPaciente = dataPaciente.filter((paciente) => {
+        const lowerCaseSearchValue = searchValue.toLowerCase();
+        const lowerCaseNome = paciente.nome_completo.toLowerCase();
+        const lowerCaseTelefone = paciente.telefone.toLowerCase();
+        const lowerCaseEmail = paciente.email.toLowerCase();
+        
+        return (
+          lowerCaseNome.includes(lowerCaseSearchValue) ||
+          lowerCaseTelefone.includes(lowerCaseSearchValue) ||
+          lowerCaseEmail.includes(lowerCaseSearchValue)
+        );
+      });
+    
+      setFilteredPatients(filtraPaciente);
+
     };
     const fetchUsuario = async () => {
       const dataUsuario = await UsuarioService.getUsuarios(token);
+      
       setUsuarios(dataUsuario);
-      console.log("homelog usuario:" + dataUsuario.nomeCompleto)
-      console.log("homelog usuario:" + dataUsuario)
+
+      const filtraUsuario = dataUsuario.filter((usuario) => {
+        const lowerCaseSearchValue = searchValue.toLowerCase();
+        const lowerCaseNome = usuario.nomeCompleto.toLowerCase();
+        const lowerCaseTelefone = usuario.telefone.toLowerCase();
+        const lowerCaseEmail = usuario.email.toLowerCase();
+        
+        return (
+          lowerCaseNome.includes(lowerCaseSearchValue) ||
+          lowerCaseTelefone.includes(lowerCaseSearchValue) ||
+          lowerCaseEmail.includes(lowerCaseSearchValue)
+        );
+      });
+    
+      setFilteredUsuario(filtraUsuario);
+     
     };
-    fetchPaciente();
-    fetchUsuario();
+  
   
     usuario?.tipo === "ADMINISTRADOR"
       ? (setTitulo("ESTATÍSTICAS E INFORMAÇÕES ADMINISTRADOR"),
@@ -69,7 +102,9 @@ export const HomePage = () => {
         console.log("teste else"),
       
         fetchPaciente());
-  }, [setTitulo]);
+
+      
+  }, [searchValue, setTitulo]);
 
   return (
     <>
@@ -130,7 +165,8 @@ export const HomePage = () => {
               />
             </div>
           </Styled.Content>
-
+          <Styled.Title>Busca</Styled.Title>
+          <Search setSearchValue={setSearchValue} />
           <Styled.Title>Informações de Pacientes</Styled.Title>
           {pacientes.map((paciente, index) => (
             <CardPaciente key={index} paciente={paciente} />
@@ -190,8 +226,10 @@ export const HomePage = () => {
               />
             </div>
           </Styled.Content>
-
+          <Styled.Title>Busca</Styled.Title>
+          <Search setSearchValue={setSearchValue} />
           <Styled.Title>Informações de Pacientes</Styled.Title>
+         
           {pacientes.map((paciente, index) => (
             <CardPaciente key={index} paciente={paciente} />
           ))}
@@ -200,9 +238,3 @@ export const HomePage = () => {
     </>
   );
 };
-/*  
-Poderá existir duas listagens e dois inputs de pesquisa na tela inicial. 
-
-. Na listagem de pacientes, deverá existir
- um campo para buscar pelo nome, cpf, telefone ou e-mail. 
- */
