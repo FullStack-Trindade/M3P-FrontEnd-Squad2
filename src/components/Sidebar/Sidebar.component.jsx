@@ -111,7 +111,7 @@ export default function SidebarComponent() {
 								Exames
 							</label>
 						</Styled.Li>
-						<Styled.Li >
+						{/* <Styled.Li >
 							<input type="radio" name="page" id="medico" />
 							<FaUserDoctor size={showSidebar ? "" : "1.5rem"} />
 							<label
@@ -120,8 +120,8 @@ export default function SidebarComponent() {
 							>
 								Medicos
 							</label>
-						</Styled.Li>
-						<Styled.Li >
+						</Styled.Li> */}
+						{/* <Styled.Li >
 							<input type="radio" name="page" id="enfermeiro" />
 							<FaUserNurse size={showSidebar ? "" : "1.5rem"} />
 							<label
@@ -130,7 +130,7 @@ export default function SidebarComponent() {
 							>
 								Enfermeiros
 							</label>
-						</Styled.Li>
+						</Styled.Li> */}
 						
 						<Styled.Li onClick={() => navigate('/cadmedicamento')}>
 							<input type="radio" name="page" id="medicamento" />
