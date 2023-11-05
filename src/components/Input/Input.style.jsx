@@ -41,7 +41,7 @@ export const Input = styled.input`
   align-items: flex-start;
   align-self: stretch;
   border-radius: 0.3126rem;
-  margin-bottom:1rem;
+  /* margin-bottom:1rem; */
   border: 1px solid;
   color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
@@ -69,7 +69,7 @@ export const TextArea = styled.textarea`
 export const Select = styled.select`
   display: flex;
   padding: 0.5rem;
-  margin-top: .390rem;
+  /* margin-top: .390rem; */
   align-items: flex-start;
   align-self: stretch;
   border-radius: 0.3125rem;
