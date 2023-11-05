@@ -6,6 +6,7 @@ import { PrivateRoutes } from "./PrivateRoutes";
 import { HomePage } from "../pages/Home/Home.page";
 import { ExamePage } from "../pages/ExamePage/ExamePage";
 import { PacientePage } from "../pages/PacientePage/PacientePage";
+import { DietaPage } from "../pages/DietaPage/DietaPage";
 import { useAuth } from "../hooks/useAuth";
 import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
 import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
@@ -28,6 +29,8 @@ export const AppRoutes = () => {
             
             <Route path="/cadastrapaciente" element={<PacientePage />} />
             <Route path="/editapaciente/:id" element={<PacientePage />} />
+            <Route path="/cadastradieta" element={<DietaPage />} />
+            <Route path="/editadieta/:id" element={<DietaPage />} />
             <Route path="/exames" element={<ExamePage />} />
             <Route path="/exames/:id" element={<ExamePage />} />
             <Route path="/cadMedicamento" element={<CadMedicamento />} />
