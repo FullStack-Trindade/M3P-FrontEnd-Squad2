@@ -11,6 +11,7 @@ export const Sidebar = styled.nav`
 		return $isOpened ? "200px" : "60px"
 	}};
 	inset: 0;
+	position: fixed;
 	padding: 0.5rem;
 `
 
