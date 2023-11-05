@@ -9,7 +9,7 @@ const CadastroExercicioService = {
         },
       });
   
-      if (response.ok) {
+      if (response.status) {
         const data = await response.json();
         return data;
       } else {
@@ -36,7 +36,7 @@ const CadastroExercicioService = {
         },
       });
   
-      if (response.ok) {
+      if (response.status) {
         const data = await response.json();
         return data;
       } else {
@@ -64,7 +64,7 @@ const CadastroExercicioService = {
         },
       });
   
-      if (response.ok) {
+      if (response.status) {
         const data = await response.json();
         return data;
       } else {
@@ -91,7 +91,7 @@ const CadastroExercicioService = {
         },
       });
   
-      if (response.ok) {
+      if (response.status) {
         const data = await response.json();
         return data;
       } else {

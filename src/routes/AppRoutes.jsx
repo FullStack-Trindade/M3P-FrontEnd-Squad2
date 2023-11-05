@@ -34,11 +34,11 @@ export const AppRoutes = () => {
             <Route path="/exames/:id" element={<ExamePage />} />
             <Route path="/cadMedicamento" element={<CadMedicamento />} />
 
-            <Route path="cadastroconsulta" element={<CadastroConsultaPage/>}/>
-            <Route path="cadastroconsulta/:id" element={<CadastroConsultaPage/>}/>
+            <Route path="consultas" element={<CadastroConsultaPage/>}/>
+            <Route path="consultas/:id" element={<CadastroConsultaPage/>}/>
 
-            <Route path="cadastroexercicio" element={< CadastroExercicioPage/>}/>
-            <Route  path="cadastroexercicio/:id" element={<CadastroExercicioPage />}/>
+            <Route path="exercicios" element={< CadastroExercicioPage/>}/>
+            <Route  path="exercicios/:id" element={<CadastroExercicioPage />}/>
           </Route>
           {/* Fim do Layout */}
         </Route>
