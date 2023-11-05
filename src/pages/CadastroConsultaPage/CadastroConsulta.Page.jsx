@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import CadastroConsultaForm from "../../components/Form/cadastroConsultaForm/CadastroConsultaForm";
+import CadastroConsultaForm from "../../components/Form/CadastroConsultaForm/CadastroConsultaForm"
 import { useContext } from "react";
 import { ToolbarTituloContext } from "../../contexts/ToolbarTitulo/ToolbarTitulo.context";
 

@@ -6,234 +6,321 @@ import PropTypes from "prop-types";
 import ConsultaService from "../../../services/CadastroConsulta/CadastroConsultaService";
 import InputComponent from "../../Input/Input.component";
 import { BtnCustom } from "../CadastroConsultaForm/CadastroConsultaStyled";
-import { EqualDivider, Form } from "../PacienteForm/PacienteForm.styled";
-import { SelectCostum } from "../CadastroExercicioForm/CadastroExercicioForm.Style";
-
+import { EqualDivider, Form, Child } from "../PacienteForm/PacienteForm.styled";
+import ListaTodoPacientes from "../../ListaPacientes/ListaTodosPacientes";
+import { Label } from "../DietaForm/DietaForm.styled";
+import { SelectComponent } from "../../Select/SelectComponent";
 
 function CadastroConsultaForm({ isEditing = false }) {
   const { id } = useParams();
-  const { control, setValue, reset, handleSubmit } = useForm();
-  const [status, setStatus] = useState(true);
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    reset,
+    handleSubmit,
+  } = useForm();
+  const [statusSistema, setStatus] = useState(true);
+  const [paciente_id, setPacienteId] = useState(null);
+  const [pacienteNome, setPacienteNome] = useState("");
   const navigate = useNavigate();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg4MjM2MywiZXhwIjoxNjk4OTY4NzYzfQ.AKLEbojUaY0Drp288h0rPud0pe01SB9ZREcUu8_a1_w";
+  const token = localStorage.getItem("@Auth:token");
 
-  const handleSearch = (value) => {
-		fetch("http://localhost:3000/pacientes")
-			.then((res) => res.json())
-			.then((json) => {
-				const result = json.filter((paciente) => {
-					return (
-						(value && paciente.nome.toLowerCase().includes(value))
-					)
-				})
-				return result
-			})
-	}
-useEffect(() => {
-  if (id) {
-    // Se o ID existe, estamos em modo de edição, então buscamos os detalhes do paciente
-    const fetchConsultaDetails = async () => {
-      try {
-        const response = await ConsultaService.getConsultaPorId(id, token);
-        if (response) {
-          // Define os detalhes do paciente nos campos do formulário
-          const consulta = response;
-          Object.keys(consulta).forEach((key) => {
-            setValue(key, consulta[key]);
-          });
-        }
-      } catch (error) {
-        console.error("Erro ao buscar detalhes da consulta:", error);
-      }
-    };
+  const [resultadosConsulta, setResultadosConsulta] = useState([]);
+  const [loadingConsulta, setLoadingConsulta] = useState(false);
 
-    fetchConsultaDetails();
-  } else {
-    reset();
-  }
-}, [id, setValue, reset]);
+  const buscarEnConsultaServices = async (data) => {
+    setLoadingConsulta(true);
+    try {
+      const pacientes = await ConsultaService.listarPacientes(data);
+      const pacientesFiltrados = pacientes.filter(
+        (paciente) =>
+          paciente.nome_completo &&
+          paciente.nome_completo
+            .toLowerCase()
+            .includes(data.search.toLowerCase())
+      );
+      setResultadosConsulta(pacientesFiltrados);
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoadingConsulta(false);
+    }
+  };
 
-const onSubmit = async (data) => {
-  try {
+  const handleSelectPaciente = (selectedPaciente) => {
+    console.log(selectedPaciente.id);
+    setPacienteId(selectedPaciente.id);
+    setPacienteNome(`Paciente: ${selectedPaciente.nome_completo}`);
+  };
+
+  useEffect(() => {
     if (id) {
-      // Se há um ID, estamos em modo de edição
-
-      await ConsultaService.atualizarConsulta(id, data, token);
-      toast.success(
-        `Consulta do paciente ${data.nome_completo} atualizado com sucesso!`,
-        {
-          position: toast.POSITION.TOP_CENTER,
-          theme: "colored",
-          autoClose: 2000,
+      // Se o ID existe, estamos em modo de edição, então buscamos os detalhes do paciente
+      const fetchConsultaDetails = async () => {
+        try {
+          const response = await ConsultaService.getConsultaPorId(id, token);
+          if (response) {
+            // Define os detalhes do paciente nos campos do formulário
+            const consulta = response;
+            Object.keys(consulta).forEach((key) => {
+              setValue(key, consulta[key]);
+            });
+          }
+        } catch (error) {
+          console.error("Erro ao buscar detalhes da consulta:", error);
         }
-      );
+      };
+
+      fetchConsultaDetails();
     } else {
-      //adiciona o status PADRÃO ao data
-      setStatus(true);
-      data = { ...data, status };
-      // Caso contrário, estamos criando um novo paciente
-      const response = await ConsultaService.criarConsulta(data, token);
-      toast.success(
-        `Cadastro da consulta do paciente: ${response.nome_completo} realizado com sucesso!`,
-        {
-          position: toast.POSITION.TOP_CENTER,
-          theme: "colored",
-          autoClose: 2000,
-        }
-      );
-      navigate("/editaconsulta/" + response.id);
+      reset();
     }
-  } catch (error) {
-    if (error.response && error.response.status === 409) {
-      const errorMessage = error.response.data.message || "Erro desconhecido";
-      toast.error(`Erro 409: ${errorMessage}`, {
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored",
-        autoClose: 2000,
-      });
-    } else {
-      toast.error(`Erro ao cadastrar consulta do paciente ${error.message}`, {
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored",
-        autoClose: 2000,
-      });
-    }
-  }
-};
+  }, [id, setValue, reset]);
 
-const onDeleteConsulta = async () => {
-  try {
-    await ConsultaService.excluirConsulta(id, token);
-    toast.success(`Exclusão da consulta realizada com sucesso!`, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: "colored",
-      autoClose: 2000,
-    });
-    navigate("/cadastroconsulta");
-  } catch (error) {
-    toast.error(`Erro ao excluir a consulta do paciente: ${error.message}`, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: "colored",
-      autoClose: 2000,
-    });
-  }
-};
+  const onSubmit = async (data) => {
+    try {
+      if (id) {
+        await ConsultaService.atualizarConsulta(id, data, token);
+        toast.success(
+          `Consulta do paciente ${data.nome_completo} atualizado com sucesso!`,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            theme: "colored",
+            autoClose: 2000,
+          }
+        );
+      } else {
+        //adiciona o status PADRÃO ao data
+        setStatus(true);
+        data = { ...data, paciente_id, statusSistema };
+        console.log(data);
 
-const getCurrentDate = () => {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const day = String(currentDate.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-const getCurrentTime = () => {
-  const currentTime = new Date();
-  const hours = String(currentTime.getHours()).padStart(2, "0");
-  const minutes = String(currentTime.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
-};
-
-useEffect(() => {
-  if (!isEditing) {
-    setValue("DataConsulta", getCurrentDate());
-    setValue("horarioConsulta", getCurrentTime());
-  }
-}, [isEditing, setValue]);
-
-return (
-  <Form onSubmit={handleSubmit(onSubmit)}>
-    
-    <InputComponent placeholder="Digite o nome do paciente" label="Paciente" onChange={(e) => handleSearch(e.target.value)} />
-    <EqualDivider>
-      <InputComponent
-        label="Motivo da consulta"
-        name="motivoConsulta"
-        control={control}
-        type="text"
-        rules={{
-          required: "Motivo da consulta é obrigatório",
-          minLength: { value: 8, message: "Mínimo de 8 caracteres" },
-          maxLength: { value: 64, message: "Máximo de 64 caracteres" },
-        }}
-      />
-      <InputComponent
-        label="Data da Consulta"
-        name="DataConsulta"
-        control={control}
-        type="Date"
-        rules={{ required: "Data da Consulta é obrigatória" }}
-      />
-      <InputComponent
-        label="Horario da Consulta"
-        name="horarioConsulta"
-        control={control}
-        type="Time"
-        rules={{ required: "Horário da Consulta é obrigatório" }}
-      />
-    </EqualDivider>
-    <EqualDivider>
-      <InputComponent
-        label="Descrição do problema"
-        name="descricaoDoProblema"
-        control={control}
-        type="text"
-        rules={{
-          required: "Descrição do problema é obrigatória",
-          minLength: { value: 16, message: "Mínimo de 16 caracteres" },
-          maxLength: { value: 1024, message: "Máximo de 1024 caracteres" },
-        }}
-      />
-      <InputComponent
-        label="Medicação receitada"
-        name="medicacionReceitada"
-        control={control}
-        type="text"
-      />
-      <InputComponent
-        label="Dosagem e Precauções"
-        name="dosagemEprec"
-        control={control}
-        type="text"
-        rules={{
-          required: "Dosagem e Precauções são obrigatórias",
-          minLength: { value: 16, message: "Mínimo de 16 caracteres" },
-          maxLength: { value: 256, message: "Máximo de 256 caracteres" },
-        }}
-      />
-    </EqualDivider>
-    <EqualDivider>
-      <SelectCostum
-        name="statusSistema"
-        id="status"
-        disabled={!isEditing}
-        required={"Status do sistema é obrigatorio"}
-      >
-        <option value="">Status do sistema</option>
-        <option value="true"> Ativo </option>
-        <option value="false"> Inativo </option>
-      </SelectCostum>
-    </EqualDivider>
-    <EqualDivider>
-      {isEditing ? (
-        <>
-          <BtnCustom variant="blue" type="submit">
-            Editar Consulta
-          </BtnCustom>
-          <BtnCustom variant="red" type="button" onClick={onDeleteConsulta}>
-            Excluir Consulta
-          </BtnCustom>
-        </>
-      ) : (
-        <BtnCustom variant="primary" type="submit">
-          Enviar Consulta
-        </BtnCustom>
-      )}
-    </EqualDivider>
-  </Form>
-)
+        // Caso contrário, estamos criando um novo paciente
+        const response = await ConsultaService.criarConsulta(data, token);
+        toast.success(
+          `Cadastro da consulta do paciente: ${data.nome_completo} realizado com sucesso!`,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            theme: "colored",
+            autoClose: 2000,
+          }
+        );
+        navigate("/editaconsulta/" + response.id);
       }
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        const errorMessage = error.response.data.message || "Erro desconhecido";
+        toast.error(`Erro 409: ${errorMessage}`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored",
+          autoClose: 2000,
+        });
+      } else {
+        toast.error(`Erro ao cadastrar consulta do paciente ${error.message}`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored",
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
+  const onDeleteConsulta = async () => {
+    try {
+      await ConsultaService.excluirConsulta(id, token);
+      toast.success(`Exclusão da consulta realizada com sucesso!`, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored",
+        autoClose: 2000,
+      });
+      navigate("/cadastroconsulta");
+    } catch (error) {
+      toast.error(`Erro ao excluir a consulta do paciente: ${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored",
+        autoClose: 2000,
+      });
+    }
+  };
+
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const getCurrentTime = () => {
+    const currentTime = new Date();
+    const hours = String(currentTime.getHours()).padStart(2, "0");
+    const minutes = String(currentTime.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
+  
+  useEffect(() => {
+    if (!isEditing) {
+      setValue("DataConsulta", getCurrentDate());
+      setValue("horarioConsulta", getCurrentTime());
+    }
+  }, [isEditing, setValue]);
+
+  return (
+    <div style={{ width: "70%" }}>
+      <EqualDivider>
+        {!isEditing ? (
+          <ListaTodoPacientes
+            onSelectPaciente={handleSelectPaciente}
+            resultados={resultadosConsulta}
+            loading={loadingConsulta}
+            onSearch={buscarEnConsultaServices}
+          />
+        ) : (
+          <></>
+        )}
+      </EqualDivider>
+
+      <div>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <EqualDivider>
+            <Label $title>Consulta</Label>
+          </EqualDivider>
+          <EqualDivider>
+            <Label>{pacienteNome}</Label>
+          </EqualDivider>
+          <EqualDivider>
+            <InputComponent
+              label="Motivo da consulta"
+              id="motivoConsulta"
+              register={{
+                ...register("motivoConsulta", {
+                  required: "Motivo da consulta é obrigatório",
+                  minLength: { value: 8, message: "Mínimo de 8 caracteres" },
+                  maxLength: { value: 64, message: "Máximo de 64 caracteres" },
+                }),
+              }}
+              type="text"
+              error={errors.motivoConsulta}
+            />
+            <InputComponent
+              label="Data da Consulta"
+              id="dataConsulta"
+              register={{
+                ...register("dataConsulta", {
+                  required: "Data da Consulta é obrigatória",
+                }),
+              }}
+              type="Date"
+              error={errors.dataConsulta}
+            />
+            <InputComponent
+              label="Horario da Consulta"
+              id="horaConsulta"
+              register={{
+                ...register("horaConsulta", {
+                  required: "Horário da Consulta é obrigatório",
+                }),
+              }}
+              type="Time"
+              error={errors.horaConsulta}
+            />
+          </EqualDivider>
+          <EqualDivider>
+            <InputComponent
+              label="Descrição do problema"
+              id="descricaoProblema"
+              register={{
+                ...register("descricaoProblema", {
+                  required: "Descrição do problema é obrigatória",
+                  minLength: { value: 16, message: "Mínimo de 16 caracteres" },
+                  maxLength: {
+                    value: 1024,
+                    message: "Máximo de 1024 caracteres",
+                  },
+                }),
+              }}
+              type="textarea"
+              rows={7}
+              error={errors.descricaoProblema}
+            />
+          </EqualDivider>
+          <EqualDivider>
+          <InputComponent
+              label="Medicação receitada"
+              id="medicacao"
+              register={{ ...register("medicacao") }}
+              type="textarea"
+              rows={5}
+              error={errors.medicacao}
+
+            />
+          </EqualDivider>
+          <EqualDivider>
+          <InputComponent
+              label="Dosagem e Precauções"
+              id="dosagem"
+              register={{
+                ...register("dosagem", {
+                  required: "Dosagem e Precauções são obrigatórias",
+                  minLength: { value: 16, message: "Mínimo de 16 caracteres" },
+                  maxLength: {
+                    value: 256,
+                    message: "Máximo de 256 caracteres",
+                  },
+                }),
+              }}
+              type="textarea"
+              rows={5}
+              error={errors.dosagem}
+            />
+          </EqualDivider>
+          <EqualDivider>
+            <SelectComponent
+              $width={"20%"}
+              id="statusSistema"
+              name="statusSistema"
+              label={"Status do Sistema"}
+              options={[
+                { id: 1, value: "true", label: "Ativo" },
+                { id: 2, value: "false", label: "Inativo" },
+              ]}
+              register={{
+                ...register("statusSistema", {
+                  required: true,
+                }),
+              }}
+              error={errors.statusSistema}
+              disabled={!isEditing}
+            ></SelectComponent>
+            <Child></Child>
+          </EqualDivider>
+          <EqualDivider>
+            {isEditing ? (
+              <>
+                <BtnCustom variant="blue" type="submit">
+                  Editar Consulta
+                </BtnCustom>
+                <BtnCustom
+                  variant="red"
+                  type="button"
+                  onClick={onDeleteConsulta}
+                >
+                  Excluir Consulta
+                </BtnCustom>
+              </>
+            ) : (
+              <BtnCustom variant="primary" type="submit">
+                Enviar Consulta
+              </BtnCustom>
+            )}
+          </EqualDivider>
+        </Form>
+      </div>
+    </div>
+  );
+}
 export default CadastroConsultaForm;
 
 CadastroConsultaForm.propTypes = {

@@ -38,7 +38,7 @@ export const AppRoutes = () => {
             <Route path="/cadMedicamento" element={<CadMedicamento />} />
 
             <Route path="consultas" element={<CadastroConsultaPage/>}/>
-            <Route path="consultas/:id" element={<CadastroConsultaPage/>}/>
+            <Route path="editaconsulta/:id" element={<CadastroConsultaPage/>}/>
 
             <Route path="exercicios" element={< CadastroExercicioPage/>}/>
             <Route  path="exercicios/:id" element={<CadastroExercicioPage />}/>
