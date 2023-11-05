@@ -24,17 +24,28 @@ export const LogsPage = () => {
             });
     };
 
+    const renderCardsLogs = () => {
+        return logs.map((log) => (
+            <Styled.Card key={log.id}>
+                <Styled.CardContent>
+                    <Styled.CardTitulo>{log.id}</Styled.CardTitulo>
+                    <Styled.CardTitulo>{log.registro}</Styled.CardTitulo>
+                    <Styled.CardTitulo>{log.dataHora}</Styled.CardTitulo>
+                </Styled.CardContent>
+            </Styled.Card>
+        ));
+    }
+
     return (
         <Styled.LogsContainer>
-            <Styled.Card>
-                {logs.map(log => (
-                    <Styled.TitulosListaCardBox key={log.id}>
-                        <Styled.CardContent>{log.id}</Styled.CardContent>
-                        <Styled.CardContent>{log.registro}</Styled.CardContent>
-                        <Styled.CardContent>{log.dataHora}</Styled.CardContent>
-                    </Styled.TitulosListaCardBox>
-                ))}
-            </Styled.Card>
+            <Styled.CardBox>
+                <Styled.TitulosListaCardBox>
+                    <h3>ID</h3>
+                    <h3>Registro</h3>
+                    <h3>Data/Hora</h3>
+                </Styled.TitulosListaCardBox>
+                {renderCardsLogs()}
+            </Styled.CardBox>
         </Styled.LogsContainer>
     );
 };
