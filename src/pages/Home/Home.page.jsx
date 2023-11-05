@@ -7,7 +7,6 @@ import {
   FaFlask,
   FaWeight,
 } from "react-icons/fa";
-import { Container } from "react-bootstrap";
 import { IoBarbellSharp } from "react-icons/io5";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -21,14 +20,13 @@ import * as Styled from "./home.style";
 import CardComponent from "../../components/Card/CardComponent/CardComponent";
 import CardPaciente from "../../components/Card/CardPaciente/CardPaciente";
 import CardUsuario from "../../components/Card/CardUsuario/CardUsuario";
-import listateste from "../../components/lista";
 
 export const HomePage = () => {
   const exameService = new ExameService();
   const { setTitulo } = useToolbarContext();
-  const { usuarioAuth } = useAuth();
+  const { usuario } = useAuth();
   const [pacientes, setPacientes] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState({});
   const token = localStorage.getItem("@Auth:token");
   /* console.log(token) */
   const dietas = async () => {
@@ -51,81 +49,87 @@ export const HomePage = () => {
     const fetchPaciente = async () => {
       const dataPaciente = await PacienteService.getPacientes(token);
       setPacientes(dataPaciente);
+      console.log("homelog paciente:" + dataPaciente);
     };
     const fetchUsuario = async () => {
       const dataUsuario = await UsuarioService.getUsuarios(token);
       setUsuarios(dataUsuario);
+      console.log("homelog usuario:" + dataUsuario.nomeCompleto)
+      console.log("homelog usuario:" + dataUsuario)
     };
-
-    if (usuarioAuth?.tipo === "ADMINISTRADOR") {
-      setTitulo("ESTATÍSTICAS E INFORMAÇÕES ADMINISTRADOR");
-      fetchPaciente();
-      fetchUsuario();
-    } else {
-      setTitulo("ESTATÍSTICAS E INFORMAÇÕES GERAIS");
-      fetchPaciente();
-    }
+    fetchPaciente();
+    fetchUsuario();
+  
+    usuario?.tipo === "ADMINISTRADOR"
+      ? (setTitulo("ESTATÍSTICAS E INFORMAÇÕES ADMINISTRADOR"),
+        console.log("teste adm"),
+        fetchPaciente(),
+        fetchUsuario())
+      : (setTitulo("ESTATÍSTICAS E INFORMAÇÕES GERAIS"),
+        console.log("teste else"),
+      
+        fetchPaciente());
   }, [setTitulo]);
 
   return (
     <>
-      {usuarioAuth?.tipo === "ADMINISTRADOR" ? (
+      {usuario?.tipo === "ADMINISTRADOR" ? (
         <Styled.Container>
-        <Styled.Title>Estatísticas do Sistema</Styled.Title>
-      <Styled.Content>
-        <div>
-          <CardComponent
-            title="Pacientes Cadastrados"
-            value={pacientes.length}
-            icon={<FaUser />}
-            color={COLOR.$black_light}
-          />
+          <Styled.Title>Estatísticas do Sistema</Styled.Title>
+          <Styled.Content>
+            <div>
+              <CardComponent
+                title="Pacientes Cadastrados"
+                value={pacientes.length}
+                icon={<FaUser />}
+                color={COLOR.$black_light}
+              />
 
-          <CardComponent
-            title="Exames Cadastrados"
-            value={exames.length}
-            icon={<FaFlask />}
-            color={COLOR.$blue_light}
-          />
-        </div>
-        <div>
-          <CardComponent
-            title="Consultas Cadastradas"
-            value={exames.length}
-            icon={<FaStethoscope />}
-            color={COLOR.$blue_darkest}
-          />
+              <CardComponent
+                title="Exames Cadastrados"
+                value={exames.length}
+                icon={<FaFlask />}
+                color={COLOR.$blue_light}
+              />
+            </div>
+            <div>
+              <CardComponent
+                title="Consultas Cadastradas"
+                value={exames.length}
+                icon={<FaStethoscope />}
+                color={COLOR.$blue_darkest}
+              />
 
-          <CardComponent
-            title="Dietas Cadastradas"
-            value={dietas.length}
-            icon={<FaWeight />}
-            color={COLOR.$white_darkest}
-          />
-        </div>
-        <div>
-          <CardComponent
-            title="Exercicios Cadastrados"
-            value={dietas.length}
-            icon={<IoBarbellSharp />}
-            color={COLOR.$black_medium}
-          />
-          <CardComponent
-            title="Medicações Cadastradas"
-            value={dietas.length}
-            icon={<FaPills />}
-            color={COLOR.$blue_lightest}
-          />
-        </div>
-        <div>
-          <CardComponent
-            title="Usuarios Cadastrados"
-            value={usuarios.length}
-            icon={<FaUser />}
-            color={COLOR.$black_light}
-          />
-        </div>
-      </Styled.Content>
+              <CardComponent
+                title="Dietas Cadastradas"
+                value={dietas.length}
+                icon={<FaWeight />}
+                color={COLOR.$white_darkest}
+              />
+            </div>
+            <div>
+              <CardComponent
+                title="Exercicios Cadastrados"
+                value={dietas.length}
+                icon={<IoBarbellSharp />}
+                color={COLOR.$black_medium}
+              />
+              <CardComponent
+                title="Medicações Cadastradas"
+                value={dietas.length}
+                icon={<FaPills />}
+                color={COLOR.$blue_lightest}
+              />
+            </div>
+            <div>
+              <CardComponent
+                title="Usuarios Cadastrados"
+                value={usuarios.length}
+                icon={<FaUser />}
+                color={COLOR.$black_light}
+              />
+            </div>
+          </Styled.Content>
 
           <Styled.Title>Informações de Pacientes</Styled.Title>
           {pacientes.map((paciente, index) => (
@@ -133,13 +137,12 @@ export const HomePage = () => {
           ))}
 
           <Styled.Title>Informações de Usuarios</Styled.Title>
-          {usuarios.map((usuario, index) => (
-            <CardUsuario key={index} usuario={usuario} />
+          {usuarios.map((user, index) => (
+            <CardUsuario key={index} user={user} />
           ))}
         </Styled.Container>
       ) : (
         <Styled.Container>
-         
           <Styled.Title>Estatísticas do Sistema</Styled.Title>
           <Styled.Content>
             <div>

@@ -8,14 +8,14 @@ import * as Styled from '../CardPaciente/CardPaciente.style';
 import  {COLOR}  from "../../../assets/styles/colors";
 import { useAuth } from '../../../hooks/useAuth';
 
-const CardUsuario = ({ usuario }) => {
-  const { nomeCompleto, tipo, telefone, email } = usuario;
-  const { usuarioAuth } = useAuth();
+const CardUsuario = ({ user }) => {
+  const { nomeCompleto, tipo, telefone, email } = user;
+  const { usuario } = useAuth();
 
   return (
     <Styled.CardWrapper>
         <Styled.IconWrapper>  
-       { usuarioAuth?.tipo === "ADMINISTRADOR"
+       { usuario?.tipo === "ADMINISTRADOR"
       ? <RiAdminFill/>
       :  <FaUserNurse style={{color:COLOR.$blue_light}}/>}
         </Styled.IconWrapper>
@@ -28,7 +28,7 @@ const CardUsuario = ({ usuario }) => {
 };
 
 CardUsuario.propTypes = {
-  usuario: PropTypes.shape({
+  user: PropTypes.shape({
     nomeCompleto: PropTypes.string,
     tipo: PropTypes.string,
     telefone: PropTypes.string,
