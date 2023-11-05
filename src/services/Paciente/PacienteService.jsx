@@ -85,6 +85,34 @@ const PacienteService = {
         throw new Error(errorMessage);
       }
     },
+    async getPacientes(token) {
+
+      const response = await api.get(`/pacientes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log("dados retornados no get",data);
+        return data;
+      } else {
+        let errorMessage = 'Erro desconhecido';
+        const erroData = await response.json();
+        if (erroData) {
+          if (erroData.message) {
+            errorMessage = erroData.message;
+          } else if (erroData.errors && Array.isArray(erroData.errors)) {
+            const errorMessages = erroData.errors
+              .map((error) => error.message)
+              .join(', ');
+            errorMessage = errorMessages;
+          }
+        }
+        throw new Error(errorMessage);
+      }
+    },
 
     async excluirPaciente(id, token) {
       const response = await api.delete(`/pacientes/${id}`, {
