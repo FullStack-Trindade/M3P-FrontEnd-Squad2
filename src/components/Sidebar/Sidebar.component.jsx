@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import * as Styled from "./sidebar.style"
 import { useNavigate, useLocation } from "react-router-dom"
 import { SidebarContext } from "../../contexts/SidebarContext"
@@ -8,12 +8,13 @@ import {
 	TbLayoutSidebarLeftCollapse,
 	TbLayoutSidebarLeftExpand,
 	TbLogout,
-	TbUserCircle,
 	TbHome,
 	TbPill,
+	TbTestPipe
 } from "react-icons/tb"
 import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
 import { MdOutlineSick } from "react-icons/md"
+import { GiKnifeFork } from 'react-icons/gi'
 
 // Imagem de Logo
 import logoP from "../../assets/images/logoG.png"
@@ -31,11 +32,20 @@ export default function SidebarComponent() {
 			case "/":
 				document.getElementById("home").checked = true
 				break
-			case "/cadMedicamento":
-				document.getElementById("cadMedicamento").checked = true
+			case "/cadastrapaciente":
+				document.getElementById("paciente").checked = true
+				break
+			case "/cadastradieta":
+				document.getElementById("dieta").checked = true
+				break
+			case "/exames":
+				document.getElementById("exames").checked = true
+				break
+			case "/cadmedicamento":
+				document.getElementById("medicamento").checked = true
 				break
 			default:
-				console.log("Pagina diferente de /")
+				console.log("Pagina desconhecida")
 				break
 		}
 	}, [location])
@@ -45,11 +55,6 @@ export default function SidebarComponent() {
 		// deslogar e apagar token no localStorage
 		// após logout redirecionar para a página de login
 		// navigate('/login')
-	}
-
-	const check = (e) => {
-		// marca o 1º filho (input) como checked
-		e.target.firstChild.checked = true
 	}
 
 	return (
@@ -66,8 +71,8 @@ export default function SidebarComponent() {
 					<p style={{ display: showSidebar ? "" : "none" }}>Páginas</p>
 
 					<ul>
-						<Styled.Li onClick={check}>
-							<input type="radio" name="page" id="home" value="Home" />
+						<Styled.Li onClick={() => navigate('/')}>
+							<input type="radio" name="page" id="home" value="home" />
 							<TbHome size={showSidebar ? "" : "1.5rem"} />
 							<label
 								htmlFor="home"
@@ -76,44 +81,65 @@ export default function SidebarComponent() {
 								Home
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={check}>
-							<input type="radio" name="page" id="cadMedico" />
-							<FaUserDoctor size={showSidebar ? "" : "1.5rem"} />
-							<label
-								htmlFor="cadMedico"
-								className={showSidebar ? "" : "tooltiptext"}
-							>
-								Cad. Medico
-							</label>
-						</Styled.Li>
-						<Styled.Li onClick={check}>
-							<input type="radio" name="page" id="cadEnfermeiro" />
-							<FaUserNurse size={showSidebar ? "" : "1.5rem"} />
-							<label
-								htmlFor="cadEnfermeiro"
-								className={showSidebar ? "" : "tooltiptext"}
-							>
-								Cad. Enfermeiro
-							</label>
-						</Styled.Li>
-						<Styled.Li onClick={check}>
-							<input type="radio" name="page" id="cadPaciente" />
+						<Styled.Li onClick={() => navigate('/cadastrapaciente')}>
+							<input type="radio" name="page" id="paciente" />
 							<MdOutlineSick size={showSidebar ? "" : "1.5rem"} />
 							<label
-								htmlFor="cadPaciente"
+								htmlFor="paciente"
 								className={showSidebar ? "" : "tooltiptext"}
 							>
-								Cad. Paciente
+								Paciente
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={check}>
-							<input type="radio" name="page" id="cadMedicamento" />
-							<TbPill size={showSidebar ? "" : "1.5rem"} />
+						<Styled.Li onClick={() => navigate('/cadastradieta')}>
+							<input type="radio" name="page" id="dieta" />
+							<GiKnifeFork size={showSidebar ? "" : "1.5rem"} />
 							<label
-								htmlFor="cadMedicamento"
+								htmlFor="dieta"
 								className={showSidebar ? "" : "tooltiptext"}
 							>
-								Cad. Medicamento
+								Dieta
+							</label>
+						</Styled.Li>
+						<Styled.Li onClick={() => navigate('/exames')}>
+							<input type="radio" name="page" id="exames" />
+							<TbTestPipe size={showSidebar ? "" : "1.5rem"} />
+							<label
+								htmlFor="exames"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Exames
+							</label>
+						</Styled.Li>
+						<Styled.Li >
+							<input type="radio" name="page" id="medico" />
+							<FaUserDoctor size={showSidebar ? "" : "1.5rem"} />
+							<label
+								htmlFor="medico"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Medicos
+							</label>
+						</Styled.Li>
+						<Styled.Li >
+							<input type="radio" name="page" id="enfermeiro" />
+							<FaUserNurse size={showSidebar ? "" : "1.5rem"} />
+							<label
+								htmlFor="enfermeiro"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Enfermeiros
+							</label>
+						</Styled.Li>
+						
+						<Styled.Li onClick={() => navigate('/cadmedicamento')}>
+							<input type="radio" name="page" id="medicamento" />
+							<TbPill size={showSidebar ? "" : "1.5rem"} />
+							<label
+								htmlFor="medicamento"
+								className={showSidebar ? "" : "tooltiptext"}
+							>
+								Medicamentos
 							</label>
 						</Styled.Li>
 					</ul>
