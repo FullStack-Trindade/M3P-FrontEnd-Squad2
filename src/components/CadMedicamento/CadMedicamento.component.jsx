@@ -3,8 +3,12 @@ import InputComponent from "../Input/Input.component"
 import { Btn } from "../Button/button.style"
 import * as Styled from './cadMedicamento.style'
 import { Label, Select, TextArea } from "../Input/Input.style"
+import { useContext } from "react"
+import { SidebarContext } from "../../contexts/SidebarContext"
 
 export default function CadMedicamentoComponent() {
+	const { showSidebar } = useContext(SidebarContext)
+
 
 	// const handleChange = (value) => {
 	// 	handleSearch(value)
@@ -25,7 +29,7 @@ export default function CadMedicamentoComponent() {
 
 	return (
 		<>
-			<Container style={{ padding: "1rem", flex: "1 1" }}>
+			<Container style={{ padding: "1rem", flex: "1 1", marginLeft: showSidebar ? "200px" : "60px" }}>
 
 				{/* Busca do Paciente */}
                 <InputComponent placeholder="Digite o nome do paciente" label="Paciente" onChange={(e) => handleSearch(e.target.value)} />
