@@ -19,7 +19,7 @@ export const ExamePage = () => {
     if (id) {
       const exameData = service.GetById(parseInt(id));
       if (exameData) {
-        const pacienteData = PacienteService.getPacientePorId(exameData.paciente_id);
+        const pacienteData = PacienteService.getPacientePorId(id);
         setSelectedPatient(pacienteData);
       } else {
         console.error(`Exame com ID ${id} não encontrado.`);
@@ -34,11 +34,11 @@ export const ExamePage = () => {
     <>
       <div style={{ display: "flex", flexDirection: "column", width: "98%" }}>
         {id ? (
-          <ExameForm isEditing={true} selectedPatient={selectedPatient} />
+          <ExameForm isEditing={true} setSelectedPatient={selectedPatient} />
         ) : (
           <>
             <Search pacienteSelecionado={handlePatient} />
-            <ExameForm isEditing={false} selectedPatient={selectedPatient} />
+            <ExameForm isEditing={false} setSelectedPatient={selectedPatient} />
           </>
         )}
       </div>
