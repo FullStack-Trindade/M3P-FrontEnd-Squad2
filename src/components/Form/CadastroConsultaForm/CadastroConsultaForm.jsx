@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 import PropTypes from "prop-types";
 import ConsultaService from '../../../services/CadastroConsulta/CadastroConsultaService';
 import InputComponent from '../../Input/Input.component';
-import * as Styled from './CadastroConsultaStyled';
-import {  EqualDivider, Form, Label } from '../PacienteForm/PacienteForm.styled';
+import { BtnCustom } from "../CadastroConsultaForm/CadastroConsultaStyled";
+import {  EqualDivider, Form} from '../PacienteForm/PacienteForm.styled';
+import { SelectCostum } from '../CadastroExercicioForm/CadastroExercicioForm.Style';
 
 
 function CadastroConsultaForm  ({ isEditing = false })  {
@@ -132,9 +133,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
   return (
     
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <EqualDivider>
-          <Label $tittle> CADASTRO DE CONSULTA</Label>
-        </EqualDivider>
+        
         <EqualDivider>
           <InputComponent
             label="Motivo da consulta"
@@ -193,33 +192,28 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVD
           />
         </EqualDivider>
         <EqualDivider>
-          <InputComponent
-            label="Status do Sistema"
-            name="status"
-            control={control}
-            type="select"
-            options={[
-              { label: "Ativo", value: "true" },
-              { label: "Inativo", value: "false" },
-            ]}
-            disabled={!isEditing}
-            rules={{ required: 'Status do Sistema é obrigatório' }}
-          />
+       
+          <SelectCostum name="statusSistema" id="status" disabled={!isEditing} required={'Status do sistema é obrigatorio'}>
+            <option value="">Status do sistema</option>
+            <option value="true"> Ativo </option>
+            <option value="false"> Inativo </option>
+        
+          </SelectCostum>
         </EqualDivider>
         <EqualDivider>
           {isEditing ? (
             <>
-              <Styled.BtnCustom variant="blue" type="submit">
+              <BtnCustom variant="blue" type="submit">
                 Editar Consulta
-              </Styled.BtnCustom>
-              <Styled.BtnCustom variant="red" type="button" onClick={onDeleteConsulta}>
+              </BtnCustom>
+              <BtnCustom variant="red" type="button" onClick={onDeleteConsulta}>
                 Excluir Consulta
-              </Styled.BtnCustom>
+              </BtnCustom>
             </>
           ) : (
-            <Styled.BtnCustom variant="primary" type="submit">
+            <BtnCustom variant="primary" type="submit">
               Enviar Consulta
-            </Styled.BtnCustom>
+            </BtnCustom>
           )}
         </EqualDivider>
       </Form>

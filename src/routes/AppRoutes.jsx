@@ -11,6 +11,7 @@ import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
 import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
 import CadMedicamento from "../pages/CadMedicamento/CadMedicamento.page"
 import CadastroConsultaPage from "../pages/CadastroConsultaPage/CadastroConsulta.Page";
+import CadastroExercicioPage from "../pages/CadastroExercicioPage/CadastroExercicioPage";
 
 export const AppRoutes = () => {
   const { usuario } = useAuth();
@@ -26,14 +27,18 @@ export const AppRoutes = () => {
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/editausuario/:id" element={<CadastrarUsuariosPage />} />}
-            
+            {}
             <Route path="/cadastrapaciente" element={<PacientePage />} />
             <Route path="/editapaciente/:id" element={<PacientePage />} />
             <Route path="/exames" element={<ExamePage />} />
             <Route path="/exames/:id" element={<ExamePage />} />
             <Route path="/cadMedicamento" element={<CadMedicamento />} />
+
             <Route path="cadastroconsulta" element={<CadastroConsultaPage/>}/>
-            <Route path="editaconsulta/:id" element={<CadastroConsultaPage/>}/>
+            <Route path="cadastroconsulta/:id" element={<CadastroConsultaPage/>}/>
+
+            <Route path="cadastroexercicio" element={< CadastroExercicioPage/>}/>
+            <Route  path="cadastroexercicio/:id" element={<CadastroExercicioPage />}/>
           </Route>
           {/* Fim do Layout */}
         </Route>
