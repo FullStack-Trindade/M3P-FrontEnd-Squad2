@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import  {COLOR}  from "../../assets/styles/colors";
+import  {COLOR}  from "../../../assets/styles/colors";
 
 export const CardWrapper = styled.div`
   margin-top: 2rem;

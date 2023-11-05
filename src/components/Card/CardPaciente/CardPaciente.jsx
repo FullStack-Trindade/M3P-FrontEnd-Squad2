@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 
 import * as Styled from './CardPaciente.style';
-import  {COLOR}  from "../../assets/styles/colors";
+import  {COLOR}  from "../../../assets/styles/colors";
 
 
 const calculateAge = (birthdate) => {
@@ -19,7 +19,7 @@ const calculateAge = (birthdate) => {
   return age;
 };
 
-const CardPatient = ({ paciente }) => {
+const CardPaciente = ({ paciente }) => {
   const { nome_completo, data_nascimento, telefone, convenio } = paciente;
   const idade = calculateAge(paciente.data_nascimento);
 
@@ -40,13 +40,13 @@ const CardPatient = ({ paciente }) => {
   );
 };
 
-CardPatient.propTypes = {
-  patient: PropTypes.shape({
-    nome: PropTypes.string.isRequired,
+CardPaciente.propTypes = {
+  paciente: PropTypes.shape({
+    nome_completo: PropTypes.string,
     idade: PropTypes.number,
-    telefone: PropTypes.string.isRequired,
+    telefone: PropTypes.string,
     convenio: PropTypes.string,
   }).isRequired,
 };
 
-export default CardPatient;
+export default CardPaciente;
