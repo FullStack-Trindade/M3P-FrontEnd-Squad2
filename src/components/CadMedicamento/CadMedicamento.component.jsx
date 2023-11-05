@@ -1,5 +1,4 @@
 import { Container } from "react-bootstrap"
-import InputComponent from "../Input/Input.component"
 import { Btn } from "../Button/button.style"
 import * as Styled from "./cadMedicamento.style"
 import {
@@ -10,13 +9,20 @@ import {
 	InputGroup,
 	Input,
 } from "../Input/Input.style"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SidebarContext } from "../../contexts/SidebarContext"
 import { useForm } from "react-hook-form"
-import { api } from "../../api/api"
+import ListaTodosPacientes from "../ListaPacientes/ListaTodosPacientes"
+import MedicamentoService from "../../services/Medicamento.service"
+import { toast } from "react-toastify"
+import { useParams } from "react-router"
 
 export default function CadMedicamentoComponent() {
 	const { showSidebar } = useContext(SidebarContext)
+	const [paciente_id, setPacienteId] = useState(null)
+	const [pacienteNome, setPacienteNome] = useState("")
+	const [statusDoSistema, setStatus] = useState(true);
+	const { id } = useParams()
 
 	const {
 		register,
@@ -25,42 +31,76 @@ export default function CadMedicamentoComponent() {
 		formState: { errors },
 	} = useForm()
 
-	// const handleChange = (value) => {
-	// 	handleSearch(value)
-	// }
+	//token consumindo do local storage
+	const token = localStorage.getItem("@Auth:token")
 
-	const onSubmit = (data) => {
-		console.log(data)
+	const onSubmit = async (data) => {
+		register("paciente_id", paciente_id)
+		console.log({ paciente_id, ...data })
+
+		try {
+			if (id) {
+				await MedicamentoService.Update(id, data, token)
+				toast.success(`Medicamento ${data.nome} atualizado com sucesso`, {
+					position: toast.POSITION.TOP_CENTER,
+					theme: "colored",
+					autoClose: 2000,
+				})
+			}
+
+			setStatus(true)
+			const dados = { ...data, statusDoSistema, paciente_id }
+			const res = await MedicamentoService.Create(dados, token)
+			toast.success(
+				`Cadastro do medicamento: ${res.nome_completo} realizado com sucesso!`,
+				{
+					position: toast.POSITION.TOP_CENTER,
+					theme: "colored",
+					autoClose: 2000,
+				}
+			)
+		} catch (error) {
+			if (error.response && error.response.status === 409) {
+				const errorMessage =
+					error.response.data.message || "Erro desconhecido"
+				toast.error(`Erro 409: ${errorMessage}`, {
+					position: toast.POSITION.TOP_CENTER,
+					theme: "colored",
+					autoClose: 2000,
+				})
+			} else {
+				toast.error(`Erro ao cadastrar Medicamento: ${error.message}`, {
+					position: toast.POSITION.TOP_CENTER,
+					theme: "colored",
+					autoClose: 2000,
+				})
+			}
+		}
 	}
 
-	const handleSearch = (value) => {
-		api.get(value)
-		// fetch("http://localhost:3000/pacientes")
-		// 	.then((res) => res.json())
-		// 	.then((json) => {
-		// 		const result = json.filter((paciente) => {
-		// 			return (
-		// 				(value && paciente.nome.toLowerCase().includes(value))
-		// 			)
-		// 		})
-		// 		return result
-		// 	})
+	const handleSelectPaciente = (selectedPaciente) => {
+		console.log(selectedPaciente.id)
+		setPacienteId(selectedPaciente.id)
+		setPacienteNome(`Paciente: ${selectedPaciente.nome_completo}`)
 	}
 
+	// pega data atual do sistema
 	const getDate = () => {
 		const year = new Date().getFullYear()
 		const month = new Date().toLocaleString("default", { month: "2-digit" })
 		const day = new Date().toLocaleString("default", { day: "2-digit" })
 
 		const hoje = `${year}-${month}-${day}`
-		setValue("data", hoje)
+		setValue("dataMedicamento", hoje)
 	}
 
+	// pega hora atual do sistema
 	const getTime = () => {
 		const horario = new Date().toLocaleTimeString().slice(0, 5)
-		setValue("horario", horario)
+		setValue("horaMedicamento", horario)
 	}
 
+	// atualiza data e hora ao carregar a página
 	useEffect(() => {
 		getDate()
 		getTime()
@@ -76,22 +116,20 @@ export default function CadMedicamentoComponent() {
 				}}
 			>
 				{/* Busca do Paciente */}
-				<InputComponent
-					placeholder="Digite o nome do paciente"
-					label="Paciente"
-					onChange={(e) => handleSearch(e.target.value)}
-				/>
+				<ListaTodosPacientes onSelectPaciente={handleSelectPaciente} />
+
+				{pacienteNome && <Label>{pacienteNome}</Label>}
 
 				{/* Inicio do formulário */}
 				<Styled.Form onSubmit={handleSubmit(onSubmit)}>
 					<InputGroup>
-					<Label htmlFor="nome">Nome do Medicamento</Label>
+						<Label htmlFor="nomeMedicamento">Nome do Medicamento</Label>
 						<Input
 							type="text"
 							placeholder="Digite o nome do Medicamento"
 							label="Nome do Medicamento"
-							id="nome"
-							{...register("nome", {
+							id="nomeMedicamento"
+							{...register("nomeMedicamento", {
 								required: "Nome do medicamento é obrigatório",
 								maxLength: {
 									value: 100,
@@ -105,7 +143,7 @@ export default function CadMedicamentoComponent() {
 								},
 							})}
 						/>
-						{errors.nome && <Error>{errors.nome.message}</Error>}
+						{errors.nomeMedicamento && <Error>{errors.nomeMedicamento.message}</Error>}
 					</InputGroup>
 
 					<div
@@ -117,27 +155,27 @@ export default function CadMedicamentoComponent() {
 						}}
 					>
 						<InputGroup>
-						<Label htmlFor="data">Data</Label>
+							<Label htmlFor="dataMedicamento">Data</Label>
 							<Input
 								type="date"
 								label="Data"
-								id="data"
-								{...register("data", { required: "Informe a data" })}
+								id="dataMedicamento"
+								{...register("dataMedicamento", { required: "Informe a data" })}
 							/>
-							{errors.data && <Error>{errors.data.message}</Error>}
+							{errors.dataMedicamento && <Error>{errors.dataMedicamento.message}</Error>}
 						</InputGroup>
 
 						<InputGroup>
-						<Label htmlFor="horario">Horario</Label>
+							<Label htmlFor="horaMedicamento">Horario</Label>
 							<Input
 								type="time"
 								label="Horario"
-								id="horario"
-								{...register("horario", {
+								id="horaMedicamento"
+								{...register("horaMedicamento", {
 									required: "informe o horário",
 								})}
 							/>
-							{errors.horario && <Error>{errors.horario.message}</Error>}
+							{errors.horaMedicamento && <Error>{errors.horaMedicamento.message}</Error>}
 						</InputGroup>
 					</div>
 					<div
@@ -149,11 +187,11 @@ export default function CadMedicamentoComponent() {
 						}}
 					>
 						<InputGroup>
-							<Label htmlFor="tipo">Tipo</Label>
+							<Label htmlFor="tipoMedicamento">Tipo</Label>
 							<Select
-								name="tipo"
-								id="tipo"
-								{...register("tipo", { required: "Informe um tipo" })}
+								name="tipoMedicamento"
+								id="tipoMedicamento"
+								{...register("tipoMedicamento", { required: "Informe um tipo" })}
 							>
 								<option value="capsula">Cápsula</option>
 								<option value="comprimido">Comprimido</option>
@@ -164,31 +202,31 @@ export default function CadMedicamentoComponent() {
 								<option value="injecao">Injeção</option>
 								<option value="spray">Spray</option>
 							</Select>
-							{errors.tipo && <Error>{errors.tipo.message}</Error>}
+							{errors.tipoMedicamento && <Error>{errors.tipoMedicamento.message}</Error>}
 						</InputGroup>
 
 						<InputGroup>
-							<Label htmlFor="quantidade">Quantidade</Label>
+							<Label htmlFor="quantidadeMedicamento">Quantidade</Label>
 							<Input
 								type="number"
 								label="Quantidade"
-								id="quantidade"
+								id="quantidadeMedicamento"
 								step={0.01}
 								placeholder="0,00"
-								{...register("quantidade", {
+								{...register("quantidadeMedicamento", {
 									required: "Informe a quantidade",
 								})}
 							/>
-							{errors.quantidade && (
-								<Error>{errors.quantidade.message}</Error>
+							{errors.quantidadeMedicamento && (
+								<Error>{errors.quantidadeMedicamento.message}</Error>
 							)}
 						</InputGroup>
 						<InputGroup>
 							<Label htmlFor="unidade">Unidade</Label>
 							<Select
-								name="unidade"
-								id="unidade"
-								{...register("unidade", {
+								name="unidadeMedicamento"
+								id="unidadeMedicamento"
+								{...register("unidadeMedicamento", {
 									required: "Informe a unidade",
 								})}
 							>
@@ -202,11 +240,11 @@ export default function CadMedicamentoComponent() {
 						</InputGroup>
 					</div>
 					<InputGroup style={{ marginTop: "1rem" }}>
-						<Label htmlFor="observacoes">Observações</Label>
+						<Label htmlFor="observacoesMedicamento">Observações</Label>
 						<TextArea
 							placeholder="Digite as observações"
-							id="observacoes"
-							{...register("observacoes", {
+							id="observacoesMedicamento"
+							{...register("observacoesMedicamento", {
 								required: "Informe as observações",
 								minLength: {
 									value: 10,
