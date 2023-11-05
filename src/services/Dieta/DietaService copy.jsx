@@ -57,18 +57,17 @@ const DietaService = {
       }
     },
 
-    async getDietaPorId(id, token) {
+    async getDietaId(id, token) {
       // Use a função `api.get` para buscar os detalhes do dieta com base no `id`
       const response = await api.get(`/dietas/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response get dieta por id:", response);
-    
+  
       if (response.ok) {
         const data = await response.json();
-        console.log("dados retornados no get por id:", data);
+        console.log("dados retornados no get por id:",data);
         return data;
       } else {
         let errorMessage = 'Erro desconhecido';
@@ -86,7 +85,6 @@ const DietaService = {
         throw new Error(errorMessage);
       }
     },
-    
 
     async excluirDieta(id, token) {
       const response = await api.delete(`/dietas/${id}`, {
@@ -131,6 +129,28 @@ const DietaService = {
         throw new Error(errorMessage);
       }
     },
+
+    async buscarPacientePorNomeOuID(nomeOuID, token) {
+  
+      const response = await api.get(`/buscarPaciente?nomeOuID=${nomeOuID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        let errorMessage = 'Erro ao buscar paciente';
+        const erroData = await response.json();
+        if (erroData && erroData.message) {
+          errorMessage = erroData.message;
+        }
+        throw new Error(errorMessage);
+      }
+    },
+  
 
     };
     export default DietaService;
