@@ -89,7 +89,7 @@ export const TextAreaContainer = styled.div`
 `;
 export const Error = styled.p`
     font-size: .8rem;
-    color: COLOR.$message_error;
+    color: ${({$color}) =>  COLOR.$message_error};
   `;
 
 export const Icon = styled.button`
