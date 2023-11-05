@@ -1,12 +1,10 @@
+import { api } from '../../api/api'; // Importe a instância da APItoken
 
-import { api } from '../../api/api'; // Importe a instância da API
-
-
-const PacienteService = {
+const DietaService = {
 
   
-    async criarPaciente(paciente, token) {
-        const response = await api.post('/pacientes', paciente, {
+    async criarDieta(dieta, token) {
+        const response = await api.post('/dietas', dieta, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -32,8 +30,8 @@ const PacienteService = {
           }
     },
 
-    async atualizarPaciente(id, paciente, token) {
-      const response = await api.put(`/pacientes/${id}`, paciente, {
+    async atualizarDieta(id, dieta, token) {
+      const response = await api.put(`/dietas/${id}`, dieta, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,17 +57,18 @@ const PacienteService = {
       }
     },
 
-    async getPacientePorId(id, token) {
-      // Use a função `api.get` para buscar os detalhes do paciente com base no `id`
-      const response = await api.get(`/pacientes/${id}`, {
+    async getDietaPorId(id, token) {
+      // Use a função `api.get` para buscar os detalhes do dieta com base no `id`
+      const response = await api.get(`/dietas/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+      console.log("response get dieta por id:", response);
+    
       if (response.ok) {
         const data = await response.json();
-        console.log("dados retornados no get por id:",data);
+        console.log("dados retornados no get por id:", data);
         return data;
       } else {
         let errorMessage = 'Erro desconhecido';
@@ -87,9 +86,10 @@ const PacienteService = {
         throw new Error(errorMessage);
       }
     },
+    
 
-    async getPacientes(token) {
-      const response = await api.get(`/pacientes`, {
+    async excluirDieta(id, token) {
+      const response = await api.delete(`/dietas/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -97,7 +97,6 @@ const PacienteService = {
   
       if (response.ok) {
         const data = await response.json();
-        console.log("dados retornados no get:",data);
         return data;
       } else {
         let errorMessage = 'Erro desconhecido';
@@ -105,19 +104,14 @@ const PacienteService = {
         if (erroData) {
           if (erroData.message) {
             errorMessage = erroData.message;
-          } else if (erroData.errors && Array.isArray(erroData.errors)) {
-            const errorMessages = erroData.errors
-              .map((error) => error.message)
-              .join(', ');
-            errorMessage = errorMessages;
           }
         }
         throw new Error(errorMessage);
       }
     },
 
-    async excluirPaciente(id, token) {
-      const response = await api.delete(`/pacientes/${id}`, {
+    async listarPacientes(token) {
+      const response = await api.get('/pacientes', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -139,4 +133,4 @@ const PacienteService = {
     },
 
     };
-    export default PacienteService;
+    export default DietaService;

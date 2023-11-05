@@ -17,10 +17,8 @@ import {
   BtnCustom as Btn,
 } from "./PacienteForm.styled";
 
-//token manual depois deve consumir de um local storage
-let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsIm5vbWVDb21wbGV0byI6IkFkbWluaXN0cmFkb3IiLCJlbWFpbCI6ImFkbWluQGJlbWxhYi5jb20uYnIiLCJ0aXBvIjoiQURNSU5JU1RSQURPUiIsImlhdCI6MTY5ODg4MjM2MywiZXhwIjoxNjk4OTY4NzYzfQ.AKLEbojUaY0Drp288h0rPud0pe01SB9ZREcUu8_a1_w";
-
+//token consumindo do local storage
+const token = localStorage.getItem("@Auth:token");
 
 const PacienteForm = ({ isEditing = false }) => {
   const { id } = useParams();
@@ -54,6 +52,15 @@ const PacienteForm = ({ isEditing = false }) => {
   }, [id, setValue, reset]);
 
   const onSubmit = async (data) => {
+    // console.log(data.endereco.cep);
+    // if (!data.endereco || !data.endereco.cep) {
+    //   toast.error(`Informe o CEP`, {
+    //     position: toast.POSITION.TOP_CENTER,
+    //     theme: 'colored',
+    //     autoClose: 2000,
+    //   });
+    //   return;
+    // }
     try {
       //lista dados do paciente a serem enviados
       console.log(data);
