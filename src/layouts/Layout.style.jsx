@@ -5,6 +5,7 @@ export const LayoutContainer = styled.div`
     height: 100%;
     width: 100%;
     min-height: 100vh;
+    overflow: auto;
 `;
 
 export const LayoutMain = styled.main`
