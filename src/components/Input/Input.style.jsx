@@ -10,6 +10,7 @@ export const InputGroup = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.4rem;
+  margin-left: 5px;
 `;
 export const Loading = styled.div`
     position: absolute;
