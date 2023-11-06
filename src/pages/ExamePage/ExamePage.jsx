@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ToolbarTituloContext } from "../../contexts/ToolbarTitulo/ToolbarTitulo.context";
 import ExameForm from "../../components/Form/ExameForm/ExameForm.component";
 import ExameService from "../../services/Exame/ExameService";
-import Search from "../../components/Busca/Search";
 import PacienteService from "../../services/Paciente/PacienteService";
 
 export const ExamePage = () => {
@@ -36,10 +35,9 @@ export const ExamePage = () => {
         {id ? (
           <ExameForm isEditing={true} setSelectedPatient={selectedPatient} />
         ) : (
-          <>
-            <Search pacienteSelecionado={handlePatient} />
+          
             <ExameForm isEditing={false} setSelectedPatient={selectedPatient} />
-          </>
+          
         )}
       </div>
     </>

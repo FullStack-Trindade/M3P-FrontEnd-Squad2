@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ExameService from "../../../services/Exame/ExameService";
 import InputComponent from "../../Input/Input.component";
 import OptionComponent from "../../Option/OptionComponent";
+import ListaTodosPacientes from "../../ListaPacientes/ListaTodosPacientes";
 
 import * as Styled from "../../Button/button.style";
 
@@ -22,14 +23,25 @@ export default function ExameForm({ isEditing = false }) {
     formState: { errors, isValid },
   } = useForm();
   const navigate = useNavigate();
-  const [status, setStatus] = useState(true);
-
+  const [paciente_id, setPacienteId] = useState(null);
+  const [pacienteNome, setPacienteNome] = useState("");
+  const [statusSistema, setStatus] = useState(true);
   
+
+  const handleSelectPaciente = (selectedPaciente) => {
+    console.log(selectedPaciente.id);
+    setPacienteId(selectedPaciente.id);
+    setPacienteNome(`Paciente: ${selectedPaciente.nome_completo}`);
+  };
+
+
+  console.log(id)
   useEffect(() => {
     if (id) {
       const exameData = async () => {
         try {
-          const response = await service.GetById(parseInt(id));
+          const response = await service.GetById(id,token);
+          console.log(response)
           if (response) {
             const exame = response;
             Object.keys(exame).forEach((key) => {
@@ -51,18 +63,20 @@ export default function ExameForm({ isEditing = false }) {
     try {
       if (id) {
         await service.Update(id, data, token);
-        toast.success(`Exame ${data.nomeExame} atualizado com sucesso!`, {
+        toast.success(`Exame atualizado com sucesso!`, {
           position: toast.POSITION.TOP_CENTER,
           theme: "colored",
           autoClose: 2000,
         });
       } else {
-        console.log(data)
         setStatus(true);
-        data = { ...data, status };
+        console.log(paciente_id);
+        data = { ...data, statusSistema, paciente_id};
+        console.log(data)
         const response = await service.Create(data, token);
+        console.log(response)
         toast.success(
-          `Cadastro do exame: ${response.exame} realizado com sucesso!`,
+          `Cadastro do exame realizado com sucesso!`,
           {
             position: toast.POSITION.TOP_CENTER,
             theme: "colored",
@@ -72,6 +86,7 @@ export default function ExameForm({ isEditing = false }) {
         navigate("/editaexame/" + response.id);
       }
     } catch (error) {
+      console.log(error)
       if (error.response && error.response.status === 400) {
         const errorMessage = error.response.data.message || "Erro desconhecido";
         toast.error(`Erro 400: ${errorMessage}`, {
@@ -80,6 +95,7 @@ export default function ExameForm({ isEditing = false }) {
           autoClose: 2000,
         });
       } else {
+        console.log(error)
         toast.error(`Erro ao cadastrar exame: ${error.message}`, {
           position: toast.POSITION.TOP_CENTER,
           theme: "colored",
@@ -109,6 +125,11 @@ export default function ExameForm({ isEditing = false }) {
 
   return (
     <>
+      {!isEditing ? (
+          <ListaTodosPacientes onSelectPaciente={handleSelectPaciente} />
+        ) : (
+          <></>
+        )}
       <form  style={{width:"98%"}} noValidate onSubmit={handleSubmit(onSubmit)}>
         <InputComponent
           label="Nome do Exame:"
@@ -213,7 +234,7 @@ export default function ExameForm({ isEditing = false }) {
         <div style={{ margin: "20px" }}>
           {isEditing ? (
             <>
-              <Styled.Btn variant="blue" type="button" onClick={editar}>
+              <Styled.Btn variant="blue" type="submit" style={{marginRight:"20px"}}>
                 Editar Exame
               </Styled.Btn>
               <Styled.Btn variant="red" type="button" onClick={deletar}>
