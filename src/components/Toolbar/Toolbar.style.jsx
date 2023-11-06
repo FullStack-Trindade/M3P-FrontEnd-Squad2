@@ -7,7 +7,7 @@ export const Header = styled.header`
 
 	width: 100%;
 	height: 7.5rem;
-	padding: 0 1rem;
+	padding: 2rem;
 
 	background-color: #004a63;
 	color: #fff;
@@ -44,7 +44,7 @@ export const PerfilDropdown = styled.div`
 	position: absolute;
 	top: 3.5rem;
 	right: 0;
-	width: 12.5rem;
+	width: 15rem;
 	height: 6rem;
 	background-color: #fff;
 	color: #004a63;

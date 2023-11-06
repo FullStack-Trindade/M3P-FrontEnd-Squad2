@@ -1,35 +1,33 @@
-import { Btn } from "../components/Button/button.style"
+/* import { Btn } from "../components/Button/button.style"*/
 import { ToolbarComponent } from "../components/Toolbar/Toolbar.component"
 import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.context"
-import InputComponent from "../components/Input/Input.component"
 import SidebarComponent from "../components/Sidebar/Sidebar.component"
 import ModalComponent from "../components/Modal/Modal.component"
 import SuccessComponent from "../components/Success/Success.component"
 import { useContext, useEffect } from "react"
+import { Outlet } from "react-router"
 import { ModalContext } from "../contexts/Modal.context"
+import * as Styled from "./Layout.style"
 
 export default function Layout() {
 
-  const {show, setShow} = useContext(ModalContext)
+	const { show, setShow } = useContext(ModalContext)
 
-  useEffect(() => {
-    setShow(true)
-  },[])
+	useEffect(() => {
+		setShow(true)
+	}, [])
 
 	return (
 		<>
 			<ToolbarTituloProvider>
-				<div style={{ display: "flex" }}>
+				<Styled.LayoutContainer>
 					<SidebarComponent />
-					<div>
+					<Styled.LayoutMain>
 						<ToolbarComponent />
-						<InputComponent
-							type="text"
-							id="ss"
-							mask="999.999.999-99"
-							label="cpf"
-						></InputComponent>
-						<h4>Botões e suas variantes</h4>
+						<Styled.LayoutContent>
+							<Outlet />
+						</Styled.LayoutContent>
+						{/*	<h4>Botões e suas variantes</h4>
 						<div style={{ display: "flex", gap: "1rem" }}>
 							<Btn variant="primary">primary</Btn>
 							<Btn variant="outlined">outlined</Btn>
@@ -40,13 +38,13 @@ export default function Layout() {
 							<Btn variant="greenOutlined">greenOutlined</Btn>
 							<Btn variant="blue">blue</Btn>
 							<Btn variant="blueOutlined">blueOutlined</Btn>
-						</div>
-					</div>
-				</div>
+						</div> */}
+					</Styled.LayoutMain>
+				</Styled.LayoutContainer>
 			</ToolbarTituloProvider>
-      <ModalComponent show={show} >
-        <SuccessComponent />
-      </ModalComponent>
+			<ModalComponent show={show} >
+				<SuccessComponent />
+			</ModalComponent>
 		</>
 	)
 }

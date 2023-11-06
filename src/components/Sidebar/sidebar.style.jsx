@@ -11,7 +11,9 @@ export const Sidebar = styled.nav`
 		return $isOpened ? "200px" : "60px"
 	}};
 	inset: 0;
+	position: sticky;
 	padding: 0.5rem;
+	z-index: 1;
 `
 
 export const Header = styled.div`
@@ -102,7 +104,7 @@ export const Li = styled.li`
 	border-radius: 0.5rem;
 	width: 100%;
 
-	svg {
+	& > * {
 		pointer-events: none;
 	}
 
