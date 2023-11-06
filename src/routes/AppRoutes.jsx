@@ -16,6 +16,8 @@ import CadastroConsultaPage from "../pages/CadastroConsultaPage/CadastroConsulta
 import CadastroExercicioPage from "../pages/CadastroExercicioPage/CadastroExercicioPage";
 
 import { LogsPage } from "../pages/LogsPage/Logs.page";
+import { ListaProntuariosPage } from "../pages/ListaProntuariosPage/ListaProntuariosPage";
+import { ProntuarioPacientePage } from "../pages/ProntuarioPacientePage/ProntuarioPacientePage";
 
 export const AppRoutes = () => {
   const { usuario } = useAuth();
@@ -48,13 +50,15 @@ export const AppRoutes = () => {
             <Route path="/editadieta/:id" element={<DietaPage />} />
 
 
-            <Route path="/cadMedicamento" element={<CadMedicamento />} />
-
             <Route path="consultas" element={<CadastroConsultaPage/>}/>
             <Route path="editaconsulta/:id" element={<CadastroConsultaPage/>}/>
 
             <Route path="exercicios" element={<CadastroExercicioPage/>}/>
             <Route  path="exercicios/:id" element={<CadastroExercicioPage />}/>
+
+            <Route path="/listaprontuarios" element={<ListaProntuariosPage />} />
+            <Route path="/listaprontuario/:id" element={<ProntuarioPacientePage />} />
+
           </Route>
           {/* Fim do Layout */}
         </Route>
