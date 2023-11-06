@@ -17,11 +17,11 @@ import MedicamentoService from "../../services/Medicamento.service"
 import { toast } from "react-toastify"
 import { useParams } from "react-router"
 
-export default function CadMedicamentoComponent() {
+export default function CadMedicamentoComponent({ isEditing }) {
 	const { showSidebar } = useContext(SidebarContext)
 	const [paciente_id, setPacienteId] = useState(null)
 	const [pacienteNome, setPacienteNome] = useState("")
-	const [statusDoSistema, setStatus] = useState(true);
+	const [statusDoSistema, setStatus] = useState(true)
 	const { id } = useParams()
 
 	const {
@@ -41,7 +41,7 @@ export default function CadMedicamentoComponent() {
 		try {
 			if (id) {
 				await MedicamentoService.Update(id, data, token)
-				toast.success(`Medicamento ${data.nome} atualizado com sucesso`, {
+				toast.success(`Medicamento ${data.nomeMedicamento} atualizado com sucesso`, {
 					position: toast.POSITION.TOP_CENTER,
 					theme: "colored",
 					autoClose: 2000,
@@ -49,8 +49,8 @@ export default function CadMedicamentoComponent() {
 			}
 
 			setStatus(true)
-			setValue('statusDoSistema', statusDoSistema)
-			const dados = { ...data, statusDoSistema ,paciente_id }
+			setValue("statusDoSistema", statusDoSistema)
+			const dados = { ...data, statusDoSistema, paciente_id }
 			console.log(dados)
 			const res = await MedicamentoService.Create(dados, token)
 			toast.success(
@@ -102,6 +102,15 @@ export default function CadMedicamentoComponent() {
 		setValue("horaMedicamento", horario)
 	}
 
+	const handleDelete = async (id) => {
+		try {
+			const ok = await MedicamentoService.Excluir(id)
+			console.log(ok)
+		} catch (error) {
+			console.error(error.message)
+		}
+	}
+
 	// atualiza data e hora ao carregar a página
 	useEffect(() => {
 		getDate()
@@ -144,7 +153,9 @@ export default function CadMedicamentoComponent() {
 								},
 							})}
 						/>
-						{errors.nomeMedicamento && <Error>{errors.nomeMedicamento.message}</Error>}
+						{errors.nomeMedicamento && (
+							<Error>{errors.nomeMedicamento.message}</Error>
+						)}
 					</InputGroup>
 
 					<div
@@ -161,9 +172,13 @@ export default function CadMedicamentoComponent() {
 								type="date"
 								label="Data"
 								id="dataMedicamento"
-								{...register("dataMedicamento", { required: "Informe a data" })}
+								{...register("dataMedicamento", {
+									required: "Informe a data",
+								})}
 							/>
-							{errors.dataMedicamento && <Error>{errors.dataMedicamento.message}</Error>}
+							{errors.dataMedicamento && (
+								<Error>{errors.dataMedicamento.message}</Error>
+							)}
 						</InputGroup>
 
 						<InputGroup>
@@ -176,7 +191,9 @@ export default function CadMedicamentoComponent() {
 									required: "informe o horário",
 								})}
 							/>
-							{errors.horaMedicamento && <Error>{errors.horaMedicamento.message}</Error>}
+							{errors.horaMedicamento && (
+								<Error>{errors.horaMedicamento.message}</Error>
+							)}
 						</InputGroup>
 					</div>
 					<div
@@ -192,7 +209,9 @@ export default function CadMedicamentoComponent() {
 							<Select
 								name="tipoMedicamento"
 								id="tipoMedicamento"
-								{...register("tipoMedicamento", { required: "Informe um tipo" })}
+								{...register("tipoMedicamento", {
+									required: "Informe um tipo",
+								})}
 							>
 								<option value="CAPSULA">Cápsula</option>
 								<option value="COMPRIMIDO">Comprimido</option>
@@ -203,7 +222,9 @@ export default function CadMedicamentoComponent() {
 								<option value="INJECAO">Injeção</option>
 								<option value="SPRAY">Spray</option>
 							</Select>
-							{errors.tipoMedicamento && <Error>{errors.tipoMedicamento.message}</Error>}
+							{errors.tipoMedicamento && (
+								<Error>{errors.tipoMedicamento.message}</Error>
+							)}
 						</InputGroup>
 
 						<InputGroup>
@@ -266,8 +287,12 @@ export default function CadMedicamentoComponent() {
 						<Btn type="submit" variant="primary">
 							Cadastrar
 						</Btn>
-						<Btn variant="outlined">Editar</Btn>
-						<Btn variant="redOutlined">Excluir</Btn>
+						{isEditing && (
+							<>
+								<Btn variant="outlined">Editar</Btn>
+								<Btn variant="redOutlined" onClick={() => handleDelete(id)}>Excluir</Btn>
+							</>
+						)}
 					</Styled.ActionsContainer>
 				</Styled.Form>
 			</Container>
