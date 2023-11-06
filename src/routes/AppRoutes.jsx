@@ -11,6 +11,10 @@ import { useAuth } from "../hooks/useAuth";
 import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
 import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
 import CadMedicamento from "../pages/CadMedicamento/CadMedicamento.page"
+
+import CadastroConsultaPage from "../pages/CadastroConsultaPage/CadastroConsulta.Page";
+import CadastroExercicioPage from "../pages/CadastroExercicioPage/CadastroExercicioPage";
+
 import { LogsPage } from "../pages/LogsPage/Logs.page";
 import { ListaProntuariosPage } from "../pages/ListaProntuariosPage/ListaProntuariosPage";
 import { ProntuarioPacientePage } from "../pages/ProntuarioPacientePage/ProntuarioPacientePage";
@@ -33,7 +37,9 @@ export const AppRoutes = () => {
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/editausuario/:id" element={<CadastrarUsuariosPage />} />}
+
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/logs" element={<LogsPage />} />}
+
             <Route path="/cadastrapaciente" element={<PacientePage />} />
             <Route path="/editapaciente/:id" element={<PacientePage />} />
 
@@ -43,10 +49,21 @@ export const AppRoutes = () => {
             <Route path="/cadastradieta" element={<DietaPage />} />
             <Route path="/editadieta/:id" element={<DietaPage />} />
 
+            <Route path="/exames" element={<ExamePage />} />
+            <Route path="/exames/:id" element={<ExamePage />} />
+              
+            <Route path="/medicamento" element={<CadMedicamento />} />
+            <Route path="/medicamento/:nome" element={<CadMedicamento />} />
 
-            <Route path="/cadMedicamento" element={<CadMedicamento />} />
+            <Route path="/consultas" element={<CadastroConsultaPage/>}/>
+            <Route path="/editaconsulta/:id" element={<CadastroConsultaPage/>}/>
+
+            <Route path="/exercicios" element={<CadastroExercicioPage/>}/>
+            <Route  path="/exercicios/:id" element={<CadastroExercicioPage />}/>
+
             <Route path="/listaprontuarios" element={<ListaProntuariosPage />} />
             <Route path="/listaprontuario/:id" element={<ProntuarioPacientePage />} />
+
           </Route>
           {/* Fim do Layout */}
         </Route>

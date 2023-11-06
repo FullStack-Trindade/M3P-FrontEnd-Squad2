@@ -48,13 +48,16 @@ export default function SidebarComponent() {
 			case `/editadieta/${id}`:
 				document.getElementById("dieta").checked = true
 				break
-			case "/exames":
+			case "/cadastraexame":
 				document.getElementById("exames").checked = true
 				break
-			case `/exames/${id}`:
+			case `/editaexame/${id}`:
 				document.getElementById("exames").checked = true
 				break
-			case "/cadmedicamento":
+			case "/medicamento":
+				document.getElementById("medicamento").checked = true
+				break
+			case `/medicamento/${id}`:
 				document.getElementById("medicamento").checked = true
 				break
 			case "/config":
@@ -125,7 +128,7 @@ export default function SidebarComponent() {
 								Dieta
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={() => navigate('/exames')}>
+						<Styled.Li onClick={() => navigate('/cadastraexame')}>
 							<input type="radio" name="page" id="exames" />
 							<TbTestPipe size={showSidebar ? "" : "1.5rem"} />
 							<label
@@ -136,7 +139,7 @@ export default function SidebarComponent() {
 							</label>
 						</Styled.Li>
 
-						<Styled.Li onClick={() => navigate('/cadmedicamento')}>
+						<Styled.Li onClick={() => navigate('/medicamento')}>
 							<input type="radio" name="page" id="medicamento" />
 							<TbPill size={showSidebar ? "" : "1.5rem"} />
 							<label
