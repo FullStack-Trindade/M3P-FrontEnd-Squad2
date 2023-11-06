@@ -40,7 +40,7 @@ export const AppRoutes = () => {
             <Route path="consultas" element={<CadastroConsultaPage/>}/>
             <Route path="editaconsulta/:id" element={<CadastroConsultaPage/>}/>
 
-            <Route path="exercicios" element={< CadastroExercicioPage/>}/>
+            <Route path="exercicios" element={<CadastroExercicioPage/>}/>
             <Route  path="exercicios/:id" element={<CadastroExercicioPage />}/>
           </Route>
           {/* Fim do Layout */}

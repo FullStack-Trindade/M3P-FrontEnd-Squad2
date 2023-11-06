@@ -18,7 +18,7 @@ export default function CadastroExercicioPage(){
 
     return(
         <>
-       
+       <h1>{setTitulo("Cadastro Exercicio")}</h1>
         {id ? <CadastroExercicioForm isEditing={true}/> : <CadastroExercicioForm isEditing={false}/>}
         </>
     )
