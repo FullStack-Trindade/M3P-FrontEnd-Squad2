@@ -7,7 +7,12 @@ export const LogsPage = () => {
     const { setTitulo } = useToolbarContext();
     const token = localStorage.getItem("@Auth:token");
     const [logs, setLogs] = useState([]);
-
+    const formataData = (data) => {
+        return new Date(data).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
+    }
+    const formataHora = (data) => {
+        return new Date(data).toLocaleTimeString().slice(0, 8);
+    }
     useEffect(() => {
         setTitulo("Página de Logs");
         fetchLogs();
@@ -30,7 +35,7 @@ export const LogsPage = () => {
                 <Styled.CardContent>
                     <Styled.CardTitulo>{log.id}</Styled.CardTitulo>
                     <Styled.CardTitulo>{log.registro}</Styled.CardTitulo>
-                    <Styled.CardTitulo>{log.dataHora}</Styled.CardTitulo>
+                    <Styled.CardTitulo>{`${formataData(log.dataHora)} às ${formataHora(log.dataHora)}`}</Styled.CardTitulo>
                 </Styled.CardContent>
             </Styled.Card>
         ));

@@ -48,10 +48,10 @@ export default function SidebarComponent() {
 			case `/editadieta/${id}`:
 				document.getElementById("dieta").checked = true
 				break
-			case "/exames":
+			case "/cadastraexame":
 				document.getElementById("exames").checked = true
 				break
-			case `/exames/${id}`:
+			case `/editaexame/${id}`:
 				document.getElementById("exames").checked = true
 				break
 			case "/cadmedicamento":
@@ -125,7 +125,7 @@ export default function SidebarComponent() {
 								Dieta
 							</label>
 						</Styled.Li>
-						<Styled.Li onClick={() => navigate('/exames')}>
+						<Styled.Li onClick={() => navigate('/cadastraexame')}>
 							<input type="radio" name="page" id="exames" />
 							<TbTestPipe size={showSidebar ? "" : "1.5rem"} />
 							<label

@@ -43,11 +43,13 @@ export const Input = styled.input`
   border-radius: 0.3126rem;
   margin-bottom:1rem;
   border: 1px solid;
+  font-size: 1rem;
   color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
     }};
   width: 100%;
   &::placeholder {
+    ont-size: 1rem;
     color: ${({ $color }) => {
       return $color === "danger"  ? COLOR.$message_error : COLOR.$blue_darkest;
     }}}
