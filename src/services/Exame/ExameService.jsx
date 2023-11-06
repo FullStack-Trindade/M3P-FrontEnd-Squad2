@@ -53,38 +53,37 @@ export default class ExameService {
             errorMessage = errorMessages;
           }
         }
-        throw new Error(errorMessage);
       }
+      throw new Error(errorMessage);
     }
-
-    async GetById(id, token) {
-      // Use a função `api.get` para buscar os detalhes do exame com base no `id`
-      const response = await api.get(`/exames/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
   
-      if (response.ok) {
-        const data = await response.json();
-        console.log("dados retornados no get por id:",data);
-        return data;
-      } else {
-        let errorMessage = 'Erro desconhecido';
-        const erroData = await response.json();
-        if (erroData) {
-          if (erroData.message) {
-            errorMessage = erroData.message;
-          } else if (erroData.errors && Array.isArray(erroData.errors)) {
-            const errorMessages = erroData.errors
-              .map((error) => error.message)
-              .join(', ');
-            errorMessage = errorMessages;
-          }
+  async GetById(id, token) {
+    const response = await api.get(`/exames/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("dados retornados no get por id:", data);
+      return data;
+    } else {
+      let errorMessage = "Erro desconhecido";
+      const erroData = await response.json();
+      if (erroData) {
+        if (erroData.message) {
+          errorMessage = erroData.message;
+        } else if (erroData.errors && Array.isArray(erroData.errors)) {
+          const errorMessages = erroData.errors
+            .map((error) => error.message)
+            .join(", ");
+          errorMessage = errorMessages;
         }
-        throw new Error(errorMessage);
       }
+      throw new Error(errorMessage);
     }
+  }
     async getExames( token) {
       const response = await api.get(`/exames`, {
         headers: {
@@ -113,7 +112,7 @@ export default class ExameService {
       }
     }
 
-    async excluirexame(id, token) {
+    async Delete(id, token) {
       const response = await api.delete(`/exames/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -131,10 +130,8 @@ export default class ExameService {
             errorMessage = erroData.message;
           }
         }
-        throw new Error(errorMessage);
       }
+      throw new Error(errorMessage);
     }
-
-    };
-
+  }
 
