@@ -35,7 +35,7 @@ export const AppRoutes = () => {
             <Route path="/exames" element={<ExamePage />} />
             <Route path="/exames/:id" element={<ExamePage />} />
             <Route path="/medicamento" element={<CadMedicamento />} />
-            <Route path="/medicamento/:id" element={<CadMedicamento />} />
+            <Route path="/medicamento/:nome" element={<CadMedicamento />} />
           </Route>
           {/* Fim do Layout */}
         </Route>
