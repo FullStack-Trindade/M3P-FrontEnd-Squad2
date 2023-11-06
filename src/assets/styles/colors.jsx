@@ -3,7 +3,7 @@ export const COLOR = {
     $blue_dark: '#065B74',
     $blue_medium: '#0D6C86',
     $blue_light: '#137C97',
-    $blue_lightest: '#198DAB',
+    $blue_lightest: '#5dc1da',
     
     $black_darkest: '#000000',
     $black_dark: '#0d0d0d',

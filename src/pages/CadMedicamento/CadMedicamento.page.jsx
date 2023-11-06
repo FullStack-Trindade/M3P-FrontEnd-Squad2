@@ -1,14 +1,27 @@
-import { Col, Container, Form, InputGroup, Row } from "react-bootstrap"
-import SidebarComponent from "../../components/Sidebar/Sidebar.component"
-import InputComponent from "../../components/Input/Input.component"
-import { MedicamentoContainer } from "./medicamento.style"
+import { useParams } from "react-router"
 import CadMedicamentoComponent from "../../components/CadMedicamento/CadMedicamento.component"
-import { ToolbarComponent } from "../../components/Toolbar/Toolbar.component"
+import { useToolbarContext } from "../../hooks/useToolbarContext"
+import { useEffect } from "react"
 
 export default function CadMedicamento() {
+	const { setTitulo } = useToolbarContext()
+	const { id } = useParams()
+
+	useEffect(() => {
+		{
+			id
+				? setTitulo("Editar Medicamento")
+				: setTitulo("Cadastrar Medicamento")
+		}
+	}, [id, setTitulo])
+
 	return (
 		<>
-			<CadMedicamentoComponent />
+			{id ? (
+				<CadMedicamentoComponent isEditing={true} />
+			) : (
+				<CadMedicamentoComponent isEditing={false} />
+			)}
 		</>
 	)
 }
