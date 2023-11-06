@@ -114,7 +114,6 @@ export default function CadMedicamentoComponent() {
 				style={{
 					padding: "1rem",
 					flex: "1 1",
-					marginLeft: showSidebar ? "200px" : "60px",
 				}}
 			>
 				{/* Busca do Paciente */}
