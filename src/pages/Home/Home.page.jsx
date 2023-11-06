@@ -21,6 +21,7 @@ import CardComponent from "../../components/Card/CardComponent/CardComponent";
 import CardPaciente from "../../components/Card/CardPaciente/CardPaciente";
 import CardUsuario from "../../components/Card/CardUsuario/CardUsuario";
 import Search from "../../components/Search/Search";
+import { useParams } from "react-router-dom";
 
 export const HomePage = () => {
   const exameService = new ExameService();
@@ -30,9 +31,9 @@ export const HomePage = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [filteredUsuario, setFilteredUsuario] = useState([]);
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
   const token = localStorage.getItem("@Auth:token");
-  /* console.log(token) */
+  const { id } = useParams();
   const dietas = async () => {
     await DietaService.getDietas(token);
   };
@@ -40,13 +41,13 @@ export const HomePage = () => {
     await exameService.getExames(token);
   };
   /*   const medicamentos = async () => {
-    await medicamentosService.getExames(token);
+    await medicamentoService.getAll (token);
   };
   const exercicios = async () => {
-    await exerciciosService.getExames(token);
+    await cadastroExercicioService.getExercicios(token);
 
   const consulta = async () => {
-    await consultaService.getExames(token);
+    await cadastroConsultaService.getConsultas(token);
   }; */
 
   useEffect(() => {
@@ -68,7 +69,6 @@ export const HomePage = () => {
       });
 
       setFilteredPatients(filtraPaciente);
-
     };
     const fetchUsuario = async () => {
       const dataUsuario = await UsuarioService.getUsuarios(token);
@@ -89,21 +89,13 @@ export const HomePage = () => {
       });
 
       setFilteredUsuario(filtraUsuario);
-
     };
-
 
     usuario?.tipo === "ADMINISTRADOR"
       ? (setTitulo("ESTATÍSTICAS E INFORMAÇÕES ADMINISTRADOR"),
-        console.log("teste adm"),
         fetchPaciente(),
         fetchUsuario())
-      : (setTitulo("ESTATÍSTICAS E INFORMAÇÕES GERAIS"),
-        console.log("teste else"),
-
-        fetchPaciente());
-
-
+      : (setTitulo("ESTATÍSTICAS E INFORMAÇÕES GERAIS"), fetchPaciente());
   }, [searchValue, setTitulo]);
 
   return (

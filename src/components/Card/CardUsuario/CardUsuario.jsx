@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useAuth } from '../../../hooks/useAuth';
 
 import {FaUser} from 'react-icons/fa';
 
 import * as Styled from '../CardPaciente/CardPaciente.style';
+import { Link } from 'react-router-dom';
 
 
 const CardUsuario = ({ user }) => {
   const { nomeCompleto, tipo, telefone, email } = user;
-  const { usuario } = useAuth();
 
   return (
     <Styled.CardWrapper>
@@ -22,6 +21,10 @@ const CardUsuario = ({ user }) => {
         <Styled.Info>{tipo}</Styled.Info>
         <Styled.Info>{telefone}</Styled.Info>
         <Styled.Info>{email}</Styled.Info>
+        <Link to={`/editausuario/${user.id}`}>
+          <Styled.ButtonVerMais>Ver mais</Styled.ButtonVerMais>
+        </Link>
+
     </Styled.CardWrapper>
   );
 };
