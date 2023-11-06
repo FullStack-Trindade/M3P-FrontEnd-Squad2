@@ -1,7 +1,6 @@
 /* import { Btn } from "../components/Button/button.style"*/
 import { ToolbarComponent } from "../components/Toolbar/Toolbar.component"
 import { ToolbarTituloProvider } from "../contexts/ToolbarTitulo/ToolbarTitulo.context"
-/* import InputComponent from "../components/Input/Input.component" */
 import SidebarComponent from "../components/Sidebar/Sidebar.component"
 import ModalComponent from "../components/Modal/Modal.component"
 import SuccessComponent from "../components/Success/Success.component"
@@ -28,13 +27,7 @@ export default function Layout() {
 						<Styled.LayoutContent>
 							<Outlet />
 						</Styled.LayoutContent>
-						{/* <InputComponent
-							type="text"
-							id="ss"
-							mask="999.999.999-99"
-							label="cpf"
-						></InputComponent>
-						<h4>Botões e suas variantes</h4>
+						{/*	<h4>Botões e suas variantes</h4>
 						<div style={{ display: "flex", gap: "1rem" }}>
 							<Btn variant="primary">primary</Btn>
 							<Btn variant="outlined">outlined</Btn>

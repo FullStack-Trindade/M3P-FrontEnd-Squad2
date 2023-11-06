@@ -22,7 +22,11 @@ export const AppRoutes = () => {
         <Route element={<PrivateRoutes />}>
           {/* Inicio do Layout */}
           <Route path="/" element={<Layout />}>
+            {usuario?.tipo === "ADMINISTRADOR" && (
+              <Route path="/config" element={<h1>Teste</h1>} />
+            )}
             <Route path="/" element={<HomePage />} />
+            <Route path="/cadastraexames" element={<ExamePage />} />
 
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
@@ -30,12 +34,18 @@ export const AppRoutes = () => {
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/logs" element={<LogsPage />} />}
             <Route path="/cadastrapaciente" element={<PacientePage />} />
             <Route path="/editapaciente/:id" element={<PacientePage />} />
+
+            <Route path="/cadastraexame" element={<ExamePage />} />
+            <Route path="/editaexame/:id" element={<ExamePage />} />
+
             <Route path="/cadastradieta" element={<DietaPage />} />
             <Route path="/editadieta/:id" element={<DietaPage />} />
+
             <Route path="/exames" element={<ExamePage />} />
             <Route path="/exames/:id" element={<ExamePage />} />
             <Route path="/medicamento" element={<CadMedicamento />} />
             <Route path="/medicamento/:nome" element={<CadMedicamento />} />
+
           </Route>
           {/* Fim do Layout */}
         </Route>
