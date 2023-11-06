@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import * as Styled from "./sidebar.style"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation, useParams } from "react-router-dom"
 import { SidebarContext } from "../../contexts/SidebarContext"
 
 // Imagem de icones
@@ -10,22 +10,26 @@ import {
 	TbLogout,
 	TbHome,
 	TbPill,
-	TbTestPipe
+	TbTestPipe,
+	TbUsersPlus,
+	TbClipboardText
 } from "react-icons/tb"
 import { FaUserDoctor, FaUserNurse } from "react-icons/fa6"
-import { MdOutlineSick } from "react-icons/md"
+import { MdOutlineSick, MdOutlineBuild } from "react-icons/md"
 import { GiKnifeFork } from 'react-icons/gi'
 
 // Imagem de Logo
 import logoP from "../../assets/images/logoG.png"
+import { useAuth } from "../../hooks/useAuth"
 
 export default function SidebarComponent() {
 	// CONTEXTS
 	const { showSidebar, setShowSidebar } = useContext(SidebarContext)
-
+	const { usuario, logout } = useAuth()
 	// REACT-ROUTER-DOM
 	const navigate = useNavigate()
 	const location = useLocation()
+	const { id } = useParams()
 
 	useEffect(() => {
 		switch (location.pathname) {
@@ -35,14 +39,35 @@ export default function SidebarComponent() {
 			case "/cadastrapaciente":
 				document.getElementById("paciente").checked = true
 				break
+			case `/editapaciente/${id}`:
+				document.getElementById("paciente").checked = true
+				break
 			case "/cadastradieta":
+				document.getElementById("dieta").checked = true
+				break
+			case `/editadieta/${id}`:
 				document.getElementById("dieta").checked = true
 				break
 			case "/exames":
 				document.getElementById("exames").checked = true
 				break
+			case `/exames/${id}`:
+				document.getElementById("exames").checked = true
+				break
 			case "/cadmedicamento":
 				document.getElementById("medicamento").checked = true
+				break
+			case "/config":
+				document.getElementById("config").checked = true
+				break
+			case "/cadastrausuarios":
+				document.getElementById("usuario").checked = true
+				break
+			case `/editausuario/${id}`:
+				document.getElementById("usuario").checked = true
+				break
+			case "/logs":
+				document.getElementById("logs").checked = true
 				break
 			default:
 				console.log("Pagina desconhecida")
@@ -51,10 +76,9 @@ export default function SidebarComponent() {
 	}, [location])
 
 	// FUNCTIONS
-	const logout = async () => {
-		// deslogar e apagar token no localStorage
-		// após logout redirecionar para a página de login
-		// navigate('/login')
+	const handleSair = async () => {
+		logout();
+		navigate('/login')
 	}
 
 	return (
@@ -111,27 +135,7 @@ export default function SidebarComponent() {
 								Exames
 							</label>
 						</Styled.Li>
-						{/* <Styled.Li >
-							<input type="radio" name="page" id="medico" />
-							<FaUserDoctor size={showSidebar ? "" : "1.5rem"} />
-							<label
-								htmlFor="medico"
-								className={showSidebar ? "" : "tooltiptext"}
-							>
-								Medicos
-							</label>
-						</Styled.Li> */}
-						{/* <Styled.Li >
-							<input type="radio" name="page" id="enfermeiro" />
-							<FaUserNurse size={showSidebar ? "" : "1.5rem"} />
-							<label
-								htmlFor="enfermeiro"
-								className={showSidebar ? "" : "tooltiptext"}
-							>
-								Enfermeiros
-							</label>
-						</Styled.Li> */}
-						
+
 						<Styled.Li onClick={() => navigate('/cadmedicamento')}>
 							<input type="radio" name="page" id="medicamento" />
 							<TbPill size={showSidebar ? "" : "1.5rem"} />
@@ -144,6 +148,43 @@ export default function SidebarComponent() {
 						</Styled.Li>
 					</ul>
 				</Styled.ListGroup>
+				{usuario.tipo === "ADMINISTRADOR" &&
+					<Styled.ListGroup>
+						<p style={{ display: showSidebar ? "" : "none" }}>Admin</p>
+
+						<ul>
+							<Styled.Li onClick={() => navigate('/config')}>
+								<input type="radio" name="page" id="config" value="config" />
+								<MdOutlineBuild size={showSidebar ? "" : "1.5rem"} />
+								<label
+									htmlFor="config"
+									className={showSidebar ? "" : "tooltiptext"}
+								>
+									Configurações
+								</label>
+							</Styled.Li>
+							<Styled.Li onClick={() => navigate('/cadastrausuarios')}>
+								<input type="radio" name="page" id="usuario" />
+								<TbUsersPlus size={showSidebar ? "" : "1.5rem"} />
+								<label
+									htmlFor="usuario"
+									className={showSidebar ? "" : "tooltiptext"}
+								>
+									Usuário
+								</label>
+							</Styled.Li>
+							<Styled.Li onClick={() => navigate('/logs')}>
+								<input type="radio" name="page" id="logs" />
+								<TbClipboardText size={showSidebar ? "" : "1.5rem"} />
+								<label
+									htmlFor="logs"
+									className={showSidebar ? "" : "tooltiptext"}
+								>
+									Logs
+								</label>
+							</Styled.Li>
+						</ul>
+					</Styled.ListGroup>}
 			</Styled.Body>
 			<Styled.Footer>
 				<Styled.TooltipContainer
@@ -161,7 +202,7 @@ export default function SidebarComponent() {
 					</Styled.SidebarBtn>
 				</Styled.TooltipContainer>
 
-				<Styled.TooltipContainer onClick={logout} $isOpened={showSidebar}>
+				<Styled.TooltipContainer onClick={handleSair} $isOpened={showSidebar}>
 					<Styled.SidebarBtn>
 						<span className={showSidebar ? "" : "tooltiptext"}>
 							Logout

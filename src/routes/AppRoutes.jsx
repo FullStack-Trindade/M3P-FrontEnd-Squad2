@@ -11,6 +11,7 @@ import { useAuth } from "../hooks/useAuth";
 import { ResetarSenhaPage } from "../pages/ResetarSenhaPage/ResetarSenhaPage";
 import { CadastrarUsuariosPage } from "../pages/CadastrarUsuariosPage/CadastrarUsuarios.page";
 import CadMedicamento from "../pages/CadMedicamento/CadMedicamento.page"
+import { LogsPage } from "../pages/LogsPage/Logs.page";
 
 export const AppRoutes = () => {
   const { usuario } = useAuth();
@@ -26,7 +27,7 @@ export const AppRoutes = () => {
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/config" element={<h1>Teste</h1>} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/cadastrausuarios" element={<CadastrarUsuariosPage />} />}
             {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/editausuario/:id" element={<CadastrarUsuariosPage />} />}
-            
+            {usuario?.tipo === 'ADMINISTRADOR' && <Route path="/logs" element={<LogsPage />} />}
             <Route path="/cadastrapaciente" element={<PacientePage />} />
             <Route path="/editapaciente/:id" element={<PacientePage />} />
             <Route path="/cadastradieta" element={<DietaPage />} />
@@ -39,13 +40,13 @@ export const AppRoutes = () => {
           {/* Fim do Layout */}
         </Route>
         {/* Fim Rotas privadas */}
-             
+
         {/* Rotas publicas abaixo: */}
         <Route path='/login' element={<LoginPage />} />
         <Route path="/resetarSenha" element={<ResetarSenhaPage />} />
         <Route path="*" element={<NotFoundPage />} />
-          
-			</Routes>
-		</Router>
-	)
+
+      </Routes>
+    </Router>
+  )
 }
