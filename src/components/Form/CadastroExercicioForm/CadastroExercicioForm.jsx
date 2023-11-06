@@ -356,3 +356,4 @@ export default function CadastroExercicioForm({ isEditing = false }) {
 CadastroExercicioForm.propTypes = {
   isEditing: PropTypes.bool,
 };
+

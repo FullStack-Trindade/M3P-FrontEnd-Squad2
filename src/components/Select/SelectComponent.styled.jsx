@@ -35,4 +35,3 @@ width: 100%;
     $color === "danger" ? COLOR.$message_error : COLOR.$blue_darkest};
   
 `;
-
