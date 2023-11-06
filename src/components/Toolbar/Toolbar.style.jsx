@@ -7,7 +7,7 @@ export const Header = styled.header`
 
 	width: 100%;
 	height: 7.5rem;
-	padding: 0 1rem;
+	padding: 2rem;
 
 	background-color: #004a63;
 	color: #fff;

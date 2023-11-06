@@ -11,8 +11,9 @@ export const Sidebar = styled.nav`
 		return $isOpened ? "200px" : "60px"
 	}};
 	inset: 0;
-	position: fixed;
+	position: sticky;
 	padding: 0.5rem;
+	z-index: 1;
 `
 
 export const Header = styled.div`
