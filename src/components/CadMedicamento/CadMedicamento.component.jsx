@@ -49,10 +49,12 @@ export default function CadMedicamentoComponent() {
 			}
 
 			setStatus(true)
-			const dados = { ...data, statusDoSistema, paciente_id }
+			setValue('statusDoSistema', statusDoSistema)
+			const dados = { ...data, statusDoSistema ,paciente_id }
+			console.log(dados)
 			const res = await MedicamentoService.Create(dados, token)
 			toast.success(
-				`Cadastro do medicamento: ${res.nome_completo} realizado com sucesso!`,
+				`Cadastro do medicamento: ${res.nomeMedicamento} realizado com sucesso!`,
 				{
 					position: toast.POSITION.TOP_CENTER,
 					theme: "colored",
@@ -193,14 +195,14 @@ export default function CadMedicamentoComponent() {
 								id="tipoMedicamento"
 								{...register("tipoMedicamento", { required: "Informe um tipo" })}
 							>
-								<option value="capsula">Cápsula</option>
-								<option value="comprimido">Comprimido</option>
-								<option value="liquido">Líquido</option>
-								<option value="creme">Creme</option>
-								<option value="gel">Gel</option>
-								<option value="inalacao">Inalação</option>
-								<option value="injecao">Injeção</option>
-								<option value="spray">Spray</option>
+								<option value="CAPSULA">Cápsula</option>
+								<option value="COMPRIMIDO">Comprimido</option>
+								<option value="LIQUIDO">Líquido</option>
+								<option value="CREME">Creme</option>
+								<option value="GEL">Gel</option>
+								<option value="INALACAO">Inalação</option>
+								<option value="INJECAO">Injeção</option>
+								<option value="SPRAY">Spray</option>
 							</Select>
 							{errors.tipoMedicamento && <Error>{errors.tipoMedicamento.message}</Error>}
 						</InputGroup>
@@ -233,7 +235,7 @@ export default function CadMedicamentoComponent() {
 								<option value="g">g</option>
 								<option value="mg">mg</option>
 								<option value="mcg">mcg</option>
-								<option value="ml">ml</option>
+								<option value="mL">ml</option>
 								<option value="%">%</option>
 							</Select>
 							{errors.unidade && <Error>{errors.unidade.message}</Error>}

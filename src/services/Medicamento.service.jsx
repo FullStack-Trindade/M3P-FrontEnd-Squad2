@@ -7,9 +7,8 @@ const MedicamentoService = {
 				Authorization: `Bearer ${token}`,
 			},
 		})
-
-		if (response.ok) {
-			const data = await response.json()
+		if (response.status === 201) {
+			const data = await response.data
 			return data
 		} else {
 			let errorMessage = "Erro desconhecido"
