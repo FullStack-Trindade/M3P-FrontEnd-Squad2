@@ -1,5 +1,5 @@
-import * as Styled from "../Input/Input.style";
 import PropTypes from "prop-types";
+import * as Styled from "../Input/Input.style";
 
 export default function OptionComponent({ register, value, value1, value2, value3, id,error,label }) {
  
