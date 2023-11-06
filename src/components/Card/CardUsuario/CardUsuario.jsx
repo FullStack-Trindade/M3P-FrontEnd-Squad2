@@ -21,7 +21,7 @@ const CardUsuario = ({ user }) => {
         <Styled.Info>{tipo}</Styled.Info>
         <Styled.Info>{telefone}</Styled.Info>
         <Styled.Info>{email}</Styled.Info>
-        <Link to={`/editausuario/${user.id}`}>
+        <Link to={`/editausuario/${user.usuarioId}`}>
           <Styled.ButtonVerMais>Ver mais</Styled.ButtonVerMais>
         </Link>
 

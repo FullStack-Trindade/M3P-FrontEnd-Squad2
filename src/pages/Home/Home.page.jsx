@@ -22,6 +22,9 @@ import CardPaciente from "../../components/Card/CardPaciente/CardPaciente";
 import CardUsuario from "../../components/Card/CardUsuario/CardUsuario";
 import Search from "../../components/Search/Search";
 import { useParams } from "react-router-dom";
+import MedicamentoService from "../../services/Medicamento.service";
+import CadastroExercicioService from "../../services/CadastroExercicio/CadastroExercicioService";
+import ConsultaService from "../../services/CadastroConsulta/CadastroConsultaService";
 
 export const HomePage = () => {
   const exameService = new ExameService();
@@ -40,15 +43,16 @@ export const HomePage = () => {
   const exames = async () => {
     await exameService.getExames(token);
   };
-  /*   const medicamentos = async () => {
-    await medicamentoService.getAll (token);
+    const medicamentos = async () => {
+    await MedicamentoService.GetAll (token);
   };
+   
   const exercicios = async () => {
-    await cadastroExercicioService.getExercicios(token);
-
+    await CadastroExercicioService.getExercicios(token);
+  }
   const consulta = async () => {
-    await cadastroConsultaService.getConsultas(token);
-  }; */
+    await ConsultaService.getConsultas(token);
+  };  
 
   useEffect(() => {
     const fetchPaciente = async () => {
@@ -122,7 +126,7 @@ export const HomePage = () => {
             <div>
               <CardComponent
                 title="Consultas Cadastradas"
-                value={exames.length}
+                value={consulta.length}
                 icon={<FaStethoscope />}
                 color={COLOR.$blue_darkest}
               />
@@ -137,13 +141,13 @@ export const HomePage = () => {
             <div>
               <CardComponent
                 title="Exercicios Cadastrados"
-                value={dietas.length}
+                value={exercicios.length}
                 icon={<IoBarbellSharp />}
                 color={COLOR.$black_medium}
               />
               <CardComponent
                 title="Medicações Cadastradas"
-                value={dietas.length}
+                value={medicamentos.length}
                 icon={<FaPills />}
                 color={COLOR.$blue_lightest}
               />
@@ -191,7 +195,7 @@ export const HomePage = () => {
             <div>
               <CardComponent
                 title="Consultas Cadastradas"
-                value={exames.length}
+                value={consulta.length}
                 icon={<FaStethoscope />}
                 color={COLOR.$blue_darkest}
               />
@@ -206,13 +210,13 @@ export const HomePage = () => {
             <div>
               <CardComponent
                 title="Exercicios Cadastrados"
-                value={dietas.length}
+                value={exercicios.length}
                 icon={<IoBarbellSharp />}
                 color={COLOR.$black_medium}
               />
               <CardComponent
                 title="Medicações Cadastradas"
-                value={dietas.length}
+                value={medicamentos.length}
                 icon={<FaPills />}
                 color={COLOR.$blue_lightest}
               />
@@ -229,4 +233,4 @@ export const HomePage = () => {
       )}
     </>
   );
-};
+}
