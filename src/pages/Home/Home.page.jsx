@@ -59,20 +59,20 @@ export const HomePage = () => {
         const lowerCaseNome = paciente.nome_completo.toLowerCase();
         const lowerCaseTelefone = paciente.telefone.toLowerCase();
         const lowerCaseEmail = paciente.email.toLowerCase();
-        
+
         return (
           lowerCaseNome.includes(lowerCaseSearchValue) ||
           lowerCaseTelefone.includes(lowerCaseSearchValue) ||
           lowerCaseEmail.includes(lowerCaseSearchValue)
         );
       });
-    
+
       setFilteredPatients(filtraPaciente);
 
     };
     const fetchUsuario = async () => {
       const dataUsuario = await UsuarioService.getUsuarios(token);
-      
+
       setUsuarios(dataUsuario);
 
       const filtraUsuario = dataUsuario.filter((usuario) => {
@@ -80,19 +80,19 @@ export const HomePage = () => {
         const lowerCaseNome = usuario.nomeCompleto.toLowerCase();
         const lowerCaseTelefone = usuario.telefone.toLowerCase();
         const lowerCaseEmail = usuario.email.toLowerCase();
-        
+
         return (
           lowerCaseNome.includes(lowerCaseSearchValue) ||
           lowerCaseTelefone.includes(lowerCaseSearchValue) ||
           lowerCaseEmail.includes(lowerCaseSearchValue)
         );
       });
-    
+
       setFilteredUsuario(filtraUsuario);
-     
+
     };
-  
-  
+
+
     usuario?.tipo === "ADMINISTRADOR"
       ? (setTitulo("ESTATÍSTICAS E INFORMAÇÕES ADMINISTRADOR"),
         console.log("teste adm"),
@@ -100,10 +100,10 @@ export const HomePage = () => {
         fetchUsuario())
       : (setTitulo("ESTATÍSTICAS E INFORMAÇÕES GERAIS"),
         console.log("teste else"),
-      
+
         fetchPaciente());
 
-      
+
   }, [searchValue, setTitulo]);
 
   return (
@@ -168,12 +168,12 @@ export const HomePage = () => {
           <Styled.Title>Busca</Styled.Title>
           <Search setSearchValue={setSearchValue} />
           <Styled.Title>Informações de Pacientes</Styled.Title>
-          {pacientes.map((paciente, index) => (
+          {filteredPatients.map((paciente, index) => (
             <CardPaciente key={index} paciente={paciente} />
           ))}
 
           <Styled.Title>Informações de Usuarios</Styled.Title>
-          {usuarios.map((user, index) => (
+          {filteredUsuario.map((user, index) => (
             <CardUsuario key={index} user={user} />
           ))}
         </Styled.Container>
@@ -229,8 +229,8 @@ export const HomePage = () => {
           <Styled.Title>Busca</Styled.Title>
           <Search setSearchValue={setSearchValue} />
           <Styled.Title>Informações de Pacientes</Styled.Title>
-         
-          {pacientes.map((paciente, index) => (
+
+          {filteredPatients.map((paciente, index) => (
             <CardPaciente key={index} paciente={paciente} />
           ))}
         </Styled.Container>
